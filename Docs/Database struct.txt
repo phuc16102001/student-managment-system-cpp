@@ -1,0 +1,43 @@
+Database: {
+
+	Student: {
+		studentID: char[9]
+		lastname: char*
+		firstname: char*
+		gender: bool
+		dob: char[11]
+		password: char*
+		accountType: int
+
+		*Note: using buffer[1024] to input
+		*Note: password is using SHA1 to encrypt
+		*Note: accountType is (0=student, 1=lecturer)
+	}
+
+	StudentList: {
+		student: Student
+		nextStudent: StudentList*
+	}
+
+	Class: {
+		className: char*
+		studentList: StudentList*
+	}
+
+	Course: {
+		courseID: char*
+		courseName: char*
+		class: Class
+		lecturerAccount: char*
+		startDate: char[11]
+		endDate: char[11]
+		dayOfWeek: int
+		startTime: char[6]
+		endTime: char[6]
+		room: char[4]
+		studentList: StudentList*
+		
+		*Note: dayOfWeek is the position of array{"SUN","MON",...,"SAT"}
+		count from 0 to 6
+	}
+}
