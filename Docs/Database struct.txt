@@ -1,7 +1,6 @@
 Database: {
-
-	Student: {
-		studentID: char[9]
+	Account: {
+		ID: char[9]
 		lastname: char*
 		firstname: char*
 		gender: bool
@@ -13,31 +12,74 @@ Database: {
 		*Note: password is using SHA1 to encrypt
 		*Note: accountType is (0=student, 1=lecturer)
 	}
-
-	StudentList: {
-		student: Student
-		nextStudent: StudentList*
+	
+	AccountList: {
+		account: Account
+		nextAccount: AccountList*
 	}
 
 	Class: {
 		className: char*
-		studentList: StudentList*
+		numberStudent: int
+		studentList: AccountList*
+	}
+	
+	Score: {
+		studentID: char[9]
+		midterm: float
+		final: float
+		lab: float
+		bonus: float
+		grade: float
+	}
+
+	ScoreList: {
+		score: Score
+		nextScore: ScoreList*
 	}
 
 	Course: {
 		courseID: char*
 		courseName: char*
 		class: Class
-		lecturerAccount: char*
+		lecturerAccount: Account
 		startDate: char[11]
 		endDate: char[11]
 		dayOfWeek: int
 		startTime: char[6]
 		endTime: char[6]
 		room: char[4]
-		studentList: StudentList*
+		studentList: AccountList*
+		scoreList: ScoreList*
 		
 		*Note: dayOfWeek is the position of array{"SUN","MON",...,"SAT"}
 		count from 0 to 6
+	}
+
+}
+
+Storage: {
+	account: {
+		each account contains "id,lastname,firstname,gender,dob,password(sha1),accountType\n"
+
+		gender: 0/1 equal false/true (1 is male)
+		password: just store sha1
+		accountType: 0 for student, 1 for lecture
+	}
+
+	class: {
+		each class contains "className,numberStudent,accountID,...,accountID\n"
+
+		numberStudent: number of student in the class
+		accountID: ID account of each student
+	}
+
+	course: {
+		
+	}
+
+	score: {
+		each scoreboard contains "courseID,studentID,midterm,final,lab,bonus,grade\n"
+
 	}
 }

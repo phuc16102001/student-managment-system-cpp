@@ -1,0 +1,52 @@
+
+* Header:
+---------------------------------
+|    Student Management System  |
+---------------------------------
+
+* Loading screen:
+|            Loading...         |
+---------------------------------
+
+* Login screen:
+ID:
+Password:
+If not success-> relogin
+
+* Main menu:
+1. Show menu            
+2. Show profile         
+3. Change password      
+4. Log out              
+---------------------------------
+Choose (1,2,3,4): _
+
+* Show profile:
+ID:            
+Lastname:         
+Firstname:              
+Date of birth:
+Account type:
+---------------------------------
+Press any key to continue...
+
+* Change password:
+Old password:
+New password:
+Repeat new password:
+---------------------------------
+Password is changed successful
+Press any key to continue...
+
+* Show menu: 
+1. Class            
+2. Course        
+3. Score board     
+4. Attendance list         
+---------------------------------
+Choose (1,2,3,4): _
+
+
+
+Note:
+Password change exception: {wrong old password, repeat password wrong};

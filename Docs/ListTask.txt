@@ -37,21 +37,21 @@ Score board: {
 Attendance list: {
 	Search an view attendance list in a course
 	Export attendance list to csv
-}
 
-Lecture: {
-	View list of courses in semester
-	View list student in a course
-	View attendance list of a course
-	Edit attendance
-	Import scoreboard of a course (mid,final,lab,bonus) from csv
-	Edit grade of student
-	View a scoreboard
-}
+	Lecture: {
+		View list of courses in semester
+		View list student in a course
+		View attendance list of a course
+		Edit attendance
+		Import scoreboard of a course (mid,final,lab,bonus) from csv
+		Edit grade of student
+		View a scoreboard
+	}
 
-Student: {
-	Check in
-	View check in result
-	View schedules
-	View score of course
+	Student: {
+		Check in
+		View check in result
+		View schedules
+		View score of course
+	}
 }

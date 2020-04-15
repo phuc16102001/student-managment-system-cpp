@@ -13,5 +13,50 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Storage">
+      <UniqueIdentifier>{5a692908-b888-481b-ad81-3147b809c015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Docs">
+      <UniqueIdentifier>{2a6b7e77-d2e8-42cb-8d58-671954f9911f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharPointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Constant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharPointer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Docs\Database struct.txt">
+      <Filter>Resource Files\Docs</Filter>
+    </Text>
+    <Text Include="..\..\Docs\ListTask.txt">
+      <Filter>Resource Files\Docs</Filter>
+    </Text>
+    <Text Include="..\..\Docs\ImplementTask.txt">
+      <Filter>Resource Files\Docs</Filter>
+    </Text>
+    <Text Include="..\..\Docs\Usescase.txt">
+      <Filter>Resource Files\Docs</Filter>
+    </Text>
+    <Text Include="Storage\account.txt">
+      <Filter>Resource Files\Storage</Filter>
+    </Text>
   </ItemGroup>
 </Project>

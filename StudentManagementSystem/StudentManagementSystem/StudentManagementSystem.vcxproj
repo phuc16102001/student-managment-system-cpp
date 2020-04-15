@@ -138,6 +138,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Account.cpp" />
+    <ClCompile Include="CharPointer.cpp" />
+    <ClCompile Include="MainSource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Account.h" />
+    <ClInclude Include="CharPointer.h" />
+    <ClInclude Include="Constant.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Docs\Database struct.txt" />
+    <Text Include="..\..\Docs\ImplementTask.txt" />
+    <Text Include="..\..\Docs\ListTask.txt" />
+    <Text Include="..\..\Docs\Usescase.txt" />
+    <Text Include="Storage\account.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
