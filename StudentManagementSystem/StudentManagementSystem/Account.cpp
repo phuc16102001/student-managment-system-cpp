@@ -45,7 +45,7 @@ bool importAccountFromStorage(AccountList*& accountList) {
 
 bool importAccountFromCSV(char* path, AccountList*& accountList) {
 	fstream fin;
-	fin.open(_data, ios::in);
+	fin.open(path, ios::in);
 	if (!fin.is_open()) return false;
 
 	AccountList* cur = accountList;

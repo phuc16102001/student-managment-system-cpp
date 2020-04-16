@@ -30,11 +30,13 @@ void displayFromCSV(AccountList* lst)
 	cout << endl;
 }
 int main() {
-	AccountList* accountList = nullptr;
-	importAccountFromStorage(accountList);
-	display(accountList);
+	//AccountList* accountList = nullptr;
+	//importAccountFromStorage(accountList);
+	//display(accountList);
 	AccountList* temp = nullptr;
-	char path [] = "data.csv";
+	char path[1024];
+	cout << "Enter path: ";
+	cin.getline(path,1024);
 	importAccountFromCSV(path, temp);
 	displayFromCSV(temp);
 }
