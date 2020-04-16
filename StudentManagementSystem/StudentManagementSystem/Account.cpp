@@ -44,7 +44,42 @@ bool importAccountFromStorage(AccountList*& accountList) {
 }
 
 bool importAccountFromCSV(char* path, AccountList*& accountList) {
-	return false;
+	fstream fin;
+	fin.open(_data, ios::in);
+	if (!fin.is_open()) return false;
+
+	AccountList* cur = accountList;
+	while (!fin.eof()) {
+		Account readAccount;
+		fin.get(readAccount.ID, sizeof(readAccount.ID), ',');
+		fin.ignore(1, ',');
+
+		readAccount.lastName = readCharPointerUntil(fin, ',');
+		fin.ignore(1, ',');
+
+		readAccount.firstName = readCharPointerUntil(fin, ',');
+		fin.ignore(1, ',');
+
+		fin >> readAccount.gender;
+		fin.ignore(1, ',');
+
+		fin.get(readAccount.dob, sizeof(readAccount.dob), '\n');
+
+
+		fin.ignore(1, '\n');
+
+		if (cur == nullptr) {
+			accountList = new AccountList;
+			cur = accountList;
+		}
+		else {
+			cur->nextAccount = new AccountList;
+			cur = cur->nextAccount;
+		}
+		cur->account = readAccount;
+	}
+
+	return true;
 }
 
 bool findAccountID(char* accountID, AccountList* accountList, Account &result) {
