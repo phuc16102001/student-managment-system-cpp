@@ -14,8 +14,29 @@ void display(AccountList* list) {
 	cout << endl;
 }
 
+void displayFromCSV(AccountList* lst)
+{
+	int i = 1;
+	while (lst->nextAccount != nullptr)
+	{
+		Account account = lst->account;
+		cout << i++ << " ";
+		cout << account.ID << " "
+			<< account.lastName << " "
+			<< account.firstName << " " 
+			<< account.dob << endl;
+		lst = lst->nextAccount;
+	}
+	cout << endl;
+}
 int main() {
-	AccountList* accountList = nullptr;
-	importAccountFromStorage(accountList);
-	display(accountList);
+	//AccountList* accountList = nullptr;
+	//importAccountFromStorage(accountList);
+	//display(accountList);
+	AccountList* temp = nullptr;
+	char path[1024];
+	cout << "Enter path: ";
+	cin.getline(path,1024);
+	importAccountFromCSV(path, temp);
+	displayFromCSV(temp);
 }
