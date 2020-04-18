@@ -34,6 +34,26 @@ bool importAccountFromStorage(AccountList*& accountList) {
 	return true;
 }
 
+bool saveAccountListToStorage(AccountList* accountList) {
+	//Open file
+	fstream fout(_accountStorage, ios::out);
+	if (!fout.is_open()) return false;
+
+	while (accountList!=nullptr) {
+		Account nowAccount = accountList->account;
+		fout << nowAccount.ID << endl;
+		fout << nowAccount.lastName << endl;
+		fout << nowAccount.firstName << endl;
+		fout << nowAccount.gender << endl;
+		fout << nowAccount.dob << endl;
+		fout << nowAccount.password << endl;
+		fout << nowAccount.accountType << endl;
+		accountList = accountList->nextAccount;
+	}
+	return true;
+
+}
+
 bool importStudentFromCSV(string path, AccountList*& accountList) {
 	//Open file
 	fstream fin(path, ios::in);

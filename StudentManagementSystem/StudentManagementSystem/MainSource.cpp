@@ -20,6 +20,7 @@ int main() {
 	cout << "Path?";
 	getline(cin, path);
 	importStudentFromCSV(path,accountList);
+	saveAccountListToStorage(accountList);
 
 	display(accountList);
 
