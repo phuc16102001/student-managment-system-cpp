@@ -2,16 +2,15 @@
 #define _ACCOUNT_HEADER_
 
 #include "Constant.h"
-#include "CharPointer.h"
 
 struct Account {
-	char ID[9];
-	char* lastName;
-	char* firstName;
+	string ID;
+	string lastName;
+	string firstName;
 	bool gender;
-	char dob[11];
-	char* password;
-	int accountType;
+	string dob;
+	string password;
+	int accountType;	//0: staff, 1: lecture, 2:student
 };
 
 struct AccountList {
@@ -19,9 +18,11 @@ struct AccountList {
 	AccountList* nextAccount = nullptr;
 };
 
-bool importAccountFromStorage(AccountList*& accountList);						//Import from .txt
-bool importAccountFromCSV(char* path, AccountList*& accountList);				//Import from .csv
-bool findAccountID(char* accountID, AccountList* accountList, Account& result);	//Find accountID and return found
-bool checkPassword(char* passwordInput, Account account);						//Return correct
+void clearAccountList(AccountList*& accountList);									//Clear accountList
+bool importAccountFromStorage(AccountList*& accountList);							//Import from .txt
+bool importStudentFromCSV(string path, AccountList*& accountList);					//Import from .csv
+bool findAccountID(string accountID, AccountList* accountList, Account& result);	//Find accountID and return found
+bool checkPassword(string passwordInput, Account account);							//Return correct
+void outputAccount(Account account);
 
 #endif

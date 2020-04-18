@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <iomanip>
+#include <algorithm>
 using namespace std;
 
 #define _accountStorage "storage\\account.txt"
