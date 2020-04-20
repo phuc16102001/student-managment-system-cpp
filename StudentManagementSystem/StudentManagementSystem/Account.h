@@ -20,9 +20,11 @@ struct AccountList {
 
 void clearAccountList(AccountList*& accountList);									//Clear accountList
 bool importAccountFromStorage(AccountList*& accountList);							//Import from .txt
+bool saveAccountListToStorage(AccountList* accountList);							//Save accountList to .txt
 bool importStudentFromCSV(string path, AccountList*& accountList);					//Import from .csv
 bool findAccountID(string accountID, AccountList* accountList, Account& result);	//Find accountID and return found
-bool checkPassword(string passwordInput, Account account);							//Return correct
-void outputAccount(Account account);
+bool checkPassword(string passwordInput, Account account);							//Return correct if same
+void outputAccount(Account account);												//Output 1 account to console
+void outputAccountList(AccountList* list);											//Output accountList to console
 
 #endif

@@ -1,27 +1,33 @@
 #include "Account.h"
+#include "Display.h"
 #include "Constant.h"
 
-
-void display(AccountList* list) {
-	while (list != nullptr) {
-		cout << "-----\n";
-		outputAccount(list->account);
-		list = list->nextAccount;
+void login(AccountList* accountList, Account& accountLogin) {
+	while (true) {
+		string inputAccountID, inputPassword;
+		displayLogin(inputAccountID, inputPassword);
+		if (findAccountID(inputAccountID, accountList, accountLogin)) {
+			if (checkPassword(inputPassword, accountLogin)) return;
+		}
+		cout << "Incorrect information\n";
+		cout << "Press enter to try again...\n";
+		cin.get();
+		system("CLS");
 	}
-	cout << endl;
 }
 
-int main() {
+void demo() {
+	//Init account
 	AccountList* accountList = nullptr;
-	
-	//importAccountFromStorage(accountList);
+	Account accountLogin;
+	importAccountFromStorage(accountList);
 
-	string path;
-	cout << "Path?";
-	getline(cin, path);
-	importStudentFromCSV(path,accountList);
-
-	display(accountList);
+	login(accountList, accountLogin);
 
 	clearAccountList(accountList);
+}
+
+
+int main() {
+	demo();
 }
