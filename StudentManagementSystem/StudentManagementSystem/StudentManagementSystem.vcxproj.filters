@@ -27,6 +27,15 @@
     <ClCompile Include="Account.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constant.h">
@@ -35,6 +44,15 @@
     <ClInclude Include="Account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage\account.txt">

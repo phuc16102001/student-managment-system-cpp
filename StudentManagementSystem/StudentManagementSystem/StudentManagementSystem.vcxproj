@@ -139,6 +139,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Class.cpp" />
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="MainSource.cpp" />
   </ItemGroup>
   <ItemGroup>
