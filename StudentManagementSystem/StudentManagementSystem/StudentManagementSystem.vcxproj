@@ -139,12 +139,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+<<<<<<< Updated upstream
+=======
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Display.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="MainSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
+    <ClInclude Include="Class.h" />
     <ClInclude Include="Constant.h" />
   </ItemGroup>
   <ItemGroup>
