@@ -47,11 +47,13 @@ bool saveAccountListToStorage(AccountList* accountList) {
 		fout << nowAccount.gender << endl;
 		fout << nowAccount.dob << endl;
 		fout << nowAccount.password << endl;
-		fout << nowAccount.accountType << endl;
+		fout << nowAccount.accountType;
+		if (accountList->nextAccount != nullptr) {
+			fout << endl;
+		}
 		accountList = accountList->nextAccount;
 	}
 	return true;
-
 }
 
 bool importStudentFromCSV(string path, AccountList*& accountList) {
@@ -115,7 +117,14 @@ bool importStudentFromCSV(string path, AccountList*& accountList) {
 }
 
 bool findAccountID(string accountID, AccountList* accountList, Account& result) {
-	return true;
+	while (accountList != nullptr) {
+		if (accountList->account.ID == accountID) {
+			result = accountList->account;
+			return true;
+		}
+		accountList = accountList->nextAccount;
+	}
+	return false;
 }
 
 bool checkPassword(string passwordInput, Account account) {
@@ -154,6 +163,14 @@ void outputAccount(Account account) {
 	cout << "Gender: " << gender << endl;
 	cout << "Date of birth: " << account.dob << endl;
 	cout << "Account type: " << accountType << endl;
+}
+
+void outputAccountList(AccountList* list) {
+	while (list != nullptr) {
+		outputAccount(list->account);
+		list = list->nextAccount;
+	}
+	cout << endl;
 }
 
 void clearAccountList(AccountList*& accountList) {

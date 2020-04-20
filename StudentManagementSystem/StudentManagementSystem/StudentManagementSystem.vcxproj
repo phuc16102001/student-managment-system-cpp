@@ -139,11 +139,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="MainSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
     <ClInclude Include="Constant.h" />
+    <ClInclude Include="Display.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage\account.txt" />
