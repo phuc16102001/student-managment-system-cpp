@@ -5,5 +5,8 @@
 
 void displayHeaderUI();
 void displayLogin(string& inputAccountID, string& inputPassword);
+int displayStaffMenu();
+int displayLectureMenu();
+int displayStudentMenu();
 
 #endif
