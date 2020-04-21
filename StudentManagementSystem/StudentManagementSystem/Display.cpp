@@ -45,6 +45,10 @@ int displayStaffMenu()
 		<< "20.Export a scoreboard into a csv file" << endl << endl;
 	cout << "Please, choose one function \n";
 	cin >> x;
+	while (x < 0 || x > 20)
+	{
+		cout << "Pls, re-enter your choice\n"; cin >> x;
+	}
 	return x;
 }
 int displayLectureMenu()
@@ -60,6 +64,10 @@ int displayLectureMenu()
 		<< "7.View a scoreboard" << endl << endl;
 	cout << "Please, choose one function \n";
 	cin >> x;
+	while (x < 0 || x > 7)
+	{
+		cout << "Pls, re-enter your choice\n"; cin >> x;
+	}
 	return x;
 }
 int displayStudentMenu()
@@ -72,5 +80,9 @@ int displayStudentMenu()
 		<< "4.View your scores of a course" << endl << endl;
 		cout << "Please, choose one function \n";
 	cin >> x;
+	while (x < 0 || x > 4)
+	{
+		cout << "Pls, re-enter your choice\n"; cin >> x;
+	}
 	return x;
 }
