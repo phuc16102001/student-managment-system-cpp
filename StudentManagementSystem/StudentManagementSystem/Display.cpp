@@ -22,8 +22,7 @@ int displayStaffMenu()
 	int x;
 	cout << "Staff Menu?\n";
 	cout << "Course:" << endl;
-	cout << "0.Log out and close" << endl
-		<< "1. Find student" << endl
+	cout << "1. Find student" << endl
 		<< "2. Add student to a class" << endl
 		<< "3. Edit student information" << endl
 		<< "4. Remove student from a class" << endl
@@ -47,7 +46,7 @@ int displayStaffMenu()
 		<< "20. Export scoreboard into csv file" << endl << endl;
 	cout << "Choose one function: ";
 	cin >> x;
-	while (x < 0 || x > 20) {
+	while (x <= 0 || x > 20) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -59,8 +58,7 @@ int displayLectureMenu()
 	displayHeaderUI();
 	int x;
 	cout << "Lecturer Menu\n";
-	cout << "0.Log out and close" << endl
-		<< "1. View list of courses in the current semester" << endl
+	cout << "1. View list of courses in the current semester" << endl
 		<< "2. View list of students of a course" << endl
 		<< "3. View attendance list of a course" << endl
 		<< "4. Edit attendances" << endl
@@ -69,7 +67,7 @@ int displayLectureMenu()
 		<< "7. Scoreboard" << endl << endl;
 	cout << "Choose one function: ";
 	cin >> x;
-	while (x < 0 || x > 7) {
+	while (x <= 0 || x > 7) {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}
@@ -81,14 +79,13 @@ int displayStudentMenu()
 	displayHeaderUI();
 	int x;
 	cout << "Student Menu\n";
-	cout << "0.Log out and close" << endl
-		<< "1. Check-in" << endl
+	cout << "1. Check-in" << endl
 		<< "2. View check-in result" << endl
 		<< "3. View schedules" << endl
 		<< "4. View your scores" << endl << endl;
 	cout << "Choose one function: ";
 	cin >> x;
-	while (x < 0 || x > 4) {
+	while (x <= 0 || x > 4) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
