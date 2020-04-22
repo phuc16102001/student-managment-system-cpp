@@ -147,6 +147,7 @@
     <ClInclude Include="Account.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Constant.h" />
+    <ClInclude Include="Display.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage\account.txt" />
