@@ -1,16 +1,21 @@
 #include "Account.h"
 #include "Display.h"
 #include "Constant.h"
+#include "Class.h"
 
-void login(AccountList* accountList, Account& accountLogin) {
+Account* login(AccountList* accountList) {
 	while (true) {
 		//Get input
 		string inputAccountID, inputPassword;
+		Account* accountLogin;
 		displayLogin(inputAccountID, inputPassword);
-		
+
 		//Verify login
-		if (findAccountID(inputAccountID, accountList, accountLogin)) {
-			if (checkPassword(inputPassword, accountLogin)) break;
+		if (accountLogin = findAccountID(inputAccountID, accountList)) {
+			if (checkPassword(inputPassword, accountLogin)) {
+				system("CLS");
+				return accountLogin;
+			}
 		}
 
 		//Incorrect account
@@ -19,43 +24,47 @@ void login(AccountList* accountList, Account& accountLogin) {
 		cin.get();
 		system("CLS");
 	}
-
-	system("CLS");
+	return nullptr;
 }
 
-void menu(Account accountLogin) {
+void menu(Account* accountLogin) {
 	//Display function menu
-	switch (accountLogin.accountType) {
-		case (0): {
-			//Display staff menu
-			displayStaffMenu();
-			break;
-		}
-		case (1): {
-			//Display lecture menu
-			displayLectureMenu();
-			break;
-		}
-		case (2): {
-			//Display student menu
-			displayStudentMenu();
-			break;
-		}
+	switch (accountLogin->accountType) {
+	case (0): {
+		//Display staff menu
+		displayStaffMenu();
+		break;
+	}
+	case (1): {
+		//Display lecture menu
+		displayLectureMenu();
+		break;
+	}
+	case (2): {
+		//Display student menu
+		displayStudentMenu();
+		break;
+	}
 	}
 }
 
 void demo() {
 	//Init account
 	AccountList* accountList = nullptr;
-	Account accountLogin;
+	Account* accountLogin;
+	ClassList* classList = nullptr;
+
+	//Import
 	importAccountFromStorage(accountList);
+	importClassFromStorage(accountList, classList);
 
 	//Display Login
-	login(accountList, accountLogin);
+	accountLogin = login(accountList);
 	menu(accountLogin);
 
 	//Clear account list
 	clearAccountList(accountList);
+	clearClassList(classList);
 }
 
 

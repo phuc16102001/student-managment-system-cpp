@@ -6,9 +6,17 @@
 
 struct Class {
 	string className;
-	int nStudent;
-	string* studentID;
+	AccountList* accountList;
 };
 
+struct ClassList {
+	Class* classData = nullptr;
+	ClassList* nextClass = nullptr;
+};
+
+bool importClassFromStorage(AccountList* accountList, ClassList*& classList);
+bool saveClassToStorage(ClassList* classList);
+void insertClassToClassList(ClassList*& classList, Class* classData);
+void clearClassList(ClassList*& classList);
 
 #endif
