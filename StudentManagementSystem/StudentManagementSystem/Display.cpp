@@ -20,33 +20,33 @@ int displayStaffMenu()
 {
 	displayHeaderUI();
 	int x;
-	cout << "Staff Menu?\n";
-	cout << "Course:" << endl;
-	cout << "1. Find student" << endl
-		<< "2. Add student to a class" << endl
-		<< "3. Edit student information" << endl
-		<< "4. Remove student from a class" << endl
-		<< "5. Move student to another class" << endl
-		<< "6. View list of classes" << endl
-		<< "7. View list of students in a class" << endl
-		<< "8. Create/Update/Delete/View academic year and semester" << endl
-		<< "9. Import courses from a semester" << endl
-		<< "10. Add new course" << endl
-		<< "11. Edit existing course" << endl
-		<< "12. Remove course" << endl
-		<< "13. Remove student from a course" << endl
-		<< "14. Add student to a course" << endl
-		<< "15. View list of course in the current semester" << endl
-		<< "16. View list of students of a course " << endl
-		<< "17. View attendance list of a course" << endl
-		<< "18. Create/Update/Delete/View all lecturers"
-		<< endl << endl;
-	cout << "Scoreboard: \n";
-	cout << "19. Search and view attendance list of a course" << endl
-		<< "20. Export scoreboard into csv file" << endl << endl;
-	cout << "Choose one function: ";
+	cout	<< "Staff Menu?\n"
+			<< "Course:\n"
+			<< "1. Find student\n" 
+			<< "2. Add student to a class\n"
+			<< "3. Edit student information\n"
+			<< "4. Remove student from a class\n"
+			<< "5. Move student to another class\n"
+			<< "6. View list of classes\n"
+			<< "7. View list of students in a class\n"
+			<< "8. Create/Update/Delete/View academic year and semester\n"
+			<< "9. Import courses from a semester\n"
+			<< "10. Add new course\n"
+			<< "11. Edit existing course\n"
+			<< "12. Remove course\n"
+			<< "13. Remove student from a course\n"
+			<< "14. Add student to a course\n"
+			<< "15. View list of course in the current semester\n"
+			<< "16. View list of students of a course\n"
+			<< "17. View attendance list of a course\n"
+			<< "18. Create/Update/Delete/View all lecturers\n\n"
+			<< "Scoreboard:\n"
+			<< "19. Search and view attendance list of a course\n"
+			<< "20. Export scoreboard into csv file\n"
+			<< "21. Logout\n"
+			<< "Choose one function: ";
 	cin >> x;
-	while (x <= 0 || x > 20) {
+	while (x < 1 || x > 21) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -58,16 +58,17 @@ int displayLectureMenu()
 	displayHeaderUI();
 	int x;
 	cout << "Lecturer Menu\n";
-	cout << "1. View list of courses in the current semester" << endl
-		<< "2. View list of students of a course" << endl
-		<< "3. View attendance list of a course" << endl
-		<< "4. Edit attendances" << endl
-		<< "5. Import scoreboard" << endl
-		<< "6. Edit student grade" << endl
-		<< "7. Scoreboard" << endl << endl;
+	cout << "1. View list of courses in the current semester\n"
+		 << "2. View list of students of a course\n"
+		 << "3. View attendance list of a course\n"
+		 << "4. Edit attendances\n"
+		 << "5. Import scoreboard\n"
+		 << "6. Edit student grade\n"
+		 << "7. Scoreboard\n"
+		 << "8. Logout\n";
 	cout << "Choose one function: ";
 	cin >> x;
-	while (x <= 0 || x > 7) {
+	while (x < 1 || x > 8) {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}
@@ -79,13 +80,14 @@ int displayStudentMenu()
 	displayHeaderUI();
 	int x;
 	cout << "Student Menu\n";
-	cout << "1. Check-in" << endl
-		<< "2. View check-in result" << endl
-		<< "3. View schedules" << endl
-		<< "4. View your scores" << endl << endl;
+	cout << "1. Check-in\n"
+		 << "2. View check-in result\n"
+		 << "3. View schedules\n"
+		 << "4. View your scores\n"
+		 << "5. Logout\n";
 	cout << "Choose one function: ";
 	cin >> x;
-	while (x <= 0 || x > 4) {
+	while (x < 1 || x > 5) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
