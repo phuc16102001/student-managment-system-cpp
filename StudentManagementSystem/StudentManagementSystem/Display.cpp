@@ -8,21 +8,92 @@ void displayHeaderUI() {
 	cout << "--------------------------------\n";
 }
 
+void inputHidenText(string& text) {
+	text = "";
+	char c;
+	while (c = _getch()) {
+		if (c == 13) {
+			//Enter press
+			cout << endl;
+			return;
+		}
+		if (c == 8 || c == 127) {
+			//Backspace
+			cout << "\b \b"; //Backward write space then backward
+			text.erase(text.length() - 1);
+		}
+		else {
+			//Other key
+			cout << "*";
+			text += c;
+		}
+	}
+	return;
+}
+
 void displayLogin(string& inputAccountID,string& inputPassword) {
 	displayHeaderUI();
+	cout << "Press Ctrl+C to exit\n";
 	cout << "User ID: ";
 	getline(cin, inputAccountID);
 	cout << "Password: ";
-	getline(cin, inputPassword);
+	inputHidenText(inputPassword);
 }
 
-int displayStaffMenu()
-{
+int displayBasicMenu() {
+	displayHeaderUI();
+	int x;
+	cout	<< "1. View profile info\n"
+			<< "2. Change password\n"
+			<< "3. Function menu\n"
+			<< "4. Logout\n"
+			<< "Choose one function: ";
+	cin		>> x;
+	while (x < 1 || x>4) {
+		cout << "Please choose again!\n";
+		cin >> x;
+	}
+	return x;
+}
+
+void displayChangePassword(Account* account, AccountList* accountListStorage) {
+	displayHeaderUI();
+	string oldPassword, newPassword, repeatPassword;
+	cout << "Old password: ";
+	inputHidenText(oldPassword);
+	cout << "New password: ";
+	inputHidenText(newPassword);
+	cout << "Repeat new password: ";
+	inputHidenText(repeatPassword);
+
+	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
+		case (0):
+			if (saveAccountListToStorage(accountListStorage)) {
+				cout << "Password change successful\n";
+			}
+			else {
+				cout << "Fail to open storage\n";
+			}
+			break;
+		case (1):
+			cout << "Wrong password\n";
+			break;
+		case (2):
+			cout << "Repeat password is not the same\n";
+			break;
+	}
+	cout << "Press enter to continue...";
+	cin.ignore();
+	cin.get();
+	system("CLS");
+}
+
+int displayStaffMenu() {
 	displayHeaderUI();
 	int x;
 	cout	<< "Staff Menu?\n"
 			<< "Course:\n"
-			<< "1. Find student\n" 
+			<< "1. Find student\n"
 			<< "2. Add student to a class\n"
 			<< "3. Edit student information\n"
 			<< "4. Remove student from a class\n"
@@ -43,7 +114,7 @@ int displayStaffMenu()
 			<< "Scoreboard:\n"
 			<< "19. Search and view attendance list of a course\n"
 			<< "20. Export scoreboard into csv file\n"
-			<< "21. Logout\n"
+			<< "21. Back\n"
 			<< "Choose one function: ";
 	cin >> x;
 	while (x < 1 || x > 21) {
@@ -53,8 +124,7 @@ int displayStaffMenu()
 	return x;
 }
 
-int displayLectureMenu()
-{
+int displayLectureMenu() {
 	displayHeaderUI();
 	int x;
 	cout << "Lecturer Menu\n";
@@ -65,8 +135,8 @@ int displayLectureMenu()
 		 << "5. Import scoreboard\n"
 		 << "6. Edit student grade\n"
 		 << "7. Scoreboard\n"
-		 << "8. Logout\n";
-	cout << "Choose one function: ";
+		 << "8. Back\n"
+		 << "Choose one function: ";
 	cin >> x;
 	while (x < 1 || x > 8) {
 		cout << "Please choose again!"; 
@@ -75,8 +145,7 @@ int displayLectureMenu()
 	return x;
 }
 
-int displayStudentMenu()
-{
+int displayStudentMenu() {
 	displayHeaderUI();
 	int x;
 	cout << "Student Menu\n";
@@ -84,12 +153,21 @@ int displayStudentMenu()
 		 << "2. View check-in result\n"
 		 << "3. View schedules\n"
 		 << "4. View your scores\n"
-		 << "5. Logout\n";
-	cout << "Choose one function: ";
+		 << "5. Back\n"
+		 << "Choose one function: ";
 	cin >> x;
 	while (x < 1 || x > 5) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
 	return x;
+}
+
+void displayProfileInfo(Account* accountDisplay) {
+	displayHeaderUI();
+	outputAccount(accountDisplay);
+	cout << "Press enter to continue...";
+	cin.ignore();
+	cin.get();
+	system("CLS");
 }
