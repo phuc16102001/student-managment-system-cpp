@@ -33,6 +33,38 @@ int displayBasicMenu() {
 	return x;
 }
 
+void displayChangePassword(Account* account, AccountList* accountListStorage) {
+	displayHeaderUI();
+	string oldPassword, newPassword, repeatPassword;
+	cout << "Old password: ";
+	cin >> oldPassword;
+	cout << "New password: ";
+	cin >> newPassword;
+	cout << "Repeat new password: ";
+	cin >> repeatPassword;
+
+	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
+		case (0):
+			if (saveAccountListToStorage(accountListStorage)) {
+				cout << "Password change successful\n";
+			}
+			else {
+				cout << "Fail to open storage\n";
+			}
+			break;
+		case (1):
+			cout << "Wrong password\n";
+			break;
+		case (2):
+			cout << "Repeat password is not the same\n";
+			break;
+	}
+	cout << "Press enter to continue...";
+	cin.ignore();
+	cin.get();
+	system("CLS");
+}
+
 int displayStaffMenu() {
 	displayHeaderUI();
 	int x;
@@ -61,7 +93,7 @@ int displayStaffMenu() {
 			<< "20. Export scoreboard into csv file\n"
 			<< "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 21) {
+	while (x < 1 || x > 20) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -81,7 +113,7 @@ int displayLectureMenu() {
 		 << "7. Scoreboard\n"
 		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 8) {
+	while (x < 1 || x > 7) {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}

@@ -22,6 +22,7 @@ void menu() {
 			displayProfileInfo(accountLoginStorage);
 			break;
 		case (2):
+			displayChangePassword(accountLoginStorage, accountListStorage);
 			break;
 		case (3):
 			functionMenu();
