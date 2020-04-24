@@ -10,13 +10,25 @@ void displayHeaderUI() {
 
 void inputHidenText(string& text) {
 	text = "";
-	while (true) {
-		char c = _getch();
-		if (c == 13) break;
-		cout << "*";
-		text += c;
+	char c;
+	while (c = _getch()) {
+		if (c == 13) {
+			//Enter press
+			cout << endl;
+			return;
+		}
+		if (c == 8 || c == 127) {
+			//Backspace
+			cout << "\b \b"; //Backward write space then backward
+			text.erase(text.length() - 1);
+		}
+		else {
+			//Other key
+			cout << "*";
+			text += c;
+		}
 	}
-	cout << endl;
+	return;
 }
 
 void displayLogin(string& inputAccountID,string& inputPassword) {
