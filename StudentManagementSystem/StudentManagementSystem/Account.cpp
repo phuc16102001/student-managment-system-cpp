@@ -178,7 +178,7 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 		cur = cur->nextAccount;
 		cur->accountData = accountData;
 	}
-
+}
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
 	if (oldPassword != account->password) return 1;
@@ -186,7 +186,6 @@ int changePasswordAccount(string oldPassword, string newPassword, string repeatP
 
 	account->password = newPassword;
 	return 0;
-	
 }
 
 int getLengthAccountList(AccountList* list) {
