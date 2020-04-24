@@ -30,7 +30,27 @@ bool importClassFromStorage(AccountList* accountList, ClassList*& classList) {
 }
 
 bool saveClassToStorage(ClassList* classList) {
-	return false;
+	//Open file
+	fstream fout(_classStorage, ios::out);
+	if (!fout.is_open()) return false;
+
+	while (classList != nullptr) {
+		//Get accountList of current classList
+		AccountList* accountList = classList->classData->accountList;
+		int number = getLengthAccountList(accountList);
+		fout << classList->classData->className << endl;
+		fout << number << endl;
+
+		while (accountList != nullptr) {
+			fout << accountList->accountData->ID << endl;
+			accountList = accountList->nextAccount;
+		}
+
+		classList = classList->nextClass;
+	}
+
+	fout.close();
+	return true;
 }
 
 void insertClassToClassList(ClassList*& classList, Class* classData) {
@@ -57,4 +77,13 @@ void clearClassList(ClassList*& classList) {
 		delete classData;
 		delete temp;
 	}
+}
+
+int getLengthClassList(ClassList* list) {
+	int count = 0;
+	while (list != nullptr) {
+		count++;
+		list = list->nextClass;
+	}
+	return count;
 }

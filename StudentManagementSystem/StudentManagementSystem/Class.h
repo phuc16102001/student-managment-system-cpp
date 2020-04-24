@@ -18,5 +18,6 @@ bool importClassFromStorage(AccountList* accountList, ClassList*& classList);
 bool saveClassToStorage(ClassList* classList);
 void insertClassToClassList(ClassList*& classList, Class* classData);
 void clearClassList(ClassList*& classList);
+int getLengthClassList(ClassList* list);
 
 #endif

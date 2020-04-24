@@ -179,3 +179,12 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 		cur->accountData = accountData;
 	}
 }
+
+int getLengthAccountList(AccountList* list) {
+	int count = 0;
+	while (list != nullptr) {
+		count++;
+		list = list->nextAccount;
+	}
+	return count;
+}
