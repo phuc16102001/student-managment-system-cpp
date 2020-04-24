@@ -8,13 +8,24 @@ void displayHeaderUI() {
 	cout << "--------------------------------\n";
 }
 
+void inputHidenText(string& text) {
+	text = "";
+	while (true) {
+		char c = _getch();
+		if (c == 13) break;
+		cout << "*";
+		text += c;
+	}
+	cout << endl;
+}
+
 void displayLogin(string& inputAccountID,string& inputPassword) {
 	displayHeaderUI();
 	cout << "Press Ctrl+C to exit\n";
 	cout << "User ID: ";
 	getline(cin, inputAccountID);
 	cout << "Password: ";
-	getline(cin, inputPassword);
+	inputHidenText(inputPassword);
 }
 
 int displayBasicMenu() {
@@ -37,11 +48,11 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 	displayHeaderUI();
 	string oldPassword, newPassword, repeatPassword;
 	cout << "Old password: ";
-	cin >> oldPassword;
+	inputHidenText(oldPassword);
 	cout << "New password: ";
-	cin >> newPassword;
+	inputHidenText(newPassword);
 	cout << "Repeat new password: ";
-	cin >> repeatPassword;
+	inputHidenText(repeatPassword);
 
 	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
 		case (0):
