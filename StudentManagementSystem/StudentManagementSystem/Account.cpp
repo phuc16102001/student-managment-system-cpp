@@ -181,5 +181,10 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 }
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
-	return 0;
+	if (oldPassword != account->password) return 1;
+	if (repeatPassword != newPassword) return 2;
+	else {
+		account->password = newPassword;
+		return 0;
+	}
 }
