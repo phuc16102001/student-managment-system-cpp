@@ -70,7 +70,7 @@ int displayStaffMenu() {
 	int x;
 	cout	<< "Staff Menu?\n"
 			<< "Course:\n"
-			<< "1. Find student\n" 
+			<< "1. Find student\n"
 			<< "2. Add student to a class\n"
 			<< "3. Edit student information\n"
 			<< "4. Remove student from a class\n"
@@ -91,9 +91,10 @@ int displayStaffMenu() {
 			<< "Scoreboard:\n"
 			<< "19. Search and view attendance list of a course\n"
 			<< "20. Export scoreboard into csv file\n"
+			<< "21. Back\n"
 			<< "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 20) {
+	while (x < 1 || x > 21) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -111,9 +112,10 @@ int displayLectureMenu() {
 		 << "5. Import scoreboard\n"
 		 << "6. Edit student grade\n"
 		 << "7. Scoreboard\n"
+		 << "8. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 7) {
+	while (x < 1 || x > 8) {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}
@@ -128,9 +130,10 @@ int displayStudentMenu() {
 		 << "2. View check-in result\n"
 		 << "3. View schedules\n"
 		 << "4. View your scores\n"
+		 << "5. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 4) {
+	while (x < 1 || x > 5) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
