@@ -3,7 +3,38 @@
 #include "Constant.h"
 #include "Class.h"
 
-Account* login(AccountList* accountList) {
+//Static variable import from storage and login
+static AccountList* accountListStorage;
+static Account* accountLoginStorage;
+static ClassList* classListStorage;
+
+void login();
+void menu();
+void functionMenu();
+void demo();
+
+void menu() {
+	while (true) {
+		int input = displayBasicMenu();
+		system("CLS");
+		switch (input) {
+		case (1):
+			displayProfileInfo(accountLoginStorage);
+			break;
+		case (2):
+			break;
+		case (3):
+			functionMenu();
+			return;
+		case (4):
+			cin.ignore();
+			login();
+			return;
+		}
+	}
+}
+
+void login() {
 	while (true) {
 		//Get input
 		string inputAccountID, inputPassword;
@@ -11,10 +42,12 @@ Account* login(AccountList* accountList) {
 		displayLogin(inputAccountID, inputPassword);
 
 		//Verify login
-		if (accountLogin = findAccountID(inputAccountID, accountList)) {
+		if (accountLogin = findAccountID(inputAccountID, accountListStorage)) {
 			if (checkPassword(inputPassword, accountLogin)) {
 				system("CLS");
-				return accountLogin;
+				accountLoginStorage = accountLogin;
+				menu();
+				return;
 			}
 		}
 
@@ -24,47 +57,46 @@ Account* login(AccountList* accountList) {
 		cin.get();
 		system("CLS");
 	}
-	return nullptr;
 }
 
-void menu(Account* accountLogin) {
+void functionMenu() {
 	//Display function menu
-	switch (accountLogin->accountType) {
-	case (0): {
-		//Display staff menu
-		displayStaffMenu();
-		break;
-	}
-	case (1): {
-		//Display lecture menu
-		displayLectureMenu();
-		break;
-	}
-	case (2): {
-		//Display student menu
-		displayStudentMenu();
-		break;
-	}
+	switch (accountLoginStorage->accountType) {
+		case (0): {
+			//Display staff menu
+			displayStaffMenu();
+			break;
+		}
+		case (1): {
+			//Display lecture menu
+			displayLectureMenu();
+			break;
+		}
+		case (2): {
+			//Display student menu
+			displayStudentMenu();
+			break;
+		}
 	}
 }
 
 void demo() {
 	//Init account
-	AccountList* accountList = nullptr;
-	Account* accountLogin;
-	ClassList* classList = nullptr;
+	accountListStorage = nullptr;
+	accountLoginStorage = nullptr;
+	classListStorage = nullptr;
 
 	//Import
-	importAccountFromStorage(accountList);
-	importClassFromStorage(accountList, classList);
+	importAccountFromStorage(accountListStorage);
+	importClassFromStorage(accountListStorage, classListStorage);
 
 	//Display Login
-	accountLogin = login(accountList);
-	menu(accountLogin);
+	login();
+	menu();
 
 	//Clear account list
-	clearAccountList(accountList);
-	clearClassList(classList);
+	clearAccountList(accountListStorage);
+	clearClassList(classListStorage);
 }
 
 

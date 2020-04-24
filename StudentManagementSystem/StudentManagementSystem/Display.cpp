@@ -10,14 +10,30 @@ void displayHeaderUI() {
 
 void displayLogin(string& inputAccountID,string& inputPassword) {
 	displayHeaderUI();
+	cout << "Press Ctrl+C to exit\n";
 	cout << "User ID: ";
 	getline(cin, inputAccountID);
 	cout << "Password: ";
 	getline(cin, inputPassword);
 }
 
-int displayStaffMenu()
-{
+int displayBasicMenu() {
+	displayHeaderUI();
+	int x;
+	cout	<< "1. View profile info\n"
+			<< "2. Change password\n"
+			<< "3. Function menu\n"
+			<< "4. Logout\n"
+			<< "Choose one function: ";
+	cin		>> x;
+	while (x < 1 || x>4) {
+		cout << "Please choose again!\n";
+		cin >> x;
+	}
+	return x;
+}
+
+int displayStaffMenu() {
 	displayHeaderUI();
 	int x;
 	cout	<< "Staff Menu?\n"
@@ -43,7 +59,6 @@ int displayStaffMenu()
 			<< "Scoreboard:\n"
 			<< "19. Search and view attendance list of a course\n"
 			<< "20. Export scoreboard into csv file\n"
-			<< "21. Logout\n"
 			<< "Choose one function: ";
 	cin >> x;
 	while (x < 1 || x > 21) {
@@ -53,8 +68,7 @@ int displayStaffMenu()
 	return x;
 }
 
-int displayLectureMenu()
-{
+int displayLectureMenu() {
 	displayHeaderUI();
 	int x;
 	cout << "Lecturer Menu\n";
@@ -65,8 +79,7 @@ int displayLectureMenu()
 		 << "5. Import scoreboard\n"
 		 << "6. Edit student grade\n"
 		 << "7. Scoreboard\n"
-		 << "8. Logout\n";
-	cout << "Choose one function: ";
+		 << "Choose one function: ";
 	cin >> x;
 	while (x < 1 || x > 8) {
 		cout << "Please choose again!"; 
@@ -75,8 +88,7 @@ int displayLectureMenu()
 	return x;
 }
 
-int displayStudentMenu()
-{
+int displayStudentMenu() {
 	displayHeaderUI();
 	int x;
 	cout << "Student Menu\n";
@@ -84,12 +96,20 @@ int displayStudentMenu()
 		 << "2. View check-in result\n"
 		 << "3. View schedules\n"
 		 << "4. View your scores\n"
-		 << "5. Logout\n";
-	cout << "Choose one function: ";
+		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 5) {
+	while (x < 1 || x > 4) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
 	return x;
+}
+
+void displayProfileInfo(Account* accountDisplay) {
+	displayHeaderUI();
+	outputAccount(accountDisplay);
+	cout << "Press enter to continue...";
+	cin.ignore();
+	cin.get();
+	system("CLS");
 }

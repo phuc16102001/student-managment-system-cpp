@@ -181,5 +181,5 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 }
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
-
+	return 0;
 }
