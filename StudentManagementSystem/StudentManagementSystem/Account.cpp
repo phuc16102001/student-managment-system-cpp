@@ -179,3 +179,7 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 		cur->accountData = accountData;
 	}
 }
+
+int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
+
+}

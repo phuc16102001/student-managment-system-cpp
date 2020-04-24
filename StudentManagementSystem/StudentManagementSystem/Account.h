@@ -27,5 +27,6 @@ bool checkPassword(string passwordInput, Account* account);							//Return corre
 void outputAccount(Account* account);												//Output 1 account to console
 void outputAccountList(AccountList* list);											//Output accountList to console
 void insertAccountToAccountList(AccountList*& accountList, Account* accountData);	//Insert account to the end of accountList
+int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account); //Change account's password
 
 #endif
