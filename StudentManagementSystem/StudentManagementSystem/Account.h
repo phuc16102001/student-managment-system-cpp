@@ -18,7 +18,6 @@ struct AccountList {
 	AccountList* nextAccount = nullptr;
 };
 
-//test
 void clearAccountList(AccountList*& accountList);									//Clear accountList
 bool importAccountFromStorage(AccountList*& accountList);							//Import from .txt
 bool saveAccountListToStorage(AccountList* accountList);							//Save accountList to .txt
