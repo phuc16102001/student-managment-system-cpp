@@ -29,5 +29,5 @@ void outputAccountList(AccountList* list);											//Output accountList to con
 void insertAccountToAccountList(AccountList*& accountList, Account* accountData);	//Insert account to the end of accountList
 int getLengthAccountList(AccountList* list);										//Get length of accountList
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account); //Change account's password
-
+void editAccount(Account* account, string lastName, string firstName, bool gender, string dob); // Edit account's data
 #endif

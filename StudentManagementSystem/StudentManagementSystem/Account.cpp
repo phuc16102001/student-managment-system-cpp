@@ -196,3 +196,24 @@ int getLengthAccountList(AccountList* list) {
 	}
 	return count;
 }
+
+void editAccount(Account* account, string lastName, string firstName, bool gender, string dob)
+{
+	if (lastName.length() != 0) // check lastName is empty
+	{
+		account->lastName = lastName;
+	}
+	if (firstName.length() != 0) // check firstName is empty
+	{
+		account->firstName = firstName;
+	}
+	if (gender != account->gender) // if new data is different to old data
+	{
+		account->gender = gender;
+	}
+	if (dob.length() != 0) // if new data is different to old data
+	{
+		account->dob = dob;
+	}
+	return;
+}
