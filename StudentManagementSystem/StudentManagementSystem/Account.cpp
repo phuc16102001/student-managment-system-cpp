@@ -181,39 +181,70 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 }
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
+	//Old password incorrect
 	if (oldPassword != account->password) return 1;
+	
+	//Repeat password incorrect
 	if (repeatPassword != newPassword) return 2;
 
+	//Change password successful
 	account->password = newPassword;
 	return 0;
 }
 
 int getLengthAccountList(AccountList* list) {
+	//Counter the length of list
 	int count = 0;
 	while (list != nullptr) {
+		//Run until the end
 		count++;
 		list = list->nextAccount;
 	}
 	return count;
 }
 
-void editAccount(Account* account, string lastName, string firstName, bool gender, string dob)
+bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob)
 {
-	if (lastName.length() != 0) // check lastName is empty
-	{
+	if (account == nullptr) return false;
+
+	//Last Name and First Name
+	if (lastName.length() != 0) {
 		account->lastName = lastName;
 	}
-	if (firstName.length() != 0) // check firstName is empty
-	{
+
+	if (firstName.length() != 0)  {
 		account->firstName = firstName;
 	}
-	if (gender != account->gender) // if new data is different to old data
-	{
-		account->gender = gender;
-	}
-	if (dob.length() != 0) // if new data is different to old data
-	{
-		account->dob = dob;
-	}
-	return;
+
+	//Gender
+	account->gender = gender;
+	
+	//Date of birth
+	int dd, mm, yyyy;
+	dd = 0;
+	mm = 0;
+	yyyy = 0;
+	
+	//Find the index of '-'
+	int index1, index2;
+	index1 = dob.find('-');
+	index2 = dob.find_last_of('-');
+
+	//Parse into int
+	dd = stoi(dob.substr(0, index1));
+	mm = stoi(dob.substr(index1+1, index2 - index1 -1));
+	yyyy = stoi(dob.substr(index2+1, dob.length() - index2 - 1));
+
+	//Combine new string
+	dob = "";
+	if (dd < 10) dob += "0";
+	dob += to_string(dd) + "-";
+	if (mm < 10) dob += "0";
+	dob += to_string(mm) + "-";
+	dob += to_string(yyyy);
+
+	//Reassign
+	account->dob = dob;
+
+	return true;
 }

@@ -19,8 +19,11 @@ void inputHidenText(string& text) {
 		}
 		if (c == 8 || c == 127) {
 			//Backspace
-			cout << "\b \b"; //Backward write space then backward
-			text.erase(text.length() - 1);
+			if (text.length() > 0) {
+				//Still have text
+				cout << "\b \b"; //Backward write space then backward
+				text.erase(text.length() - 1);
+			}
 		}
 		else {
 			//Other key
@@ -32,8 +35,11 @@ void inputHidenText(string& text) {
 }
 
 void displayLogin(string& inputAccountID,string& inputPassword) {
+	//Header
 	displayHeaderUI();
 	cout << "Press Ctrl+C to exit\n";
+
+	//Input
 	cout << "User ID: ";
 	getline(cin, inputAccountID);
 	cout << "Password: ";
@@ -57,7 +63,10 @@ int displayBasicMenu() {
 }
 
 void displayChangePassword(Account* account, AccountList* accountListStorage) {
+	//Header
 	displayHeaderUI();
+	
+	//Input
 	string oldPassword, newPassword, repeatPassword;
 	cout << "Old password: ";
 	inputHidenText(oldPassword);
@@ -66,19 +75,24 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 	cout << "Repeat new password: ";
 	inputHidenText(repeatPassword);
 
+	//Try to change password
 	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
 		case (0):
 			if (saveAccountListToStorage(accountListStorage)) {
+				//Save after change successful
 				cout << "Password change successful\n";
 			}
 			else {
+				//Fail to save
 				cout << "Fail to open storage\n";
 			}
 			break;
 		case (1):
+			//Wrong old password
 			cout << "Wrong password\n";
 			break;
 		case (2):
+			//Wrong repeat password
 			cout << "Repeat password is not the same\n";
 			break;
 	}
@@ -121,6 +135,7 @@ int displayStaffMenu() {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
+	cin.ignore();
 	return x;
 }
 
@@ -142,6 +157,7 @@ int displayLectureMenu() {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}
+	cin.ignore();
 	return x;
 }
 
@@ -160,6 +176,7 @@ int displayStudentMenu() {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
+	cin.ignore();
 	return x;
 }
 
@@ -170,4 +187,58 @@ void displayProfileInfo(Account* accountDisplay) {
 	cin.ignore();
 	cin.get();
 	system("CLS");
+}
+
+void displayEditAccount(AccountList* accountListStorage) {
+	///Variable
+	string accountID, lastName, firstName, dob;
+	bool gender;
+
+	//Header
+	displayHeaderUI();
+	cout << "Edit an student\n";
+
+	//Input
+	cout << "User ID: ";
+	getline(cin, accountID);
+	cout << "Last name: ";
+	getline(cin, lastName);
+	cout << "First name: ";
+	getline(cin, firstName);
+
+	//Gender input
+	string genderText;
+	gender = 0;
+	cout << "Gender: ";
+	getline(cin, genderText);
+
+	//LowerCase 
+	for (int i = 0; i < genderText.length(); i++) {
+		genderText[i] = tolower(genderText[i]);
+	}
+	if (genderText == "male") {
+		gender = 1;
+	}
+
+	//Dob input
+	cout << "Date of birth: ";
+	getline(cin, dob);
+
+	//Find account
+	Account* account = findAccountID(accountID, accountListStorage);
+
+	if (editAccount(account, lastName, firstName, gender, dob)) {
+		if (saveAccountListToStorage(accountListStorage)) {
+			//Successful 
+			cout << "Success to edit informaton\n";
+		}
+		else {
+			//Open storage failed
+			cout << "Fail to open storage\n";
+		}
+	}
+	else {
+		//Not exist
+		cout << "Fail to edit information\n";
+	}
 }
