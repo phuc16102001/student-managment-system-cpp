@@ -8,77 +8,113 @@ static AccountList* accountListStorage;
 static Account* accountLoginStorage;
 static ClassList* classListStorage;
 
+//Prototype
 void login();
-void menu();
+void basicMenu();
 void functionMenu();
+void functionStaff(int number);
+void functionLecture(int number);
+void functionStudent(int number);
 void demo();
 
-void menu() {
+void basicMenu() {
 	while (true) {
 		int input = displayBasicMenu();
 		system("CLS");
 		switch (input) {
-		case (1):
-			displayProfileInfo(accountLoginStorage);
-			break;
-		case (2):
-			displayChangePassword(accountLoginStorage, accountListStorage);
-			break;
-		case (3):
-			functionMenu();
-			return;
-		case (4):
-			cin.ignore();
-			login();
-			return;
-		}
+			case (1):
+				displayProfileInfo(accountLoginStorage);
+				break;
+			case (2):
+				displayChangePassword(accountLoginStorage, accountListStorage);
+				break;
+			case (3):
+				functionMenu();
+				return;
+			case (4):
+				cin.ignore();
+				login();
+				return;
+			}
 	}
 }
 
 void login() {
-	while (true) {
-		//Get input
-		string inputAccountID, inputPassword;
-		Account* accountLogin;
-		displayLogin(inputAccountID, inputPassword);
+	//Get input
+	string inputAccountID, inputPassword;
+	Account* accountLogin;
+	displayLogin(inputAccountID, inputPassword);
 
-		//Verify login
-		if (accountLogin = findAccountID(inputAccountID, accountListStorage)) {
-			if (checkPassword(inputPassword, accountLogin)) {
-				system("CLS");
-				accountLoginStorage = accountLogin;
-				menu();
-				return;
-			}
+	//Verify login
+	if (accountLogin = findAccountID(inputAccountID, accountListStorage)) {
+		if (checkPassword(inputPassword, accountLogin)) {
+			system("CLS");
+			accountLoginStorage = accountLogin;
+			basicMenu();
+			return;
 		}
-
-		//Incorrect account
-		cout << "Incorrect information\n";
-		cout << "Press enter to try again...\n";
-		cin.get();
-		system("CLS");
 	}
+
+	//Incorrect account
+	cout << "Incorrect information\n";
+	cout << "Press enter to try again...\n";
+	cin.get();
+	system("CLS");
+	login();
 }
 
 void functionMenu() {
 	//Display function menu
-	switch (accountLoginStorage->accountType) {
+	int accountType = accountLoginStorage->accountType;
+	switch (accountType) {
 		case (0): {
 			//Display staff menu
-			displayStaffMenu();
+			int number = displayStaffMenu();
+			system("CLS");
+			functionStaff(number);	
 			break;
 		}
+
 		case (1): {
 			//Display lecture menu
-			displayLectureMenu();
+			int number = displayLectureMenu();
+			system("CLS");
+			functionLecture(number);
 			break;
 		}
+
 		case (2): {
 			//Display student menu
-			displayStudentMenu();
+			int number = displayStudentMenu();
+			system("CLS");
+			functionStudent(number);
 			break;
 		}
 	}
+}
+
+void functionStaff(int number) {
+	switch (number) {
+		case (3):
+			displayEditAccount(accountListStorage);
+			break;
+		case (21):
+			basicMenu();
+			return;
+	}
+
+	cout << "Press enter to continue...\n";
+	cin.get();
+	system("CLS");
+	functionMenu();
+}
+
+void functionLecture(int number) {
+
+}
+
+void functionStudent(int number) {
+
 }
 
 void demo() {
@@ -93,7 +129,6 @@ void demo() {
 
 	//Display Login
 	login();
-	menu();
 
 	//Clear account list
 	clearAccountList(accountListStorage);
