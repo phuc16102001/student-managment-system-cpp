@@ -12,5 +12,8 @@ void displayChangePassword(Account* account, AccountList* accountListStorage);
 int displayStaffMenu();
 int displayLectureMenu();
 int displayStudentMenu();
+void displayFindStudent(AccountList* accountListStorage);
+void displayEditAccount(AccountList* accountListStorage);
+
 
 #endif
