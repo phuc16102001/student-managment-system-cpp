@@ -10,7 +10,7 @@ struct Account {
 	bool gender = 0;				//0: female, 1: male
 	string dob = "00-00-0000";
 	string password = "000000000";	//One way hash
-	int accountType = 2;			//0: staff, 1: lecture, 2:student
+	int accountType = 2;			//0: staff, 1: lecture, 2: student
 };
 
 struct AccountList {

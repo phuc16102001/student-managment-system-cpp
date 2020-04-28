@@ -42,6 +42,7 @@ bool saveClassToStorage(ClassList* classList) {
 		fout << number << endl;
 
 		while (accountList != nullptr) {
+			//Witch each account, write down accountID
 			fout << accountList->accountData->ID << endl;
 			accountList = accountList->nextAccount;
 		}
@@ -86,4 +87,8 @@ int getLengthClassList(ClassList* list) {
 		list = list->nextClass;
 	}
 	return count;
+}
+
+Class* findClassName(string className, ClassList* classList) {
+
 }

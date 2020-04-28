@@ -52,6 +52,9 @@
     <Text Include="Storage\account.txt">
       <Filter>Resource Files\Storage</Filter>
     </Text>
+    <Text Include="Storage\class.txt">
+      <Filter>Resource Files\Storage</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ImportFile\student.csv">

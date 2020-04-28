@@ -19,5 +19,6 @@ bool saveClassToStorage(ClassList* classList);
 void insertClassToClassList(ClassList*& classList, Class* classData);
 void clearClassList(ClassList*& classList);
 int getLengthClassList(ClassList* list);
+Class* findClassName(string className, ClassList* classList);
 
 #endif

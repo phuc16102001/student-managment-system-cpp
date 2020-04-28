@@ -201,6 +201,15 @@ void displayEditAccount(AccountList* accountListStorage) {
 	//Input
 	cout << "User ID: ";
 	getline(cin, accountID);
+
+	//Find account
+	Account* account = findAccountID(accountID, accountListStorage);
+
+	if (account == nullptr) {
+		cout << "Cannot find this account\n";
+		return;
+	}
+
 	cout << "Last name: ";
 	getline(cin, lastName);
 	cout << "First name: ";
@@ -224,8 +233,6 @@ void displayEditAccount(AccountList* accountListStorage) {
 	cout << "Date of birth: ";
 	getline(cin, dob);
 
-	//Find account
-	Account* account = findAccountID(accountID, accountListStorage);
 
 	if (editAccount(account, lastName, firstName, gender, dob)) {
 		if (saveAccountListToStorage(accountListStorage)) {
