@@ -5,8 +5,8 @@
 #include "Account.h"
 
 struct Class {
-	string className;
-	AccountList* accountList;
+	string className = "";
+	AccountList* accountList = nullptr;
 };
 
 struct ClassList {
