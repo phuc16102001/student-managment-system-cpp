@@ -196,11 +196,20 @@ void displayEditAccount(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
-	cout << "Edit an student\n";
+	cout << "Edit a student\n";
 
 	//Input
 	cout << "User ID: ";
 	getline(cin, accountID);
+
+	//Find account
+	Account* account = findAccountID(accountID, accountListStorage);
+
+	if (account == nullptr) {
+		cout << "Cannot find this account\n";
+		return;
+	}
+
 	cout << "Last name: ";
 	getline(cin, lastName);
 	cout << "First name: ";
@@ -224,8 +233,6 @@ void displayEditAccount(AccountList* accountListStorage) {
 	cout << "Date of birth: ";
 	getline(cin, dob);
 
-	//Find account
-	Account* account = findAccountID(accountID, accountListStorage);
 
 	if (editAccount(account, lastName, firstName, gender, dob)) {
 		if (saveAccountListToStorage(accountListStorage)) {
@@ -240,5 +247,29 @@ void displayEditAccount(AccountList* accountListStorage) {
 	else {
 		//Not exist
 		cout << "Fail to edit information\n";
+	}
+}
+
+void displayFindStudent(AccountList* accountListStorage) {
+	///Variable
+	string accountID;
+
+	//Header
+	displayHeaderUI();
+	cout << "Find a student\n";
+
+	//Input
+	cout << "User ID: ";
+	getline(cin, accountID);
+
+	//Find account
+	Account* account = findAccountID(accountID, accountListStorage);
+	if (account == nullptr) {
+		cout << "Cannot find this student\n";
+	}
+	else {
+		system("CLS");
+		displayHeaderUI();
+		outputAccount(account);
 	}
 }

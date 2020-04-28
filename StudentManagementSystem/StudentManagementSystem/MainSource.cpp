@@ -95,6 +95,9 @@ void functionMenu() {
 
 void functionStaff(int number) {
 	switch (number) {
+		case (1):
+			displayFindStudent(accountListStorage);
+			break;
 		case (3):
 			displayEditAccount(accountListStorage);
 			break;

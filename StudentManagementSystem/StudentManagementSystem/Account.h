@@ -4,13 +4,13 @@
 #include "Constant.h"
 
 struct Account {
-	string ID;
-	string lastName;
-	string firstName;
-	bool gender;		//0: female, 1: male
-	string dob;
-	string password;	//One way hash
-	int accountType;	//0: staff, 1: lecture, 2:student
+	string ID = "";
+	string lastName = "";
+	string firstName = "";
+	bool gender = 0;				//0: female, 1: male
+	string dob = "00-00-0000";
+	string password = "000000000";	//One way hash
+	int accountType = 2;			//0: staff, 1: lecture, 2: student
 };
 
 struct AccountList {
