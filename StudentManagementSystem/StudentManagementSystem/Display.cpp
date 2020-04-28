@@ -106,32 +106,35 @@ int displayStaffMenu() {
 	displayHeaderUI();
 	int x;
 	cout	<< "Staff Menu?\n"
-			<< "Course:\n"
+			<< "Student:\n"
 			<< "1. Find student\n"
-			<< "2. Add student to a class\n"
-			<< "3. Edit student information\n"
-			<< "4. Remove student from a class\n"
-			<< "5. Move student to another class\n"
-			<< "6. View list of classes\n"
-			<< "7. View list of students in a class\n"
-			<< "8. Create/Update/Delete/View academic year and semester\n"
-			<< "9. Import courses from a semester\n"
-			<< "10. Add new course\n"
-			<< "11. Edit existing course\n"
-			<< "12. Remove course\n"
-			<< "13. Remove student from a course\n"
-			<< "14. Add student to a course\n"
-			<< "15. View list of course in the current semester\n"
-			<< "16. View list of students of a course\n"
-			<< "17. View attendance list of a course\n"
-			<< "18. Create/Update/Delete/View all lecturers\n\n"
+			<< "2. Edit student information\n\n"
+			<< "Class:\n"
+			<< "3. Add manual student to a class\n"
+			<< "4. Create a class from csv file\n"
+			<< "5. Remove student from a class\n"
+			<< "6. Move student to another class\n"
+			<< "7. View list of classes\n"
+			<< "8. View list of students in a class\n\n"
+			<< "Course:\n"
+			<< "9. Create/Update/Delete/View academic year and semester\n"
+			<< "10. Import courses from a semester\n"
+			<< "11. Add new course\n"
+			<< "12. Edit existing course\n"
+			<< "13. Remove course\n"
+			<< "14. Remove student from a course\n"
+			<< "15. Add student to a course\n"
+			<< "16. View list of course in the current semester\n"
+			<< "17. View list of students of a course\n"
+			<< "18. View attendance list of a course\n"
+			<< "19. Create/Update/Delete/View all lecturers\n\n"
 			<< "Scoreboard:\n"
-			<< "19. Search and view attendance list of a course\n"
-			<< "20. Export scoreboard into csv file\n"
-			<< "21. Back\n"
+			<< "20. Search and view attendance list of a course\n"
+			<< "21. Export scoreboard into csv file\n"
+			<< "22. Back\n"
 			<< "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 21) {
+	while (x < 1 || x > 22) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -206,6 +209,7 @@ void displayEditAccount(AccountList* accountListStorage) {
 	Account* account = findAccountID(accountID, accountListStorage);
 
 	if (account == nullptr) {
+		//Dont have this account
 		cout << "Cannot find this account\n";
 		return;
 	}

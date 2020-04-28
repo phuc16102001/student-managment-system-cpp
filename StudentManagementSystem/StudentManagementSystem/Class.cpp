@@ -90,5 +90,5 @@ int getLengthClassList(ClassList* list) {
 }
 
 Class* findClassName(string className, ClassList* classList) {
-
+	return nullptr;
 }
