@@ -154,7 +154,12 @@ void demo() {
 	clearClassList(classListStorage);
 }
 
+void test() {
+	string path;
+	getline(cin, path);
+	importStudentFromCSV(path,accountListStorage);
+}
 
 int main() {
-	demo();
+	test();
 }

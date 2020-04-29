@@ -1,5 +1,15 @@
 #include "Account.h"
 
+string clearSpecialCharString(string input) {
+	string validString = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (int i = input.length()-1; i > -1 ; i--) {
+		if (validString.find(input[i]) == -1) {
+			input.erase(i, 1);
+		}
+	}
+	return input;
+}
+
 bool importAccountFromStorage(AccountList*& accountList) {
 	//Open file
 	fstream fin(_accountStorage, ios::in);
@@ -80,14 +90,11 @@ bool importStudentFromCSV(string path, AccountList*& accountList) {
 		}
 
 		//Dob and password default
+		//Clear all special characters in password and hash
 		getline(fin, newAccount->dob);
 		newAccount->password = newAccount->dob;
-
-		//Clear all '-' in password
-		int pos = 0;
-		while ((pos = newAccount->password.find('-')) != -1) {
-			newAccount->password.replace(pos, 1, "");
-		}
+		newAccount->password = clearSpecialCharString(newAccount->password);
+		newAccount->password = SHA256(newAccount->password);
 
 		//Student account
 		newAccount->accountType = 2;
@@ -110,7 +117,7 @@ Account* findAccountID(string accountID, AccountList* accountList) {
 
 bool checkPassword(string passwordInput, Account* account) {
 	//Check if the passwordInput is equal to account password
-	return passwordInput == account->password;
+	return SHA256(passwordInput) == account->password;
 }
 
 void outputAccount(Account* account) {

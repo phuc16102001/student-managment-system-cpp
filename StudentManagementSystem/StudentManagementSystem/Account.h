@@ -2,6 +2,7 @@
 #define _ACCOUNT_HEADER_
 
 #include "Constant.h"
+#include "SHA256.h"
 
 struct Account {
 	string ID = "";
