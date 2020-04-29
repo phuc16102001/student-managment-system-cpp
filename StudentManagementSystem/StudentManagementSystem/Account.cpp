@@ -1,5 +1,15 @@
 #include "Account.h"
 
+string clearSpecialCharString(string input) {
+	string validString = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (int i = input.length()-1; i > -1 ; i--) {
+		if (validString.find(input[i]) == -1) {
+			input.erase(i, 1);
+		}
+	}
+	return input;
+}
+
 bool importAccountFromStorage(AccountList*& accountList) {
 	//Open file
 	fstream fin(_accountStorage, ios::in);
@@ -80,14 +90,11 @@ bool importStudentFromCSV(string path, AccountList*& accountList) {
 		}
 
 		//Dob and password default
+		//Clear all special characters in password and hash
 		getline(fin, newAccount->dob);
 		newAccount->password = newAccount->dob;
-
-		//Clear all '-' in password
-		int pos = 0;
-		while ((pos = newAccount->password.find('-')) != -1) {
-			newAccount->password.replace(pos, 1, "");
-		}
+		newAccount->password = clearSpecialCharString(newAccount->password);
+		newAccount->password = SHA256(newAccount->password);
 
 		//Student account
 		newAccount->accountType = 2;
@@ -110,7 +117,7 @@ Account* findAccountID(string accountID, AccountList* accountList) {
 
 bool checkPassword(string passwordInput, Account* account) {
 	//Check if the passwordInput is equal to account password
-	return passwordInput == account->password;
+	return SHA256(passwordInput) == account->password;
 }
 
 void outputAccount(Account* account) {
@@ -123,18 +130,18 @@ void outputAccount(Account* account) {
 	//Account type string
 	string accountType;
 	switch (account->accountType) {
-	case (0): {
-		accountType = "Staff";
-		break;
-	}
-	case (1): {
-		accountType = "Lecture";
-		break;
-	}
-	case (2): {
-		accountType = "Student";
-		break;
-	}
+		case (0): {
+			accountType = "Staff";
+			break;
+		}
+		case (1): {
+			accountType = "Lecture";
+			break;
+		}
+		case (2): {
+			accountType = "Student";
+			break;
+		}
 	}
 
 	//Output
@@ -182,13 +189,13 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
 	//Old password incorrect
-	if (oldPassword != account->password) return 1;
+	if (SHA256(oldPassword) != account->password) return 1;
 	
 	//Repeat password incorrect
 	if (repeatPassword != newPassword) return 2;
 
 	//Change password successful
-	account->password = newPassword;
+	account->password = SHA256(newPassword);
 	return 0;
 }
 
@@ -247,4 +254,10 @@ bool editAccount(Account* account, string lastName, string firstName, bool gende
 	account->dob = dob;
 
 	return true;
+}
+
+void resetAccountPassword(Account* account){
+	string dob = account->dob;
+	string password = clearSpecialCharString(dob);
+	account->password = SHA256(password);
 }

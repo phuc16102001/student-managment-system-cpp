@@ -106,32 +106,36 @@ int displayStaffMenu() {
 	displayHeaderUI();
 	int x;
 	cout	<< "Staff Menu?\n"
-			<< "Course:\n"
+			<< "Student:\n"
 			<< "1. Find student\n"
-			<< "2. Add student to a class\n"
-			<< "3. Edit student information\n"
-			<< "4. Remove student from a class\n"
-			<< "5. Move student to another class\n"
-			<< "6. View list of classes\n"
-			<< "7. View list of students in a class\n"
-			<< "8. Create/Update/Delete/View academic year and semester\n"
-			<< "9. Import courses from a semester\n"
-			<< "10. Add new course\n"
-			<< "11. Edit existing course\n"
-			<< "12. Remove course\n"
-			<< "13. Remove student from a course\n"
-			<< "14. Add student to a course\n"
-			<< "15. View list of course in the current semester\n"
-			<< "16. View list of students of a course\n"
-			<< "17. View attendance list of a course\n"
-			<< "18. Create/Update/Delete/View all lecturers\n\n"
+			<< "2. Edit student information\n"
+			<< "3. Reset password\n\n"
+			<< "Class:\n"
+			<< "4. Add manual student to a class\n"
+			<< "5. Create a class from csv file\n"
+			<< "6. Remove student from a class\n"
+			<< "7. Move student to another class\n"
+			<< "8. View list of classes\n"
+			<< "9. View list of students in a class\n\n"
+			<< "Course:\n"
+			<< "10. Create/Update/Delete/View academic year and semester\n"
+			<< "11. Import courses from a semester\n"
+			<< "12. Add new course\n"
+			<< "13. Edit existing course\n"
+			<< "14. Remove course\n"
+			<< "15. Remove student from a course\n"
+			<< "16. Add student to a course\n"
+			<< "17. View list of course in the current semester\n"
+			<< "18. View list of students of a course\n"
+			<< "19. View attendance list of a course\n"
+			<< "20. Create/Update/Delete/View all lecturers\n\n"
 			<< "Scoreboard:\n"
-			<< "19. Search and view attendance list of a course\n"
-			<< "20. Export scoreboard into csv file\n"
-			<< "21. Back\n"
+			<< "21. Search and view attendance list of a course\n"
+			<< "22. Export scoreboard into csv file\n"
+			<< "23. Back\n"
 			<< "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 21) {
+	while (x < 1 || x > 23) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -206,6 +210,7 @@ void displayEditAccount(AccountList* accountListStorage) {
 	Account* account = findAccountID(accountID, accountListStorage);
 
 	if (account == nullptr) {
+		//Dont have this account
 		cout << "Cannot find this account\n";
 		return;
 	}
@@ -271,5 +276,33 @@ void displayFindStudent(AccountList* accountListStorage) {
 		system("CLS");
 		displayHeaderUI();
 		outputAccount(account);
+	}
+}
+
+void displayResetPassword(AccountList* accountListStorage) {
+	///Variable
+	string accountID;
+
+	//Header
+	displayHeaderUI();
+	cout << "Reset password\n";
+
+	//Input
+	cout << "User ID: ";
+	getline(cin, accountID);
+
+	//Find account
+	Account* account = findAccountID(accountID, accountListStorage);
+	if (account == nullptr) {
+		cout << "Cannot find this student\n";
+	}
+	else {
+		resetAccountPassword(account);
+		if (saveAccountListToStorage(accountListStorage)) {
+			cout << "Reset successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
 	}
 }

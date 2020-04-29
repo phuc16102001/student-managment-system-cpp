@@ -98,10 +98,12 @@ void functionStaff(int number) {
 		case (1):
 			displayFindStudent(accountListStorage);
 			break;
-		case (3):
+		case (2):
 			displayEditAccount(accountListStorage);
 			break;
-		case (21):
+		case (3):
+			displayResetPassword(accountListStorage);
+		case (23):
 			basicMenu();
 			return;
 	}
@@ -113,11 +115,27 @@ void functionStaff(int number) {
 }
 
 void functionLecture(int number) {
-
+	switch (number) {
+		case (8):
+			basicMenu();
+			return;
+	}
+	cout << "Press enter to continue...\n";
+	cin.get();
+	system("CLS");
+	functionMenu();
 }
 
 void functionStudent(int number) {
-
+	switch (number) {
+		case (5):
+			basicMenu();
+			return;
+	}
+	cout << "Press enter to continue...\n";
+	cin.get();
+	system("CLS");
+	functionMenu();
 }
 
 void demo() {
@@ -138,6 +156,12 @@ void demo() {
 	clearClassList(classListStorage);
 }
 
+void test() {
+	string path;
+	getline(cin, path);
+	importStudentFromCSV(path,accountListStorage);
+	saveAccountListToStorage(accountListStorage);
+}
 
 int main() {
 	demo();
