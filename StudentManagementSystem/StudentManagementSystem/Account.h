@@ -30,5 +30,6 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 int getLengthAccountList(AccountList* list);										//Get length of accountList
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account); //Change account's password
 bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob); // Edit account's data
+void resetPassword(Account* account);												// Reset password of an account (change to dob)
 
 #endif

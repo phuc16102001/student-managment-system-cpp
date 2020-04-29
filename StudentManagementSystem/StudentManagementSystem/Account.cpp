@@ -248,3 +248,12 @@ bool editAccount(Account* account, string lastName, string firstName, bool gende
 
 	return true;
 }
+
+void resetPassword (Account* account){
+	string temp = account->dob;
+	int pos = 0;
+	while ((pos = temp.find('-')) != -1) {
+		temp.replace(pos, 1, "");
+	}
+	account->password = temp;
+}

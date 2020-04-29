@@ -90,5 +90,13 @@ int getLengthClassList(ClassList* list) {
 }
 
 Class* findClassName(string className, ClassList* classList) {
+	if (classList == nullptr) return nullptr;
+	if (className.size() == 0) return nullptr;
+	ClassList* cur = classList;
+	while (cur != nullptr)
+	{
+		if (cur->classData->className == className) return cur->classData;
+		cur = cur->nextClass;
+	}
 	return nullptr;
 }
