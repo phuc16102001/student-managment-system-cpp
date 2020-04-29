@@ -130,18 +130,18 @@ void outputAccount(Account* account) {
 	//Account type string
 	string accountType;
 	switch (account->accountType) {
-	case (0): {
-		accountType = "Staff";
-		break;
-	}
-	case (1): {
-		accountType = "Lecture";
-		break;
-	}
-	case (2): {
-		accountType = "Student";
-		break;
-	}
+		case (0): {
+			accountType = "Staff";
+			break;
+		}
+		case (1): {
+			accountType = "Lecture";
+			break;
+		}
+		case (2): {
+			accountType = "Student";
+			break;
+		}
 	}
 
 	//Output
@@ -189,13 +189,13 @@ void insertAccountToAccountList(AccountList*& accountList, Account* accountData)
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
 	//Old password incorrect
-	if (oldPassword != account->password) return 1;
+	if (SHA256(oldPassword) != account->password) return 1;
 	
 	//Repeat password incorrect
 	if (repeatPassword != newPassword) return 2;
 
 	//Change password successful
-	account->password = newPassword;
+	account->password = SHA256(newPassword);
 	return 0;
 }
 
@@ -256,11 +256,8 @@ bool editAccount(Account* account, string lastName, string firstName, bool gende
 	return true;
 }
 
-void resetPassword (Account* account){
-	string temp = account->dob;
-	int pos = 0;
-	while ((pos = temp.find('-')) != -1) {
-		temp.replace(pos, 1, "");
-	}
-	account->password = temp;
+void resetAccountPassword(Account* account){
+	string dob = account->dob;
+	string password = clearSpecialCharString(dob);
+	account->password = SHA256(password);
 }
