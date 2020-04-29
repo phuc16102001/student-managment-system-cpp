@@ -1,6 +1,7 @@
 #ifndef _CONSTANT_HEADER_
 #define _CONSTANT_HEADER_
 
+#pragma warning(disable:4996)
 #include <iostream>
 #include <fstream>
 #include <string>

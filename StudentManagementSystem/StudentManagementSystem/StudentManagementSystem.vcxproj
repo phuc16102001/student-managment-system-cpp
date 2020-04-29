@@ -142,12 +142,14 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="MainSource.cpp" />
+    <ClCompile Include="SHA256.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Constant.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="SHA256.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage\account.txt" />
