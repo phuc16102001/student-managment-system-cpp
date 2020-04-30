@@ -7,8 +7,12 @@ bool importClassFromStorage(AccountList* accountList, ClassList*& classList) {
 
 	while (!fin.eof()) {
 		//Read data input
+		string tempName;
+		getline(fin, tempName);
+		if (tempName == "") break;
+	
 		Class* newClass = new Class;
-		getline(fin, newClass->className);
+		newClass->className = tempName;
 		int numberOfStudent;
 		fin >> numberOfStudent;
 		fin.ignore();
@@ -19,7 +23,9 @@ bool importClassFromStorage(AccountList* accountList, ClassList*& classList) {
 			string accountID;
 			getline(fin, accountID);
 			Account* account = findAccountID(accountID, accountList);
-			insertAccountToAccountList(newAccountList, account);
+			if (account) {
+				insertAccountToAccountList(newAccountList, account);
+			}
 		}
 		newClass->accountList = newAccountList;
 
@@ -54,20 +60,25 @@ bool saveClassToStorage(ClassList* classList) {
 	return true;
 }
 
-void insertClassToClassList(ClassList*& classList, Class* classData) {
+bool insertClassToClassList(ClassList*& classList, Class* classData) {
 	if (classList == nullptr) {
 		classList = new ClassList;
 		classList->classData = classData;
 	}
 	else {
 		ClassList* cur = classList;
-		while (cur != nullptr && cur->nextClass != nullptr) {
+		while (cur != nullptr) {
+			if (cur->classData->className == classData->className) {
+				return false;
+			}
+			if (cur->nextClass == nullptr) break;
 			cur = cur->nextClass;
 		}
 		cur->nextClass = new ClassList;
 		cur = cur->nextClass;
 		cur->classData = classData;
 	}
+	return true;
 }
 
 void clearClassList(ClassList*& classList) {
