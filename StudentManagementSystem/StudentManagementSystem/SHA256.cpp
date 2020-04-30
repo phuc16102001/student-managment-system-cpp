@@ -1,26 +1,12 @@
 #include "SHA256.h"
 
-#define uchar unsigned char
-#define uint unsigned int
-
-#define DBL_INT_ADD(a,b,c) if (a > 0xffffffff - (c)) ++b; a += c;	//add c into a number which store by a, b (uint)
-#define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))				//a rotate left b times
-#define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (32-(b))))			//a rotate right b times
-
-#define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))						//CH
-#define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))		//MAJ
-#define EP0(x) (ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22))	//S0
-#define EP1(x) (ROTRIGHT(x,6) ^ ROTRIGHT(x,11) ^ ROTRIGHT(x,25))	//S1
-#define SIG0(x) (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))		//S0 ext
-#define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))		//S1 ext
-
-typedef struct {
+struct Block {
 	//Variable is 32 bit
-	uchar data[64];
-	uint datalen;
-	uint bitlen[2];
-	uint state[8];
-} SHA256_CTX;
+	uchar data[64];		//Split 64 chars (512 bits) into a block
+	uint datalen;		//Length of data above
+	uint bitlen[2];		//String input len in 64 bit (using big endian)
+	uint state[8];		//H0-H7
+};
 
 uint k[64] = {
 	//Constant K
@@ -34,32 +20,32 @@ uint k[64] = {
 	0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
 };
 
-void SHA256Transform(SHA256_CTX* ctx, uchar data[])
+void SHA256Transform(Block* block, uchar data[])
 {
-	uint a, b, c, d, e, f, g, h, i, j, t1, t2, m[64];
+	uint a, b, c, d, e, f, g, h, i, j, t1, t2, w[64];
 
 	//Split 64 chars into 16 blocks 32 bits into 
 	//1 block will contain 4 chars (4*8=32 bits)
 	for (i = 0, j = 0; i < 16; ++i, j += 4)
-		m[i] = (data[j] << 24) | (data[j + 1] << 16) | (data[j + 2] << 8) | (data[j + 3]);
+		w[i] = (data[j] << 24) | (data[j + 1] << 16) | (data[j + 2] << 8) | (data[j + 3]);
 
 	//Ext loop
 	for (; i < 64; ++i)
-		m[i] = SIG1(m[i - 2]) + m[i - 7] + SIG0(m[i - 15]) + m[i - 16];
+		w[i] = SIG1(w[i - 2]) + w[i - 7] + SIG0(w[i - 15]) + w[i - 16];
 
 	//Init hash value
-	a = ctx->state[0];
-	b = ctx->state[1];
-	c = ctx->state[2];
-	d = ctx->state[3];
-	e = ctx->state[4];
-	f = ctx->state[5];
-	g = ctx->state[6];
-	h = ctx->state[7];
+	a = block->state[0];
+	b = block->state[1];
+	c = block->state[2];
+	d = block->state[3];
+	e = block->state[4];
+	f = block->state[5];
+	g = block->state[6];
+	h = block->state[7];
 
 	//Main loop
 	for (i = 0; i < 64; ++i) {
-		t1 = h + EP1(e) + CH(e, f, g) + k[i] + m[i];
+		t1 = h + EP1(e) + CH(e, f, g) + k[i] + w[i];
 		t2 = EP0(a) + MAJ(a, b, c);
 		h = g;
 		g = f;
@@ -72,120 +58,124 @@ void SHA256Transform(SHA256_CTX* ctx, uchar data[])
 	}
 
 	//Plus hash value
-	ctx->state[0] += a;
-	ctx->state[1] += b;
-	ctx->state[2] += c;
-	ctx->state[3] += d;
-	ctx->state[4] += e;
-	ctx->state[5] += f;
-	ctx->state[6] += g;
-	ctx->state[7] += h;
+	block->state[0] += a;
+	block->state[1] += b;
+	block->state[2] += c;
+	block->state[3] += d;
+	block->state[4] += e;
+	block->state[5] += f;
+	block->state[6] += g;
+	block->state[7] += h;
 }
 
-void SHA256Init(SHA256_CTX* ctx)
+void SHA256Init(Block* block)
 {
 	//H0-H7
-	ctx->datalen = 0;
-	ctx->bitlen[0] = 0;
-	ctx->bitlen[1] = 0;
-	ctx->state[0] = 0x6a09e667;
-	ctx->state[1] = 0xbb67ae85;
-	ctx->state[2] = 0x3c6ef372;
-	ctx->state[3] = 0xa54ff53a;
-	ctx->state[4] = 0x510e527f;
-	ctx->state[5] = 0x9b05688c;
-	ctx->state[6] = 0x1f83d9ab;
-	ctx->state[7] = 0x5be0cd19;
+	block->datalen = 0;
+	block->bitlen[0] = 0;
+	block->bitlen[1] = 0;
+	block->state[0] = 0x6a09e667;
+	block->state[1] = 0xbb67ae85;
+	block->state[2] = 0x3c6ef372;
+	block->state[3] = 0xa54ff53a;
+	block->state[4] = 0x510e527f;
+	block->state[5] = 0x9b05688c;
+	block->state[6] = 0x1f83d9ab;
+	block->state[7] = 0x5be0cd19;
 }
 
-void SHA256Update(SHA256_CTX* ctx, uchar data[], uint len)
+void SHA256Update(Block* block, uchar data[], uint len)
 {
+	//Process all the data[] (length's len)
 	for (uint i = 0; i < len; ++i) {
 		//Put all the input string into ctx->data
-		ctx->data[ctx->datalen] = data[i];
-		ctx->datalen++;
+		block->data[block->datalen] = data[i];
+		block->datalen++;
 
 		//With each block (512bits = 64 chars = 64 bytes)
-		if (ctx->datalen == 64) {
+		if (block->datalen == 64) {
 			//Hash the block then reset data
-			SHA256Transform(ctx, ctx->data);
+			SHA256Transform(block, block->data);
 
 			//Plus the 512 bits (64 bytes = 64 chars)
-			DBL_INT_ADD(ctx->bitlen[0], ctx->bitlen[1], 512);
-			ctx->datalen = 0;
+			DBL_INT_ADD(block->bitlen[0], block->bitlen[1], 512);
+			block->datalen = 0;
 		}
 	}
 }
 
-void SHA256Final(SHA256_CTX* ctx, uchar hash[])
+void SHA256Final(Block* block, uchar hash[])
 {
-	uint i = ctx->datalen;
+	uint i = block->datalen;
 
 	//Add +1 and 0's until the length is 448+512k or 448 (mod 512)
 	//Then encode the string length into 64 bits variable 
 	//Total length of the hash bits will have the length of 512k (k is int)
-	if (ctx->datalen < 56) {
-		ctx->data[i++] = 0x80;		//1000 0000
+	if (block->datalen < 56) {
+		block->data[i++] = 0x80;		//1000 0000
 
 		while (i < 56)				//448 bits for 64 bits (8 bytes) for the length
-			ctx->data[i++] = 0x00;	//0000 0000
+			block->data[i++] = 0x00;	//0000 0000
 	}
 	else {
-		ctx->data[i++] = 0x80;		//1000 0000
+		block->data[i++] = 0x80;		//1000 0000
 
 		while (i < 64)
-			ctx->data[i++] = 0x00;	//0000 0000
+			block->data[i++] = 0x00;	//0000 0000
 
-		SHA256Transform(ctx, ctx->data);
-		memset(ctx->data, 0, 56);
+		SHA256Transform(block, block->data);
+		memset(block->data, 0, 56);
 	}
 
 	//Plus the last length of block string
 	//Note: datalen != len(data) because the upper block is using i as the variable
-	DBL_INT_ADD(ctx->bitlen[0], ctx->bitlen[1], ctx->datalen * 8);
+	DBL_INT_ADD(block->bitlen[0], block->bitlen[1], block->datalen * 8);
 
 	//Hash the last block (0's bits and the length in int64 = 8 bytes)
-	ctx->data[63] = ctx->bitlen[0];
-	ctx->data[62] = ctx->bitlen[0] >> 8;
-	ctx->data[61] = ctx->bitlen[0] >> 16;
-	ctx->data[60] = ctx->bitlen[0] >> 24;
-	ctx->data[59] = ctx->bitlen[1];
-	ctx->data[58] = ctx->bitlen[1] >> 8;
-	ctx->data[57] = ctx->bitlen[1] >> 16;
-	ctx->data[56] = ctx->bitlen[1] >> 24;
+	block->data[63] = block->bitlen[0];
+	block->data[62] = block->bitlen[0] >> 8;
+	block->data[61] = block->bitlen[0] >> 16;
+	block->data[60] = block->bitlen[0] >> 24;
+	block->data[59] = block->bitlen[1];
+	block->data[58] = block->bitlen[1] >> 8;
+	block->data[57] = block->bitlen[1] >> 16;
+	block->data[56] = block->bitlen[1] >> 24;
 
 	//Hash the last block
-	SHA256Transform(ctx, ctx->data);
+	SHA256Transform(block, block->data);
 
 	//Create hash string from state
 	//State[k] will be place hash[4k-1,4k+3]
 	for (i = 0; i < 4; ++i) {
-		hash[i] = (ctx->state[0] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 4] = (ctx->state[1] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 8] = (ctx->state[2] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 12] = (ctx->state[3] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 16] = (ctx->state[4] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 20] = (ctx->state[5] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 24] = (ctx->state[6] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 28] = (ctx->state[7] >> (24 - i * 8)) & 0x000000ff;
+		hash[i] = (block->state[0] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 4] = (block->state[1] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 8] = (block->state[2] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 12] = (block->state[3] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 16] = (block->state[4] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 20] = (block->state[5] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 24] = (block->state[6] >> (24 - i * 8)) & 0x000000ff;
+		hash[i + 28] = (block->state[7] >> (24 - i * 8)) & 0x000000ff;
 	}
 }
 
 string SHA256(string inputText) {
+	//Convert input data into CString
 	char* data = (char*)inputText.c_str();
 	int strLen = strlen(data);
-	SHA256_CTX ctx;
-	unsigned char hash[32];
+	
+	//Init variable
+	Block block;
+	uchar hash[32];
 	string hashStr = "";
 
 	//Init h[]
-	SHA256Init(&ctx);
+	SHA256Init(&block);
 
 	//Transform each block contain 64 chars
-	SHA256Update(&ctx, (unsigned char*)data, strLen);
+	SHA256Update(&block, (uchar*)data, strLen);
 
 	//Final step for the block of remain and string length
-	SHA256Final(&ctx, hash);
+	SHA256Final(&block, hash);
 
 
 	char s[3];

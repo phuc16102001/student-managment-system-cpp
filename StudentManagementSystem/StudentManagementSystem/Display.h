@@ -2,6 +2,7 @@
 #define _DISPLAY_HEADER_
 
 #include "Constant.h"
+#include "Class.h"
 #include "Account.h"
 
 void displayHeaderUI();															//Display UI header
@@ -15,5 +16,6 @@ int displayStudentMenu();
 void displayFindStudent(AccountList* accountListStorage);
 void displayEditAccount(AccountList* accountListStorage);
 void displayResetPassword(AccountList* accountListStorage);
+void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListStorage);
 
 #endif

@@ -103,6 +103,9 @@ void functionStaff(int number) {
 			break;
 		case (3):
 			displayResetPassword(accountListStorage);
+			break;
+		case (5):
+			displayCreateClass(accountListStorage,classListStorage);
 		case (23):
 			basicMenu();
 			return;
@@ -157,10 +160,6 @@ void demo() {
 }
 
 void test() {
-	string path;
-	getline(cin, path);
-	importStudentFromCSV(path,accountListStorage);
-	saveAccountListToStorage(accountListStorage);
 }
 
 int main() {

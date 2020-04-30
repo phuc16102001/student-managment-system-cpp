@@ -22,16 +22,16 @@ struct AccountList {
 void clearAccountList(AccountList*& accountList);															//Clear accountList
 bool importAccountFromStorage(AccountList*& accountList);													//Import from .txt
 bool saveAccountListToStorage(AccountList* accountList);													//Save accountList to .txt
-bool importStudentFromCSV(string path, AccountList*& accountList);											//Import from .csv
+bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& accountListStorage);		//Import from .csv and merge into storage
 Account* findAccountID(string accountID, AccountList* accountList);											//Find accountID 
 bool checkPassword(string passwordInput, Account* account);													//Return correct if same
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console
-void insertAccountToAccountList(AccountList*& accountList, Account* accountData);							//Insert account to the end of accountList
+bool insertAccountToAccountList(AccountList*& accountList, Account* accountData);							//Insert account to the end of accountList (unique id)
 int getLengthAccountList(AccountList* list);																//Get length of accountList
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account); //Change account's password
 bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob);				//Edit account's data
 void resetAccountPassword(Account* account);																//Reset password of an account (change to dob)
-string clearSpecialCharString(string input);																//Return string after clear all special characters
+string clearSpecialCharString(string input);																//Clear all special character in a string, remain alphabet and number
 
 #endif

@@ -306,3 +306,43 @@ void displayResetPassword(AccountList* accountListStorage) {
 		}
 	}
 }
+
+void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+	string className, pathFile;
+	AccountList* importList = nullptr;
+
+	//Header
+	displayHeaderUI();
+	cout << "Create class from csv file\n";
+
+	//Input
+	cout << "Class Name: ";
+	getline(cin, className);
+	cout << "Path of .csv file: ";
+	getline(cin, pathFile);
+
+	//Import student to importList
+	if (importStudentFromCSV(pathFile, importList, accountListStorage)) {
+		//Create new class
+		Class* newClass = new Class;
+		newClass->className = className;
+		newClass->accountList = importList;
+
+		//Add class
+		if (insertClassToClassList(classListStorage, newClass)) {
+			//Save classStorage
+			if (saveClassToStorage(classListStorage)) {
+				cout << "Create new class successful\n";
+			}
+			else {
+				cout << "Fail to save\n";
+			}
+		}
+		else {
+			cout << "Class existed\n";
+		}
+	}
+	else {
+		cout << "Fail to open file\n";
+	}
+}

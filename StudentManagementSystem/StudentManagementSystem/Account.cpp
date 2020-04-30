@@ -18,8 +18,12 @@ bool importAccountFromStorage(AccountList*& accountList) {
 	AccountList* cur = nullptr;
 	while (!fin.eof()) {
 		//Read data input
+		string tempID;
+		getline(fin, tempID);
+		if (tempID == "") break;
+
 		Account* newAccount = new Account;
-		getline(fin, newAccount->ID);
+		newAccount->ID = tempID;
 		getline(fin, newAccount->lastName);
 		getline(fin, newAccount->firstName);
 		fin >> newAccount->gender;
@@ -48,16 +52,13 @@ bool saveAccountListToStorage(AccountList* accountList) {
 		fout << nowAccount->gender << endl;
 		fout << nowAccount->dob << endl;
 		fout << nowAccount->password << endl;
-		fout << nowAccount->accountType;
-		if (accountList->nextAccount != nullptr) {
-			fout << endl;
-		}
+		fout << nowAccount->accountType << endl;
 		accountList = accountList->nextAccount;
 	}
 	return true;
 }
 
-bool importStudentFromCSV(string path, AccountList*& accountList) {
+bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& accountListStorage) {
 	//Open file
 	fstream fin(path, ios::in);
 	if (!fin.is_open()) return false;
@@ -68,12 +69,13 @@ bool importStudentFromCSV(string path, AccountList*& accountList) {
 
 	AccountList* cur = nullptr;
 	while (!fin.eof()) {
-		//Read data input
-		Account* newAccount = new Account;
-
 		//Number of record
 		getline(fin, temp, ',');
 		if (temp == "") break;
+
+		//Read data input
+		string tempID;
+		Account* newAccount = new Account;
 
 		//Input data
 		getline(fin, newAccount->ID, ',');
@@ -100,9 +102,19 @@ bool importStudentFromCSV(string path, AccountList*& accountList) {
 		newAccount->accountType = 2;
 
 		//Insert to list
+		Account* findAccount = findAccountID(newAccount->ID, accountListStorage);
+		if (findAccount) {
+			//If account existed
+			delete newAccount;
+			newAccount = findAccount;
+		}
+		else {
+			//Not exist
+			insertAccountToAccountList(accountListStorage,newAccount);
+		}
 		insertAccountToAccountList(accountList, newAccount);
 	}
-	return true;
+	return saveAccountListToStorage(accountListStorage);
 }
 
 Account* findAccountID(string accountID, AccountList* accountList) {
@@ -171,20 +183,27 @@ void clearAccountList(AccountList*& accountList) {
 	}
 }
 
-void insertAccountToAccountList(AccountList*& accountList, Account* accountData) {
+bool insertAccountToAccountList(AccountList*& accountList, Account* accountData) {
 	if (accountList == nullptr) {
 		accountList = new AccountList;
 		accountList->accountData = accountData;
+		accountList->nextAccount = nullptr;
 	}
 	else {
 		AccountList* cur = accountList;
-		while (cur != nullptr && cur->nextAccount != nullptr) {
+		while (cur != nullptr) {
+			if (cur->accountData->ID == accountData->ID) {
+				return false;
+			}
+			if (cur->nextAccount == nullptr) break;
 			cur = cur->nextAccount;
 		}
 		cur->nextAccount = new AccountList;
 		cur = cur->nextAccount;
 		cur->accountData = accountData;
+		cur->nextAccount = nullptr;
 	}
+	return true;
 }
 
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account) {
