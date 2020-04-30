@@ -8,6 +8,54 @@ void displayHeaderUI() {
 	cout << "--------------------------------\n";
 }
 
+void outputAccount(Account* account) {
+	//Gender string
+	string gender = "Female";
+	if (account->gender) {
+		gender = "Male";
+	}
+
+	//Account type string
+	string accountType;
+	switch (account->accountType) {
+	case (0): {
+		accountType = "Staff";
+		break;
+	}
+	case (1): {
+		accountType = "Lecture";
+		break;
+	}
+	case (2): {
+		accountType = "Student";
+		break;
+	}
+	}
+
+	//Output
+	cout << "UserID: " << account->ID << endl;
+	cout << "Last name: " << account->lastName << endl;
+	cout << "First name: " << account->firstName << endl;
+	cout << "Gender: " << gender << endl;
+	cout << "Date of birth: " << account->dob << endl;
+	cout << "Account type: " << accountType << endl;
+}
+
+void outputAccountList(AccountList* list) {
+	while (list != nullptr) {
+		outputAccount(list->accountData);
+		list = list->nextAccount;
+	}
+	cout << endl;
+}
+
+void outputClassList(ClassList* classList) {
+	while (classList) {
+		cout << "+ " << classList->classData->className << endl;
+		classList = classList->nextClass;
+	}
+}
+
 void inputHidenText(string& text) {
 	text = "";
 	char c;
@@ -307,6 +355,18 @@ void displayResetPassword(AccountList* accountListStorage) {
 	}
 }
 
+void displayAddManualStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+
+}
+
+void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+
+}
+
+void moveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+
+}
+
 void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
 	string className, pathFile;
 	AccountList* importList = nullptr;
@@ -352,4 +412,16 @@ void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListS
 		//Fail to open file csv
 		cout << "Fail to open file\n";
 	}
+}
+
+void displayViewListClasses(ClassList* classListStorage) {
+	//Header
+	displayHeaderUI();
+	cout << "List of classes\n";
+
+	outputClassList(classListStorage);
+}
+
+void displayViewListStudentInClass(ClassList* classListStorage){
+
 }

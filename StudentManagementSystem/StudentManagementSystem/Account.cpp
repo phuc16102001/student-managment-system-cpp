@@ -161,47 +161,6 @@ bool checkPassword(string passwordInput, Account* account) {
 	return SHA256(passwordInput) == account->password;
 }
 
-void outputAccount(Account* account) {
-	//Gender string
-	string gender = "Female";
-	if (account->gender) {
-		gender = "Male";
-	}
-
-	//Account type string
-	string accountType;
-	switch (account->accountType) {
-		case (0): {
-			accountType = "Staff";
-			break;
-		}
-		case (1): {
-			accountType = "Lecture";
-			break;
-		}
-		case (2): {
-			accountType = "Student";
-			break;
-		}
-	}
-
-	//Output
-	cout << "UserID: " << account->ID << endl;
-	cout << "Last name: " << account->lastName << endl;
-	cout << "First name: " << account->firstName << endl;
-	cout << "Gender: " << gender << endl;
-	cout << "Date of birth: " << account->dob << endl;
-	cout << "Account type: " << accountType << endl;
-}
-
-void outputAccountList(AccountList* list) {
-	while (list != nullptr) {
-		outputAccount(list->accountData);
-		list = list->nextAccount;
-	}
-	cout << endl;
-}
-
 void clearAccountList(AccountList*& accountList) {
 	while (accountList != nullptr) {
 		AccountList* temp = accountList;
