@@ -10,6 +10,34 @@ string clearSpecialCharString(string input) {
 	return input;
 }
 
+string convertDate(string input) {
+	//Date of birth
+	int dd, mm, yyyy;
+	dd = 0;
+	mm = 0;
+	yyyy = 0;
+
+	//Find the index of '-'
+	int index1, index2;
+	index1 = input.find('-');
+	index2 = input.find_last_of('-');
+
+	//Parse into int
+	dd = stoi(input.substr(0, index1));
+	mm = stoi(input.substr(index1 + 1, index2 - index1 - 1));
+	yyyy = stoi(input.substr(index2 + 1, input.length() - index2 - 1));
+
+	//Combine new string
+	input = "";
+	if (dd < 10) input += "0";
+	input += to_string(dd) + "-";
+	if (mm < 10) input += "0";
+	input += to_string(mm) + "-";
+	input += to_string(yyyy);
+	
+	return input;
+}
+
 bool importAccountFromStorage(AccountList*& accountList) {
 	//Open file
 	fstream fin(_accountStorage, ios::in);
@@ -94,6 +122,7 @@ bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& 
 		//Dob and password default
 		//Clear all special characters in password and hash
 		getline(fin, newAccount->dob);
+		newAccount->dob = convertDate(newAccount->dob);
 		newAccount->password = newAccount->dob;
 		newAccount->password = clearSpecialCharString(newAccount->password);
 		newAccount->password = SHA256(newAccount->password);
@@ -114,7 +143,7 @@ bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& 
 		}
 		insertAccountToAccountList(accountList, newAccount);
 	}
-	return saveAccountListToStorage(accountListStorage);
+	return true;
 }
 
 Account* findAccountID(string accountID, AccountList* accountList) {
@@ -245,32 +274,8 @@ bool editAccount(Account* account, string lastName, string firstName, bool gende
 	//Gender
 	account->gender = gender;
 	
-	//Date of birth
-	int dd, mm, yyyy;
-	dd = 0;
-	mm = 0;
-	yyyy = 0;
-	
-	//Find the index of '-'
-	int index1, index2;
-	index1 = dob.find('-');
-	index2 = dob.find_last_of('-');
-
-	//Parse into int
-	dd = stoi(dob.substr(0, index1));
-	mm = stoi(dob.substr(index1+1, index2 - index1 -1));
-	yyyy = stoi(dob.substr(index2+1, dob.length() - index2 - 1));
-
-	//Combine new string
-	dob = "";
-	if (dd < 10) dob += "0";
-	dob += to_string(dd) + "-";
-	if (mm < 10) dob += "0";
-	dob += to_string(mm) + "-";
-	dob += to_string(yyyy);
-
 	//Reassign
-	account->dob = dob;
+	account->dob = convertDate(dob);
 
 	return true;
 }

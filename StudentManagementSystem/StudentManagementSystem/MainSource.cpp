@@ -106,6 +106,7 @@ void functionStaff(int number) {
 			break;
 		case (5):
 			displayCreateClass(accountListStorage,classListStorage);
+			break;
 		case (23):
 			basicMenu();
 			return;

@@ -318,6 +318,14 @@ void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListS
 	//Input
 	cout << "Class Name: ";
 	getline(cin, className);
+
+	//Check if existed
+	Class* findClass = findClassName(className, classListStorage);
+	if (findClass) {
+		cout << "Class existed\n";
+		return;
+	}
+
 	cout << "Path of .csv file: ";
 	getline(cin, pathFile);
 
@@ -331,18 +339,17 @@ void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListS
 		//Add class
 		if (insertClassToClassList(classListStorage, newClass)) {
 			//Save classStorage
-			if (saveClassToStorage(classListStorage)) {
+			if (saveAccountListToStorage(accountListStorage) && saveClassToStorage(classListStorage)) {
 				cout << "Create new class successful\n";
 			}
 			else {
+				//Fail to save account and class
 				cout << "Fail to save\n";
 			}
 		}
-		else {
-			cout << "Class existed\n";
-		}
 	}
 	else {
+		//Fail to open file csv
 		cout << "Fail to open file\n";
 	}
 }
