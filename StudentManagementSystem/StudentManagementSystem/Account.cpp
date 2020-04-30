@@ -285,3 +285,7 @@ void resetAccountPassword(Account* account){
 	string password = clearSpecialCharString(dob);
 	account->password = SHA256(password);
 }
+
+bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
+	return false;
+}
