@@ -191,7 +191,7 @@ int displayStaffMenu() {
 	return x;
 }
 
-int displayLectureMenu() {
+int displayLecturerMenu() {
 	displayHeaderUI();
 	int x;
 	cout << "Lecturer Menu\n";

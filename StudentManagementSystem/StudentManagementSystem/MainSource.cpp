@@ -13,7 +13,7 @@ void login();
 void basicMenu();
 void functionMenu();
 void functionStaff(int number);
-void functionLecture(int number);
+void functionLecturer(int number);
 void functionStudent(int number);
 void demo();
 
@@ -76,10 +76,10 @@ void functionMenu() {
 		}
 
 		case (1): {
-			//Display lecture menu
-			int number = displayLectureMenu();
+			//Display lecturer menu
+			int number = displayLecturerMenu();
 			system("CLS");
-			functionLecture(number);
+			functionLecturer(number);
 			break;
 		}
 
@@ -121,7 +121,7 @@ void functionStaff(int number) {
 	functionMenu();
 }
 
-void functionLecture(int number) {
+void functionLecturer(int number) {
 	switch (number) {
 		case (8):
 			basicMenu();
