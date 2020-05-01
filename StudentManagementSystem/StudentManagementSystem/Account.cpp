@@ -176,7 +176,7 @@ void outputAccount(Account* account) {
 			break;
 		}
 		case (1): {
-			accountType = "Lecture";
+			accountType = "Lecturer";
 			break;
 		}
 		case (2): {
@@ -287,7 +287,7 @@ void resetAccountPassword(Account* account){
 }
 
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
-	if (accountList == nullptr || accountID.size == 0) return false; // accountList or accountID is empty 
+	if (accountList == nullptr) return false; // accountList or accountID is empty 
 	AccountList* tempPrev = nullptr, * tempCur = nullptr;
 	while (accountList != nullptr) {
 		if (accountList->nextAccount->accountData->ID == accountID) {

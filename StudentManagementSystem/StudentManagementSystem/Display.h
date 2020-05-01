@@ -11,7 +11,7 @@ void displayProfileInfo(Account* accountDisplay);								//Display UI profile in
 int displayBasicMenu();															//Display UI basic menu
 void displayChangePassword(Account* account, AccountList* accountListStorage);
 int displayStaffMenu();
-int displayLectureMenu();
+int displayLecturerMenu();
 int displayStudentMenu();
 void displayFindStudent(AccountList* accountListStorage);
 void displayEditAccount(AccountList* accountListStorage);
