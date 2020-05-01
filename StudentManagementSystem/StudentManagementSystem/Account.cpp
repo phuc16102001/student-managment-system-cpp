@@ -287,5 +287,17 @@ void resetAccountPassword(Account* account){
 }
 
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
-	return false;
+	if (accountList == nullptr || accountID.size == 0) return false; // accountList or accountID is empty 
+	AccountList* tempPrev = nullptr, * tempCur = nullptr;
+	while (accountList != nullptr) {
+		if (accountList->nextAccount->accountData->ID == accountID) {
+			tempPrev = accountList;
+			tempCur = accountList->nextAccount;
+		}
+		accountList = accountList->nextAccount;
+	}
+	if (tempPrev == nullptr || tempCur == nullptr) return false; // there're no account with accountID entered to function
+	tempPrev->nextAccount = tempCur->nextAccount;
+	delete tempCur;
+	return true;
 }
