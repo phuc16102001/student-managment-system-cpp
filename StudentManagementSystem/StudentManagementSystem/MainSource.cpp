@@ -104,11 +104,17 @@ void functionStaff(int number) {
 		case (3):
 			displayResetPassword(accountListStorage);
 			break;
+		case (4):
+			displayAddManuallyStudentToClass(accountListStorage, classListStorage);
+			break;
 		case (5):
 			displayCreateClass(accountListStorage,classListStorage);
 			break;
 		case (8):
 			displayViewListClasses(classListStorage);
+			break;
+		case (9):
+			displayViewListStudentInClass(classListStorage);
 			break;
 		case (23):
 			basicMenu();

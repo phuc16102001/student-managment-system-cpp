@@ -43,6 +43,7 @@ void outputAccount(Account* account) {
 
 void outputAccountList(AccountList* list) {
 	while (list != nullptr) {
+		cout << "==========================\n";
 		outputAccount(list->accountData);
 		list = list->nextAccount;
 	}
@@ -54,6 +55,12 @@ void outputClassList(ClassList* classList) {
 		cout << "+ " << classList->classData->className << endl;
 		classList = classList->nextClass;
 	}
+}
+
+void outputClass(Class* classData) {
+	cout << "Members of " << classData->className << ":\n";
+	AccountList* accountList = classData->accountList;
+	outputAccountList(accountList);
 }
 
 void inputHidenText(string& text) {
@@ -355,8 +362,75 @@ void displayResetPassword(AccountList* accountListStorage) {
 	}
 }
 
-void displayAddManualStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+	string className, accountID;
+	Class* classData;
+	Account* accountData;
 
+	//Header
+	displayHeaderUI();
+	cout << "Create class from csv file\n";
+
+	//Input className
+	cout << "Class Name: ";
+	getline(cin, className);
+	classData = findClassName(className, classListStorage);
+
+	//Find class
+	if (!classData) {
+		cout << "Class does not exist\n";
+		return;
+	}
+
+	//Input userID
+	cout << "UserID: ";
+	getline(cin, accountID);
+
+	//Find account
+	accountData = findAccountID(accountID, accountListStorage);
+	if (!accountData) {
+		//Not existed
+		string lastName, firstName, dob;
+		bool gender;
+
+		cout << "Last name: ";
+		getline(cin, lastName);
+		cout << "First name: ";
+		getline(cin, firstName);
+
+		//Gender input
+		string genderText;
+		gender = 0;
+		cout << "Gender: ";
+		getline(cin, genderText);
+
+		//LowerCase 
+		for (int i = 0; i < genderText.length(); i++) {
+			genderText[i] = tolower(genderText[i]);
+		}
+		if (genderText == "male") {
+			gender = 1;
+		}
+
+		//Dob input
+		cout << "Date of birth: ";
+		getline(cin, dob);
+
+		accountData = new Account;
+		accountData->ID = accountID;
+		accountData->lastName = lastName;
+		accountData->firstName = firstName;
+		accountData->dob = convertDate(dob);
+		accountData->gender = gender;
+		accountData->password = clearSpecialCharString(dob);
+		accountData->password = SHA256(accountData->password);
+
+		insertAccountToAccountList(accountListStorage, accountData);
+		saveAccountListToStorage(accountListStorage);
+	}
+	insertAccountToAccountList(classData->accountList, accountData);
+	saveClassToStorage(classListStorage);
+	cout << "Added successfully\n";
 }
 
 void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
@@ -423,5 +497,23 @@ void displayViewListClasses(ClassList* classListStorage) {
 }
 
 void displayViewListStudentInClass(ClassList* classListStorage){
+	//Header
+	displayHeaderUI();
+	cout << "List of student in class\n";
 
+	//Input
+	string className;
+	Class* classFind;
+	cout << "Class name: ";
+	getline(cin, className);
+
+	//Find class
+	classFind = findClassName(className, classListStorage);
+
+	if (classFind) {
+		outputClass(classFind);
+	}
+	else {
+		cout << "Class does not exist\n";
+	}
 }

@@ -32,5 +32,6 @@ bool editAccount(Account* account, string lastName, string firstName, bool gende
 void resetAccountPassword(Account* account);																//Reset password of an account (change to dob)
 string clearSpecialCharString(string input);																//Clear all special character in a string, remain alphabet and number
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList);								//Remove account from accountList which has accountID (Note: dont delete Account*)
+string convertDate(string input);
 
 #endif
