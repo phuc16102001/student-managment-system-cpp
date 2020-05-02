@@ -273,25 +273,28 @@ void resetAccountPassword(Account* account){
 }
 
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
-	if (accountList == nullptr) return false; 
+	if (accountList == nullptr) return false;
 
-	//missing check the 1st node
+	AccountList* cur = accountList;
 
-	//using 1 pointer only
-	//check the next node if is ID, then delete and return
-	//alert: dont use accountList, pass by ref
-	AccountList* tempPrev = nullptr, * tempCur = nullptr;
-	while (accountList != nullptr) {
-		if (accountList->nextAccount->accountData->ID == accountID) {
-			tempPrev = accountList;
-			tempCur = accountList->nextAccount;
-		}
+	if (accountList->accountData->ID == accountID) {
 		accountList = accountList->nextAccount;
+		delete cur;
+		return true;
+	}
+	
+	while (cur->nextAccount != nullptr) {
+		if (cur->nextAccount->accountData->ID == accountID) {
+			AccountList* temp = cur->nextAccount;
+			cur->nextAccount = cur->nextAccount->nextAccount;
+			delete temp;
+			return true;
+		}
+		else {
+			cur = cur->nextAccount;
+		}
 	}
 
-	//CLQG Day ??? :))) Lam khuc tren lai thoi, bo phan nay nhe
-	if (tempPrev == nullptr || tempCur == nullptr) return false; // there're no account with accountID entered to function
-	tempPrev->nextAccount = tempCur->nextAccount;
-	delete tempCur;
-	return true;
+	return false;
+	
 }
