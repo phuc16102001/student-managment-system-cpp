@@ -30,8 +30,7 @@ int getLengthAccountList(AccountList* list);																//Get length of acco
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account); //Change account's password
 bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob);				//Edit account's data
 void resetAccountPassword(Account* account);																//Reset password of an account (change to dob)
-string clearSpecialCharString(string input);																//Clear all special character in a string, remain alphabet and number
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList);								//Remove account from accountList which has accountID (Note: dont delete Account*)
-string convertDate(string input);
+Account* createAccount(string accountID, string lastName, string firstName, string genderText, string dob, int accountType);
 
 #endif

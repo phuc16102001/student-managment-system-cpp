@@ -363,6 +363,7 @@ void displayResetPassword(AccountList* accountListStorage) {
 }
 
 void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+	//Init variable
 	string className, accountID;
 	Class* classData;
 	Account* accountData;
@@ -390,44 +391,27 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 	accountData = findAccountID(accountID, accountListStorage);
 	if (!accountData) {
 		//Not existed
-		string lastName, firstName, dob;
+		string lastName, firstName, dob, genderText;
 		bool gender;
 
+		//Input
 		cout << "Last name: ";
 		getline(cin, lastName);
 		cout << "First name: ";
 		getline(cin, firstName);
-
-		//Gender input
-		string genderText;
-		gender = 0;
 		cout << "Gender: ";
 		getline(cin, genderText);
-
-		//LowerCase 
-		for (int i = 0; i < genderText.length(); i++) {
-			genderText[i] = tolower(genderText[i]);
-		}
-		if (genderText == "male") {
-			gender = 1;
-		}
-
-		//Dob input
 		cout << "Date of birth: ";
 		getline(cin, dob);
 
-		accountData = new Account;
-		accountData->ID = accountID;
-		accountData->lastName = lastName;
-		accountData->firstName = firstName;
-		accountData->dob = convertDate(dob);
-		accountData->gender = gender;
-		accountData->password = clearSpecialCharString(dob);
-		accountData->password = SHA256(accountData->password);
+		//Create new account
+		accountData = createAccount(accountID, lastName, firstName, genderText, dob, 2);
 
+		//Add to storage
 		insertAccountToAccountList(accountListStorage, accountData);
 		saveAccountListToStorage(accountListStorage);
 	}
+	//Add to student list
 	insertAccountToAccountList(classData->accountList, accountData);
 	saveClassToStorage(classListStorage);
 	cout << "Added successfully\n";
@@ -493,6 +477,7 @@ void displayViewListClasses(ClassList* classListStorage) {
 	displayHeaderUI();
 	cout << "List of classes\n";
 
+	//Output list of classes
 	outputClassList(classListStorage);
 }
 
@@ -510,6 +495,7 @@ void displayViewListStudentInClass(ClassList* classListStorage){
 	//Find class
 	classFind = findClassName(className, classListStorage);
 
+	//Output class
 	if (classFind) {
 		outputClass(classFind);
 	}

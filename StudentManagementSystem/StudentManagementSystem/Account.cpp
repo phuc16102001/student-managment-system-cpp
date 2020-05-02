@@ -1,5 +1,6 @@
 #include "Account.h"
 
+//Clear all special string, just contain alphabet and number
 string clearSpecialCharString(string input) {
 	string validString = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	for (int i = input.length()-1; i > -1 ; i--) {
@@ -10,6 +11,7 @@ string clearSpecialCharString(string input) {
 	return input;
 }
 
+//Convert string input into format DD-MM-YYYY
 string convertDate(string input) {
 	//Date of birth
 	int dd, mm, yyyy;
@@ -36,6 +38,32 @@ string convertDate(string input) {
 	input += to_string(yyyy);
 	
 	return input;
+}
+
+Account* createAccount(string accountID, string lastName, string firstName, string genderText, string dob, int accountType) {
+	Account* account = new Account;
+	if (!account) return nullptr;
+
+	//LowerCase 
+	bool gender = 0;
+	for (int i = 0; i < genderText.length(); i++) {
+		genderText[i] = tolower(genderText[i]);
+	}
+	if (genderText == "male") {
+		gender = 1;
+	}
+
+	//Assign value
+	account->ID = accountID;
+	account->lastName = lastName;
+	account->firstName = firstName;
+	account->dob = convertDate(dob);
+	account->gender = gender;
+	account->password = clearSpecialCharString(dob);
+	account->password = SHA256(account->password);
+	account->accountType = accountType;
+
+	return account;
 }
 
 bool importAccountFromStorage(AccountList*& accountList) {
@@ -123,8 +151,7 @@ bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& 
 		//Clear all special characters in password and hash
 		getline(fin, newAccount->dob);
 		newAccount->dob = convertDate(newAccount->dob);
-		newAccount->password = newAccount->dob;
-		newAccount->password = clearSpecialCharString(newAccount->password);
+		newAccount->password = clearSpecialCharString(newAccount->dob);
 		newAccount->password = SHA256(newAccount->password);
 
 		//Student account
@@ -246,7 +273,13 @@ void resetAccountPassword(Account* account){
 }
 
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
-	if (accountList == nullptr) return false; // accountList or accountID is empty 
+	if (accountList == nullptr) return false; 
+
+	//missing check the 1st node
+
+	//using 1 pointer only
+	//check the next node if is ID, then delete and return
+	//alert: dont use accountList, pass by ref
 	AccountList* tempPrev = nullptr, * tempCur = nullptr;
 	while (accountList != nullptr) {
 		if (accountList->nextAccount->accountData->ID == accountID) {
@@ -255,6 +288,8 @@ bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
 		}
 		accountList = accountList->nextAccount;
 	}
+
+	//CLQG Day ??? :))) Lam khuc tren lai thoi, bo phan nay nhe
 	if (tempPrev == nullptr || tempCur == nullptr) return false; // there're no account with accountID entered to function
 	tempPrev->nextAccount = tempCur->nextAccount;
 	delete tempCur;
