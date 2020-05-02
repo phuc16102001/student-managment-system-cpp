@@ -418,7 +418,32 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 }
 
 void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+	string className, studentID;
 
+	//Header
+	displayHeaderUI();
+	cout << "Remove student from class\n";
+
+	//Input
+	cout << "Class Name: ";
+	getline(cin, className);
+
+	Class* findClass = findClassName(className, classListStorage);
+	if (!findClass) {
+		cout << "Class does not existed\n";
+		return;
+	}
+
+	//Input
+	cout << "Student ID: ";
+	getline(cin, studentID);
+
+	if (removeAccountFromAccountList(studentID, findClass->accountList)) {
+		cout << "Removed successfully\n";
+	}
+	else {
+		cout << "Cannot find this student\n";
+	}
 }
 
 void moveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
