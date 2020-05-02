@@ -273,28 +273,26 @@ void resetAccountPassword(Account* account){
 }
 
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList) {
-	if (accountList == nullptr) return false;
-
 	AccountList* cur = accountList;
 
-	if (accountList->accountData->ID == accountID) {
+	//1st node
+	if (cur && cur->accountData->ID == accountID) {
 		accountList = accountList->nextAccount;
 		delete cur;
 		return true;
 	}
 	
-	while (cur->nextAccount != nullptr) {
+	//Other node
+	while (cur && cur->nextAccount) {
 		if (cur->nextAccount->accountData->ID == accountID) {
 			AccountList* temp = cur->nextAccount;
 			cur->nextAccount = cur->nextAccount->nextAccount;
 			delete temp;
 			return true;
 		}
-		else {
-			cur = cur->nextAccount;
-		}
+		cur = cur->nextAccount;	
 	}
 
+	//Not found
 	return false;
-	
 }
