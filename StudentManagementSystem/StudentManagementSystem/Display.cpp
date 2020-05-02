@@ -408,11 +408,12 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 		accountData = createAccount(accountID, lastName, firstName, genderText, dob, 2);
 
 		//Add to storage
-		insertAccountToAccountList(accountListStorage, accountData);
+		insertAccountToAccountList(accountData, accountListStorage);
 		saveAccountListToStorage(accountListStorage);
 	}
+
 	//Add to student list
-	insertAccountToAccountList(classData->accountList, accountData);
+	insertAccountToAccountList(accountData, classData->accountList);
 	saveClassToStorage(classListStorage);
 	cout << "Added successfully\n";
 }
@@ -446,8 +447,50 @@ void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*&
 	}
 }
 
-void moveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+	//Variable
+	string oldClassName, newClassName, studentID;
+	Class* oldClass,* newClass;
+	Account* account;
 
+	//Header
+	displayHeaderUI();
+	cout << "Remove student from class\n";
+
+	//Old class
+	cout << "Old class Name: ";
+	getline(cin, oldClassName);
+	oldClass = findClassName(oldClassName, classListStorage);
+	if (!oldClass) {
+		cout << "Class does not existed\n";
+		return;
+	}
+
+	//New class
+	cout << "New class Name: ";
+	getline(cin, newClassName);
+	newClass = findClassName(newClassName, classListStorage);
+	if (!newClass) {
+		cout << "Class does not existed\n";
+		return;
+	}
+
+	//Account
+	cout << "Student ID: ";
+	getline(cin, studentID);
+	account = findAccountID(studentID, accountListStorage);
+
+	//If account exist and remove success
+	if (removeAccountFromAccountList(studentID, oldClass->accountList) && account) {
+		//Insert to new class
+		if (insertAccountToAccountList(account, newClass->accountList)) {
+			cout << "Changed successfully\n";
+			return;
+		}
+	}
+
+	//Cannot find student neither account nor in class
+	cout << "Cannot find this student\n";
 }
 
 void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListStorage) {

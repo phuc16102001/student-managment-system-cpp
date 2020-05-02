@@ -25,7 +25,7 @@ bool saveAccountListToStorage(AccountList* accountList);													//Save acco
 bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& accountListStorage);		//Import from .csv and merge into storage
 Account* findAccountID(string accountID, AccountList* accountList);											//Find accountID 
 bool checkPassword(string passwordInput, Account* account);													//Return correct if same
-bool insertAccountToAccountList(AccountList*& accountList, Account* accountData);							//Insert account to the end of accountList (unique id)
+bool insertAccountToAccountList(Account* accountData, AccountList*& accountList);							//Insert account to the end of accountList (unique id)
 int getLengthAccountList(AccountList* list);																//Get length of accountList
 int changePasswordAccount(string oldPassword, string newPassword, string repeatPassword, Account* account); //Change account's password
 bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob);				//Edit account's data

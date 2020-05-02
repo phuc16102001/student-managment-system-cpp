@@ -21,6 +21,7 @@ void displayViewListClasses(ClassList* classListStorage);
 void displayViewListStudentInClass(ClassList* classListStorage);
 void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage);
 void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage);
+void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

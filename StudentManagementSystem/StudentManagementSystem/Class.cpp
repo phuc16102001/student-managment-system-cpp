@@ -24,7 +24,7 @@ bool importClassFromStorage(AccountList* accountList, ClassList*& classList) {
 			getline(fin, accountID);
 			Account* account = findAccountID(accountID, accountList);
 			if (account) {
-				insertAccountToAccountList(newAccountList, account);
+				insertAccountToAccountList(account,newAccountList);
 			}
 		}
 		newClass->accountList = newAccountList;

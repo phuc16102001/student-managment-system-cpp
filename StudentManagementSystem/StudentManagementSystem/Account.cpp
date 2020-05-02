@@ -90,7 +90,7 @@ bool importAccountFromStorage(AccountList*& accountList) {
 		fin.ignore();
 
 		//Insert to list
-		insertAccountToAccountList(accountList, newAccount);
+		insertAccountToAccountList(newAccount, accountList);
 	}
 	return true;
 }
@@ -166,9 +166,9 @@ bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& 
 		}
 		else {
 			//Not exist
-			insertAccountToAccountList(accountListStorage,newAccount);
+			insertAccountToAccountList(newAccount,accountListStorage);
 		}
-		insertAccountToAccountList(accountList, newAccount);
+		insertAccountToAccountList(newAccount,accountList);
 	}
 	return true;
 }
@@ -198,7 +198,7 @@ void clearAccountList(AccountList*& accountList) {
 	}
 }
 
-bool insertAccountToAccountList(AccountList*& accountList, Account* accountData) {
+bool insertAccountToAccountList(Account* accountData, AccountList*& accountList) {
 	if (accountList == nullptr) {
 		accountList = new AccountList;
 		accountList->accountData = accountData;

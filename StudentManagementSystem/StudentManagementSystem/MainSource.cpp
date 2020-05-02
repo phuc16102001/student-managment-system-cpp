@@ -113,6 +113,9 @@ void functionStaff(int number) {
 		case (6):
 			displayRemoveStudentFromClass(accountListStorage, classListStorage);
 			break;
+		case (7):
+			displayMoveStudentToAnotherClass(accountListStorage, classListStorage);
+			break;
 		case (8):
 			displayViewListClasses(classListStorage);
 			break;
