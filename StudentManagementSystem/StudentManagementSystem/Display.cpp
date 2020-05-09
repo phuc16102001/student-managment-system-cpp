@@ -150,6 +150,9 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 			//Wrong repeat password
 			cout << "Repeat password is not the same\n";
 			break;
+		case (3):
+			cout << "Maximum length is 20\n";
+			break;
 	}
 	cout << "Press enter to continue...";
 	cin.ignore();
@@ -250,12 +253,13 @@ void displayProfileInfo(Account* accountDisplay) {
 
 void displayEditAccount(AccountList* accountListStorage) {
 	///Variable
-	string accountID, lastName, firstName, dob;
+	string accountID, lastName, firstName, dob, genderText;
 	bool gender;
 
 	//Header
 	displayHeaderUI();
 	cout << "Edit a student\n";
+	cout << "Let blank if unchange\n";
 
 	//Input
 	cout << "User ID: ";
@@ -270,14 +274,21 @@ void displayEditAccount(AccountList* accountListStorage) {
 		return;
 	}
 
+	//Last name
 	cout << "Last name: ";
 	getline(cin, lastName);
+	if (lastName == "") {
+		lastName = account->lastName;
+	}
+
+	//First name
 	cout << "First name: ";
 	getline(cin, firstName);
+	if (firstName == "") {
+		firstName = account->firstName;
+	}
 
-	//Gender input
-	string genderText;
-	gender = 0;
+	//Gender
 	cout << "Gender: ";
 	getline(cin, genderText);
 
@@ -285,14 +296,21 @@ void displayEditAccount(AccountList* accountListStorage) {
 	for (int i = 0; i < genderText.length(); i++) {
 		genderText[i] = tolower(genderText[i]);
 	}
+
+	gender = account->gender;
 	if (genderText == "male") {
 		gender = 1;
+	}
+	else if (genderText == "female") {
+		gender = 0;
 	}
 
 	//Dob input
 	cout << "Date of birth: ";
 	getline(cin, dob);
-
+	if (dob == "") {
+		dob = account->dob;
+	}
 
 	if (editAccount(account, lastName, firstName, gender, dob)) {
 		if (saveAccountListToStorage(accountListStorage)) {

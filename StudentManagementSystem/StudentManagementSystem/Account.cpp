@@ -228,6 +228,9 @@ int changePasswordAccount(string oldPassword, string newPassword, string repeatP
 	//Repeat password incorrect
 	if (repeatPassword != newPassword) return 2;
 
+	//If maximum length is 20
+	if (newPassword.length() > 20) return 3;
+
 	//Change password successful
 	account->password = SHA256(newPassword);
 	return 0;
@@ -247,20 +250,9 @@ int getLengthAccountList(AccountList* list) {
 bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob)
 {
 	if (account == nullptr) return false;
-
-	//Last Name and First Name
-	if (lastName.length() != 0) {
-		account->lastName = lastName;
-	}
-
-	if (firstName.length() != 0)  {
-		account->firstName = firstName;
-	}
-
-	//Gender
+	account->lastName = lastName;
+	account->firstName = firstName;
 	account->gender = gender;
-	
-	//Reassign
 	account->dob = convertDate(dob);
 
 	return true;
