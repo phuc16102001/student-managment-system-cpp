@@ -2,11 +2,14 @@
 #include "Display.h"
 #include "Constant.h"
 #include "Class.h"
+#include "Course.h"
 
-//Static variable import from storage and login
+//Static variable import from storage
 static AccountList* accountListStorage;
 static Account* accountLoginStorage;
 static ClassList* classListStorage;
+static string currentSemester = "";
+static CourseList* courseListStorage;
 
 //Prototype
 void login();
