@@ -2,6 +2,19 @@
 #define _COURSE_HEADER_
 
 #include "Constant.h"
+#include "Account.h"
+
+struct Score {
+	float midScore;
+	float bonusScore;
+	float finalScore;
+	float totalScore;
+};
+
+struct ScoreList {
+	Score* scoreData;
+	ScoreList* nextScore;
+};
 
 struct Course {
 	string courseID;
@@ -11,22 +24,17 @@ struct Course {
 	string startDate;
 	string endDate;
 	int dayOfWeek;
-	int startHour, startMinute;
-	int endHour, endMinute;
+	int startHour;
+	int startMinute;
+	int endHour;
+	int endMinute;
+	ScoreList* scoreList = nullptr;
+	AccountList* accountList = nullptr;
 };
 
 struct CourseList {
 	Course* courseData;
 	CourseList* nextCourse;
-};
-
-struct Score {
-	float midScore, bonusScore, finalScore, totalScore;
-};
-
-struct ScoreList {
-	Score* scoreData;
-	ScoreList* nextScore;
 };
 
 #endif

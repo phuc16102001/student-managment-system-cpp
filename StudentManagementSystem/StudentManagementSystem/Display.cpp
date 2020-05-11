@@ -177,7 +177,7 @@ int displayStaffMenu() {
 			<< "8. View list of classes\n"
 			<< "9. View list of students in a class\n\n"
 			<< "Course:\n"
-			<< "10. Create/Update/Delete/View academic year and semester\n"
+			<< "10. Create academic year and semester\n"
 			<< "11. Import courses from a semester\n"
 			<< "12. Add new course\n"
 			<< "13. Edit existing course\n"
