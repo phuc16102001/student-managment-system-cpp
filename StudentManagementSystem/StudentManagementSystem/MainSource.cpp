@@ -4,12 +4,12 @@
 #include "Class.h"
 #include "Course.h"
 
-//Static variable import from storage
-static AccountList* accountListStorage;
-static Account* accountLoginStorage;
-static ClassList* classListStorage;
-static string currentSemester = "";
-static CourseList* courseListStorage;
+//Variable import from storage
+AccountList* accountListStorage;
+Account* accountLoginStorage;
+ClassList* classListStorage;
+string currentSemester = "";
+CourseList* courseListStorage;
 
 //Prototype
 void login();
@@ -72,7 +72,7 @@ void functionMenu() {
 	switch (accountType) {
 		case (0): {
 			//Display staff menu
-			int number = displayStaffMenu();
+			int number = displayStaffMenu(currentSemester);
 			system("CLS");
 			functionStaff(number);	
 			break;
@@ -80,7 +80,7 @@ void functionMenu() {
 
 		case (1): {
 			//Display lecturer menu
-			int number = displayLecturerMenu();
+			int number = displayLecturerMenu(currentSemester);
 			system("CLS");
 			functionLecturer(number);
 			break;
@@ -88,7 +88,7 @@ void functionMenu() {
 
 		case (2): {
 			//Display student menu
-			int number = displayStudentMenu();
+			int number = displayStudentMenu(currentSemester);
 			system("CLS");
 			functionStudent(number);
 			break;
@@ -125,7 +125,7 @@ void functionStaff(int number) {
 		case (9):
 			displayViewListStudentInClass(classListStorage);
 			break;
-		case (23):
+		case (24):
 			basicMenu();
 			return;
 	}

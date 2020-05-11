@@ -8,6 +8,11 @@ void displayHeaderUI() {
 	cout << "--------------------------------\n";
 }
 
+void displayCurrentSemester(string semester) {
+	cout << "Current semester: " << semester << endl;
+	cout << "--------------------------------\n";
+}
+
 void outputAccount(Account* account) {
 	//Gender string
 	string gender = "Female";
@@ -161,8 +166,9 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 	system("CLS");
 }
 
-int displayStaffMenu() {
+int displayStaffMenu(string semester) {
 	displayHeaderUI();
+	displayCurrentSemester(semester);
 	int x;
 	cout	<< "Staff Menu?\n"
 			<< "Student:\n"
@@ -178,23 +184,24 @@ int displayStaffMenu() {
 			<< "9. View list of students in a class\n\n"
 			<< "Course:\n"
 			<< "10. Create academic year and semester\n"
-			<< "11. Import courses from a semester\n"
-			<< "12. Add new course\n"
-			<< "13. Edit existing course\n"
-			<< "14. Remove course\n"
-			<< "15. Remove student from a course\n"
-			<< "16. Add student to a course\n"
-			<< "17. View list of course in the current semester\n"
-			<< "18. View list of students of a course\n"
-			<< "19. View attendance list of a course\n"
-			<< "20. Create/Update/Delete/View all lecturers\n\n"
+			<< "11. Change current academic year and semester\n"
+			<< "12. Import courses from a semester\n"
+			<< "13. Add new course\n"
+			<< "14. Edit existing course\n"
+			<< "15. Remove course\n"
+			<< "16. Remove student from a course\n"
+			<< "17. Add student to a course\n"
+			<< "18. View list of course in the current semester\n"
+			<< "19. View list of students of a course\n"
+			<< "20. View attendance list of a course\n"
+			<< "21. Create/Update/Delete/View all lecturers\n\n"
 			<< "Scoreboard:\n"
-			<< "21. Search and view attendance list of a course\n"
-			<< "22. Export scoreboard into csv file\n"
-			<< "23. Back\n"
+			<< "22. Search and view attendance list of a course\n"
+			<< "23. Export scoreboard into csv file\n"
+			<< "24. Back\n"
 			<< "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 23) {
+	while (x < 1 || x > 24) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}
@@ -202,8 +209,9 @@ int displayStaffMenu() {
 	return x;
 }
 
-int displayLecturerMenu() {
+int displayLecturerMenu(string semester) {
 	displayHeaderUI();
+	displayCurrentSemester(semester);
 	int x;
 	cout << "Lecturer Menu\n";
 	cout << "1. View list of courses in the current semester\n"
@@ -224,8 +232,9 @@ int displayLecturerMenu() {
 	return x;
 }
 
-int displayStudentMenu() {
+int displayStudentMenu(string semester) {
 	displayHeaderUI();
+	displayCurrentSemester(semester);
 	int x;
 	cout << "Student Menu\n";
 	cout << "1. Check-in\n"

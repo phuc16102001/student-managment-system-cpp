@@ -10,9 +10,9 @@ void displayLogin(string& inputAccountID, string& inputPassword);				//Display U
 void displayProfileInfo(Account* accountDisplay);								//Display UI profile info of an account
 int displayBasicMenu();															//Display UI basic menu
 void displayChangePassword(Account* account, AccountList* accountListStorage);
-int displayStaffMenu();
-int displayLecturerMenu();
-int displayStudentMenu();
+int displayStaffMenu(string semester);
+int displayLecturerMenu(string semester);
+int displayStudentMenu(string semester);
 void displayFindStudent(AccountList* accountListStorage);
 void displayEditAccount(AccountList* accountListStorage);
 void displayResetPassword(AccountList* accountListStorage);

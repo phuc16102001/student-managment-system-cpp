@@ -37,4 +37,8 @@ struct CourseList {
 	CourseList* nextCourse = nullptr;
 };
 
+bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList);
+bool saveCourseToStorage(string semester, CourseList* courseList);
+void clearCourseList(CourseList*& courseList);
+
 #endif
