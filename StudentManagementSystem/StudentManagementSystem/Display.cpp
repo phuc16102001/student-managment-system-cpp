@@ -151,6 +151,7 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 			cout << "Repeat password is not the same\n";
 			break;
 		case (3):
+			//Maximum length is 20
 			cout << "Maximum length is 20\n";
 			break;
 	}
