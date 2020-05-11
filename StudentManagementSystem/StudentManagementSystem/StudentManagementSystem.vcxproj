@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="Class.cpp" />
+    <ClCompile Include="Course.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="MainSource.cpp" />
     <ClCompile Include="SHA256.cpp" />
@@ -148,12 +149,14 @@
     <ClInclude Include="Account.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Constant.h" />
+    <ClInclude Include="Course.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="SHA256.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage\account.txt" />
     <Text Include="Storage\class.txt" />
+    <Text Include="Storage\course\2019-2020-2.course.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ImportFile\student19CLC5.csv" />

@@ -14,11 +14,11 @@ struct ClassList {
 	ClassList* nextClass = nullptr;
 };
 
-bool importClassFromStorage(AccountList* accountList, ClassList*& classList);
-bool saveClassToStorage(ClassList* classList);
-bool insertClassToClassList(ClassList*& classList, Class* classData);
-void clearClassList(ClassList*& classList);
-int getLengthClassList(ClassList* list);
-Class* findClassName(string className, ClassList* classList);
+bool importClassFromStorage(AccountList* accountList, ClassList*& classList);		//Import classList from .txt
+bool saveClassToStorage(ClassList* classList);										//Save classList to .txt
+bool insertClassToClassList(ClassList*& classList, Class* classData);				//Insert a class to classList
+void clearClassList(ClassList*& classList);											//Clear all classList (do not clear accountList)
+int getLengthClassList(ClassList* list);											//Return length of a classList
+Class* findClassName(string className, ClassList* classList);						//Return a class which className
 
 #endif

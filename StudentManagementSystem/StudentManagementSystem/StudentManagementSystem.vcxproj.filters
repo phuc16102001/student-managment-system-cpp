@@ -19,6 +19,9 @@
     <Filter Include="Resource Files\ImportFile">
       <UniqueIdentifier>{0aa947c7-cf67-4340-909e-756db7623173}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Storage\Course">
+      <UniqueIdentifier>{5334b0a4-c573-47e5-9855-7a705ea3f653}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainSource.cpp">
@@ -34,6 +37,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SHA256.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Course.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,6 +59,9 @@
     <ClInclude Include="SHA256.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Course.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Storage\account.txt">
@@ -60,6 +69,9 @@
     </Text>
     <Text Include="Storage\class.txt">
       <Filter>Resource Files\Storage</Filter>
+    </Text>
+    <Text Include="Storage\course\2019-2020-2.course.txt">
+      <Filter>Resource Files\Storage\Course</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

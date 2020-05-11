@@ -3,7 +3,7 @@
 //Clear all special string, just contain alphabet and number
 string clearSpecialCharString(string input) {
 	string validString = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	for (int i = input.length()-1; i > -1 ; i--) {
+	for (int i = input.length() - 1; i > -1; i--) {
 		if (validString.find(input[i]) == -1) {
 			input.erase(i, 1);
 		}
@@ -247,8 +247,7 @@ int getLengthAccountList(AccountList* list) {
 	return count;
 }
 
-bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob)
-{
+bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob) {
 	if (account == nullptr) return false;
 	account->lastName = lastName;
 	account->firstName = firstName;
@@ -258,7 +257,7 @@ bool editAccount(Account* account, string lastName, string firstName, bool gende
 	return true;
 }
 
-void resetAccountPassword(Account* account){
+void resetAccountPassword(Account* account) {
 	string dob = account->dob;
 	string password = clearSpecialCharString(dob);
 	account->password = SHA256(password);
