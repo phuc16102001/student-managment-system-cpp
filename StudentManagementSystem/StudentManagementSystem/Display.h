@@ -6,10 +6,10 @@
 #include "Class.h"
 #include "Account.h"
 
-void displayHeaderUI();															//Display UI header
-void displayLogin(string& inputAccountID, string& inputPassword);				//Display UI login
-void displayProfileInfo(Account* accountDisplay);								//Display UI profile info of an account
-int displayBasicMenu();															//Display UI basic menu
+void displayHeaderUI();																					//Display UI header
+void displayLogin(string& inputAccountID, string& inputPassword);										//Display UI login
+void displayProfileInfo(Account* accountDisplay);														//Display UI profile info of an account
+int displayBasicMenu();																					//Display UI basic menu
 void displayChangePassword(Account* account, AccountList* accountListStorage);
 int displayStaffMenu(string semester);
 int displayLecturerMenu(string semester);
@@ -25,6 +25,7 @@ void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*&
 void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage);
 void displayCreateNewAcademicYearSemester();
 void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage);
+void displayRemoveCourse(string currentSemester, CourseList*& courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

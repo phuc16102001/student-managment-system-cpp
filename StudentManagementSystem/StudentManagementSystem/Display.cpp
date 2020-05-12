@@ -629,3 +629,23 @@ void displayChangeAcademicYearSemester(string& currentSemester, AccountList* acc
 		cout << "Cannot find this academic year and semester\n";
 	}
 }
+
+void displayRemoveCourse(string currentSemester, CourseList*& courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	cout << "Remove course\n";
+
+	string courseID;
+	cout << "CourseID: "; getline(cin, courseID);
+	if (removeCourseFromCourseList(courseID,courseList)) {
+		if (saveCourseToStorage(currentSemester, courseList)) {
+			cout << "Remove successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		cout << "Cannot find this course\n";
+	}
+}
