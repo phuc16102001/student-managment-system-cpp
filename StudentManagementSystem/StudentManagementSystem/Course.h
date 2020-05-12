@@ -43,7 +43,9 @@ bool insertCourseToCourseList(Course* courseData, CourseList*& courseList);
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList);
 bool saveCourseToStorage(string semester, CourseList* courseList);
 void clearCourseList(CourseList*& courseList);
-bool changeSemester();
+bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList);
 bool createSemester(string academicYear, string semester);
+Course* findCourseID(string courseID, CourseList* courseList);
+bool removeCourseFromCourseList(string courseID, CourseList*& courseList);
 
 #endif

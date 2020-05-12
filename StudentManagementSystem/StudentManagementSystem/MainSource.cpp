@@ -5,11 +5,11 @@
 #include "Course.h"
 
 //Variable import from storage
-AccountList* accountListStorage;
-Account* accountLoginStorage;
-ClassList* classListStorage;
+AccountList* accountListStorage = nullptr;
+Account* accountLoginStorage = nullptr;
+ClassList* classListStorage = nullptr;
 string currentSemester = "";
-CourseList* courseListStorage;
+CourseList* courseListStorage = nullptr;
 
 //Prototype
 void login();
@@ -127,6 +127,9 @@ void functionStaff(int number) {
 			break;
 		case(10):
 			displayCreateNewAcademicYearSemester();
+			break;
+		case (11):
+			displayChangeAcademicYearSemester(currentSemester,accountListStorage,courseListStorage);
 			break;
 		case (24):
 			basicMenu();

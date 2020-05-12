@@ -68,17 +68,23 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 		fin >> nStudent;
 
 		for (int i = 0; i < nStudent; i++) {
+			//Each student
 			string studentID;
 			Score* studentScore = new Score;
 
+			//Input student's ID
 			getline(fin, studentID);
+
+			//Input student's score
 			fin >> studentScore->midScore >> studentScore->finalScore >> studentScore->bonusScore >> studentScore->totalScore;
 
+			//Find account
 			Account* studentAccount = findAccountID(studentID, accountList);
 			if (studentAccount == nullptr) break;
 		
 			studentScore->studentID = studentAccount->ID;
 
+			//Insert to list
 			insertAccountToAccountList(studentAccount, studentAccountList);
 			insertScoreToScoreList(studentScore, studentScoreList);
 		}
@@ -158,8 +164,19 @@ void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
 	}
 }
 
-bool changeSemester() {
-	return false;
+bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList) {
+	string path = _courseStorage + academicYear + '-' + semester + ".course.txt";
+
+	//Check existed
+	fstream fin(path, ios::in);
+	if (!fin.is_open()) return false;
+	fin.close();
+
+	//Import current semester courses
+	currentSemester = academicYear + '-' + semester;
+	importCourseFromStorage(currentSemester, accountList, courseList);
+
+	return true;
 }
 
 bool createSemester(string academicYear, string semester) {
@@ -174,4 +191,16 @@ bool createSemester(string academicYear, string semester) {
 	fstream fout(path, ios::out);
 	fout << "";
 	fout.close();
+}
+
+Course* findCourseID(string courseID, CourseList* courseList) {
+	//Find course which have courseID
+	//If not found return nullptr
+	return nullptr;
+}
+
+bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
+	//Remove 1st course which courseID in courseList
+	//If not found return false;
+	return false;
 }

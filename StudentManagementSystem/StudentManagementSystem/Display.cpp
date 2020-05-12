@@ -613,3 +613,17 @@ void displayCreateNewAcademicYearSemester() {
 		cout << "Fail to create semester\n";
 	}
 }
+
+void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage) {
+	displayHeaderUI();
+
+	string academicYear, semester;
+	cout << "Academic year: "; getline(cin, academicYear);
+	cout << "Semester: "; getline(cin, semester);
+	if (changeSemester(academicYear, semester, currentSemester, accountListStorage, courseListStorage)) {
+		cout << "Change successfully\n";
+	}
+	else {
+		cout << "Cannot find this academic year and semester\n";
+	}
+}
