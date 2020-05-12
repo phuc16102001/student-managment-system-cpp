@@ -17,9 +17,12 @@ void clearCourseList(CourseList*& courseList) {
 		while (scoreList != nullptr) {
 			ScoreList* tempScore = scoreList;
 			scoreList = scoreList->nextScore;
+			
+			delete tempScore->scoreData;
 			delete tempScore;
 		}
 
+		delete tempCourse->courseData;
 		delete tempCourse;
 	}
 }
