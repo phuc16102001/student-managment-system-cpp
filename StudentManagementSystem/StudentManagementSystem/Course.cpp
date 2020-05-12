@@ -194,7 +194,6 @@ bool createSemester(string academicYear, string semester) {
 }
 
 Course* findCourseID(string courseID, CourseList* courseList) {
-	if (courseList == nullptr) return nullptr;
 	while (courseList != nullptr) {
 		if (courseList->courseData->courseID == courseID) return courseList->courseData;
 		courseList = courseList->nextCourse;
@@ -203,7 +202,7 @@ Course* findCourseID(string courseID, CourseList* courseList) {
 }
 
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
-	// case 1: first course in courseList is course which need to đelete
+	// case 1: first course in courseList is course which need to delete
 	if (courseList->courseData->courseID == courseID) {
 		CourseList* temp = courseList;
 		courseList = courseList->nextCourse;
@@ -213,7 +212,7 @@ bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
 	//case 2: other courses
 	CourseList* cur = courseList;
 	// move cur to before of course which have course ID
-	while (cur != nullptr && cur->nextCourse->courseData->courseID != courseID) {
+	while (cur != nullptr  && cur->nextCourse!=nullptr && cur->nextCourse->courseData->courseID != courseID) {
 		CourseList* temp = cur->nextCourse;
 		cur->nextCourse = temp->nextCourse;
 		delete temp;
