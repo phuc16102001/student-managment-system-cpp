@@ -241,6 +241,4 @@ int getLengthCourseList(CourseList* courseList) {
 		courseList = courseList->nextCourse;
 	}
 	return count;
-
-	return 0;
 }
