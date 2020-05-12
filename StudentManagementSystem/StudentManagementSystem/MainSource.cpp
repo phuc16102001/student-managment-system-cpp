@@ -125,6 +125,9 @@ void functionStaff(int number) {
 		case (9):
 			displayViewListStudentInClass(classListStorage);
 			break;
+		case(10):
+			displayCreateNewAcademicYearSemester();
+			break;
 		case (24):
 			basicMenu();
 			return;
@@ -192,5 +195,5 @@ void test() {
 }
 
 int main() {
-	test();
+	demo();
 }

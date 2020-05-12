@@ -2,6 +2,7 @@
 #define _DISPLAY_HEADER_
 
 #include "Constant.h"
+#include "Course.h"
 #include "Class.h"
 #include "Account.h"
 
@@ -22,6 +23,7 @@ void displayViewListStudentInClass(ClassList* classListStorage);
 void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage);
 void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage);
 void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassList*& classListStorage);
+void displayCreateNewAcademicYearSemester();
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

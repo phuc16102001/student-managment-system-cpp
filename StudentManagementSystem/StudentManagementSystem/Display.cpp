@@ -599,3 +599,17 @@ void displayViewListStudentInClass(ClassList* classListStorage){
 		cout << "Class does not exist\n";
 	}
 }
+
+void displayCreateNewAcademicYearSemester() {
+	displayHeaderUI();
+
+	string academicYear, semester;
+	cout << "Academic year: "; getline(cin, academicYear);
+	cout << "Semester: "; getline(cin, semester);
+	if (createSemester(academicYear, semester)) {
+		cout << "Created successfully\n";
+	}
+	else {
+		cout << "Fail to create semester\n";
+	}
+}
