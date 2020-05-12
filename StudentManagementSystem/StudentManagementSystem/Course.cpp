@@ -1,4 +1,4 @@
-#include "Course.h"
+﻿#include "Course.h"
 
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList) {
 	//Open file
@@ -194,13 +194,31 @@ bool createSemester(string academicYear, string semester) {
 }
 
 Course* findCourseID(string courseID, CourseList* courseList) {
-	//Find course which have courseID
-	//If not found return nullptr
+	if (courseList == nullptr) return nullptr;
+	while (courseList != nullptr) {
+		if (courseList->courseData->courseID == courseID) return courseList->courseData;
+		courseList = courseList->nextCourse;
+	}
 	return nullptr;
 }
 
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
-	//Remove 1st course which courseID in courseList
-	//If not found return false;
+	// case 1: first course in courseList is course which need to đelete
+	if (courseList->courseData->courseID == courseID) {
+		CourseList* temp = courseList;
+		courseList = courseList->nextCourse;
+		delete temp;
+		return true;
+	}
+	//case 2: other courses
+	CourseList* cur = courseList;
+	// move cur to before of course which have course ID
+	while (cur != nullptr && cur->nextCourse->courseData->courseID != courseID) {
+		CourseList* temp = cur->nextCourse;
+		cur->nextCourse = temp->nextCourse;
+		delete temp;
+		return true;
+	}
+	
 	return false;
 }
