@@ -179,9 +179,18 @@ void demo() {
 }
 
 void test() {
-	if (importCourseFromStorage("2019-2020-2", accountListStorage, courseListStorage)) cout << "OK";
+	string academicYear;
+	string semester;
+	cout << "year: "; getline(cin, academicYear);
+	cout << "semester: "; getline(cin, semester);
+	if (createSemester(academicYear, semester)) {
+		cout << "Success\n";
+	}
+	else {
+		cout << "Fail\n";
+	}
 }
 
 int main() {
-	demo();
+	test();
 }

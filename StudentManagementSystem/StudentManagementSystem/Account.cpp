@@ -51,6 +51,8 @@ bool importAccountFromStorage(AccountList*& accountList) {
 		//Insert to list
 		insertAccountToAccountList(newAccount, accountList);
 	}
+
+	fin.close();
 	return true;
 }
 
@@ -70,6 +72,8 @@ bool saveAccountListToStorage(AccountList* accountList) {
 		fout << nowAccount->accountType << endl;
 		accountList = accountList->nextAccount;
 	}
+
+	fout.close();
 	return true;
 }
 
@@ -129,6 +133,8 @@ bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& 
 		}
 		insertAccountToAccountList(newAccount,accountList);
 	}
+	
+	fin.close();
 	return true;
 }
 

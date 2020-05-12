@@ -32,6 +32,8 @@ bool importClassFromStorage(AccountList* accountList, ClassList*& classList) {
 		//Insert
 		insertClassToClassList(classList, newClass);
 	}
+
+	fin.close();
 	return true;
 }
 

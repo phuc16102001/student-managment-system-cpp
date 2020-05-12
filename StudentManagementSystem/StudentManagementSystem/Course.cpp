@@ -88,6 +88,8 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 		//Insert to list
 		insertCourseToCourseList(newCourse, courseList);
 	}
+
+	fin.close();
 	return true;
 }
 
@@ -154,4 +156,22 @@ void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
 		cur->scoreData = scoreData;
 		cur->nextScore = nullptr;
 	}
+}
+
+bool changeSemester() {
+	return false;
+}
+
+bool createSemester(string academicYear, string semester) {
+	string path = _courseStorage + academicYear + '-' + semester + ".course.txt";
+
+	//Check existed
+	fstream fin(path, ios::in);
+	if (fin.is_open()) return false;
+	fin.close();
+
+	//Create new file
+	fstream fout(path, ios::out);
+	fout << "";
+	fout.close();
 }
