@@ -616,6 +616,8 @@ void displayCreateNewAcademicYearSemester() {
 
 void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage) {
 	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	cout << "Change academic year and semester\n";
 
 	string academicYear, semester;
 	cout << "Academic year: "; getline(cin, academicYear);

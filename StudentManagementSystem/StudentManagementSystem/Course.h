@@ -48,5 +48,6 @@ bool changeSemester(string academicYear, string semester, string& currentSemeste
 bool createSemester(string academicYear, string semester);
 Course* findCourseID(string courseID, CourseList* courseList);
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList);
+int getLengthCourseList(CourseList* courseList);
 
 #endif

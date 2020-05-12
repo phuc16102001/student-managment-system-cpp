@@ -231,3 +231,7 @@ bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
 	
 	return false;
 }
+
+int getLengthCourseList(CourseList* courseList) {
+	return 0;
+}
