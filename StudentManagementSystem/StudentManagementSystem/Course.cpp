@@ -233,5 +233,12 @@ bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
 }
 
 int getLengthCourseList(CourseList* courseList) {
-	return 0;
+	//Counter the length of list
+	int count = 0;
+	while (courseList != nullptr) {
+		//Run until the end
+		count++;
+		courseList = courseList->nextCourse;
+	}
+	return count;
 }
