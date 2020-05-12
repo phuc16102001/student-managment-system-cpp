@@ -126,19 +126,23 @@ bool saveCourseToStorage(string semester, CourseList* courseList) {
 	return false;
 }
 
+void clearScoreList(ScoreList*& scoreList) {
+	while (scoreList != nullptr) {
+		ScoreList* tempScore = scoreList;
+		scoreList = scoreList->nextScore;
+
+		delete tempScore->scoreData;
+		delete tempScore;
+	}
+}
+
 void clearCourseList(CourseList*& courseList) {
 	while (courseList != nullptr) {
 		CourseList* tempCourse = courseList;
 		courseList = courseList->nextCourse;
 
 		ScoreList* scoreList = tempCourse->courseData->scoreList;
-		while (scoreList != nullptr) {
-			ScoreList* tempScore = scoreList;
-			scoreList = scoreList->nextScore;
-			
-			delete tempScore->scoreData;
-			delete tempScore;
-		}
+		clearScoreList(scoreList);
 
 		delete tempCourse->courseData;
 		delete tempCourse;
@@ -195,27 +199,33 @@ bool createSemester(string academicYear, string semester) {
 
 Course* findCourseID(string courseID, CourseList* courseList) {
 	while (courseList != nullptr) {
-		if (courseList->courseData->courseID == courseID) return courseList->courseData;
+		if (courseList->courseData->courseID == courseID) {
+			return courseList->courseData;
+		}
 		courseList = courseList->nextCourse;
 	}
 	return nullptr;
 }
 
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
-	// case 1: first course in courseList is course which need to delete
+	//1st node
 	if (courseList->courseData->courseID == courseID) {
-		CourseList* temp = courseList;
+		CourseList* tempCourse = courseList;
 		courseList = courseList->nextCourse;
-		delete temp;
+
+		clearScoreList(tempCourse->courseData->scoreList);
+		delete tempCourse;
 		return true;
 	}
-	//case 2: other courses
+
+	//Other node
 	CourseList* cur = courseList;
-	// move cur to before of course which have course ID
-	while (cur != nullptr  && cur->nextCourse!=nullptr && cur->nextCourse->courseData->courseID != courseID) {
-		CourseList* temp = cur->nextCourse;
-		cur->nextCourse = temp->nextCourse;
-		delete temp;
+	while (cur != nullptr && cur->nextCourse!=nullptr && cur->nextCourse->courseData->courseID != courseID) {
+		CourseList* tempCourse = cur->nextCourse;
+		cur->nextCourse = tempCourse->nextCourse;
+		
+		clearScoreList(tempCourse->courseData->scoreList);
+		delete tempCourse;
 		return true;
 	}
 	

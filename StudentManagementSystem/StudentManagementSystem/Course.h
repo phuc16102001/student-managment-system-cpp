@@ -42,6 +42,7 @@ void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList);
 bool insertCourseToCourseList(Course* courseData, CourseList*& courseList);
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList);
 bool saveCourseToStorage(string semester, CourseList* courseList);
+void clearScoreList(ScoreList*& scoreList);
 void clearCourseList(CourseList*& courseList);
 bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList);
 bool createSemester(string academicYear, string semester);
