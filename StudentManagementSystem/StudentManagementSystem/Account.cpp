@@ -1,45 +1,5 @@
 #include "Account.h"
 
-//Clear all special string, just contain alphabet and number
-string clearSpecialCharString(string input) {
-	string validString = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	for (int i = input.length() - 1; i > -1; i--) {
-		if (validString.find(input[i]) == -1) {
-			input.erase(i, 1);
-		}
-	}
-	return input;
-}
-
-//Convert string input into format DD-MM-YYYY
-string convertDate(string input) {
-	//Date of birth
-	int dd, mm, yyyy;
-	dd = 0;
-	mm = 0;
-	yyyy = 0;
-
-	//Find the index of '-'
-	int index1, index2;
-	index1 = input.find('-');
-	index2 = input.find_last_of('-');
-
-	//Parse into int
-	dd = stoi(input.substr(0, index1));
-	mm = stoi(input.substr(index1 + 1, index2 - index1 - 1));
-	yyyy = stoi(input.substr(index2 + 1, input.length() - index2 - 1));
-
-	//Combine new string
-	input = "";
-	if (dd < 10) input += "0";
-	input += to_string(dd) + "-";
-	if (mm < 10) input += "0";
-	input += to_string(mm) + "-";
-	input += to_string(yyyy);
-	
-	return input;
-}
-
 Account* createAccount(string accountID, string lastName, string firstName, string genderText, string dob, int accountType) {
 	Account* account = new Account;
 	if (!account) return nullptr;
@@ -71,7 +31,6 @@ bool importAccountFromStorage(AccountList*& accountList) {
 	fstream fin(_accountStorage, ios::in);
 	if (!fin.is_open()) return false;
 
-	AccountList* cur = nullptr;
 	while (!fin.eof()) {
 		//Read data input
 		string tempID;

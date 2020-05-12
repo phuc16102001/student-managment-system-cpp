@@ -179,6 +179,7 @@ void demo() {
 }
 
 void test() {
+	if (importCourseFromStorage("2019-2020-2", accountListStorage, courseListStorage)) cout << "OK";
 }
 
 int main() {

@@ -3,12 +3,14 @@
 
 #include "Constant.h"
 #include "Account.h"
+#include "Utils.h"
 
 struct Score {
 	float midScore = -1;
 	float bonusScore = -1;
 	float finalScore = -1;
 	float totalScore = -1;
+	string studentID;
 };
 
 struct ScoreList {
@@ -20,14 +22,13 @@ struct Course {
 	string courseID;
 	string courseName;
 	string className;
-	string lecturerAccount;
-	string startDate;
-	string endDate;
-	int dayOfWeek = -1;
-	int startHour = -1;
-	int startMinute = -1;
-	int endHour = -1;
-	int endMinute = -1;
+	Account* lecturerAccount;
+	int startDate, startMonth, startYear;
+	int endDate, endMonth, endYear;
+	int dayOfWeek = -1;				//1-7 (with 1 is sunday)
+	int startHour, startMinute;
+	int endHour, endMinute;
+	string roomName;
 	ScoreList* scoreList = nullptr;
 	AccountList* accountList = nullptr;
 };
@@ -37,6 +38,8 @@ struct CourseList {
 	CourseList* nextCourse = nullptr;
 };
 
+void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList);
+bool insertCourseToCourseList(Course* courseData, CourseList*& courseList);
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList);
 bool saveCourseToStorage(string semester, CourseList* courseList);
 void clearCourseList(CourseList*& courseList);

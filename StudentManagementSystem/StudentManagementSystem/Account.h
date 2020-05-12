@@ -2,6 +2,7 @@
 #define _ACCOUNT_HEADER_
 
 #include "Constant.h"
+#include "Utils.h"
 #include "SHA256.h"
 
 struct Account {
