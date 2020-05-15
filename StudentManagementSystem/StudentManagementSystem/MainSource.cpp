@@ -131,6 +131,9 @@ void functionStaff(int number) {
 		case (11):
 			displayChangeAcademicYearSemester(currentSemester,accountListStorage,courseListStorage);
 			break;
+		case(13):
+			displayAddNewCourse(currentSemester, accountListStorage, classListStorage, courseListStorage);
+			break;
 		case (24):
 			basicMenu();
 			return;

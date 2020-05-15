@@ -60,3 +60,11 @@ string convertDate(string input) {
 
 	return input;
 }
+
+string dateToString(int date, int month, int year) {
+	return to_string(date) + "-" + to_string(month) + "-" + to_string(year);
+}
+
+string timeToString(int hour, int minute) {
+	return to_string(hour) + ":" + to_string(minute);
+}

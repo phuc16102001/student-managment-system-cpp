@@ -3,6 +3,7 @@
 
 #include "Constant.h"
 #include "Account.h"
+#include "Class.h"
 #include "Utils.h"
 
 struct Score {
@@ -25,12 +26,12 @@ struct Course {
 	Account* lecturerAccount;
 	int startDate, startMonth, startYear;
 	int endDate, endMonth, endYear;
-	int dayOfWeek = -1;				//1-7 (with 1 is sunday)
+	int dayOfWeek = -1;				//0-6 (with 0 is sunday)
 	int startHour, startMinute;
 	int endHour, endMinute;
 	string roomName;
 	ScoreList* scoreList = nullptr;
-	AccountList* accountList = nullptr;
+	AccountList* studentList = nullptr;
 };
 
 struct CourseList {
@@ -49,5 +50,6 @@ bool createSemester(string academicYear, string semester);
 Course* findCourseID(string courseID, CourseList* courseList);
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList);
 int getLengthCourseList(CourseList* courseList);
+Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage);
 
 #endif

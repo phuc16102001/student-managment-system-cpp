@@ -10,13 +10,12 @@
 #include <conio.h>
 using namespace std;
 
-#define _storagePath "storage\\"
-#define _accountStorage "storage\\account.txt"
-#define _classStorage	"storage\\class.txt"
+#define _storagePath "Storage\\"
+#define _accountStorage "Storage\\account.txt"
+#define _classStorage	"Storage\\class.txt"
 
-//Course storage = "storage\course\<academic year>-<semester>.course.txt"
-//For ex: storage\course\2019-2020-2.course.txt
-#define _courseStorage "storage\\course\\"
+//Course storage = "Storage\course\<academic year>-<semester>.txt"
+//For ex: Storage\course\2019-2020-2.txt
+#define _courseStorage "Storage\\course\\"
 
-#define _scoreStorage "storage\\score.txt"
 #endif

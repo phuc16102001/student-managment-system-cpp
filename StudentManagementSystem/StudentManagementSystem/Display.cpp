@@ -649,3 +649,30 @@ void displayRemoveCourse(string currentSemester, CourseList*& courseList) {
 		cout << "Cannot find this course\n";
 	}
 }
+
+void displayAddNewCourse(string currentSemester, AccountList* accountList, ClassList* classList, CourseList*& courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	cout << "Add new course\n";
+
+	string courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName;
+	cout << "CourseID: "; getline(cin, courseID);
+	cout << "Course name: "; getline(cin, courseName);
+	cout << "Class name: "; getline(cin, className);
+	cout << "Lecturer ID: "; getline(cin, lecturerID);
+	cout << "Start date: "; getline(cin, startDate);
+	cout << "End date: "; getline(cin, endDate);
+	cout << "Start time: "; getline(cin, startTime);
+	cout << "End time: "; getline(cin, endTime);
+
+	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): "; getline(cin, dayOfWeekString);
+	for (int i = 0; i < dayOfWeekString.length(); i++) {
+		dayOfWeekString[i] = toupper(dayOfWeekString[i]);
+	}
+
+	cout << "Room name: "; getline(cin, roomName);
+
+	Course* newCourse = createCourse(courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList, classList);
+	insertCourseToCourseList(newCourse, courseList);
+	saveCourseToStorage(currentSemester, courseList);
+}

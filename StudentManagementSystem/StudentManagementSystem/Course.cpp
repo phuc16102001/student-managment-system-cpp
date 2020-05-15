@@ -2,7 +2,7 @@
 
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList) {
 	//Open file
-	string path = _courseStorage + semester + ".course.txt";
+	string path = string(_courseStorage) + semester + ".txt";
 	fstream fin(path, ios::in);
 	if (!fin.is_open()) return false;
 
@@ -57,6 +57,7 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 
 		//Input dayOfWeek
 		fin >> newCourse->dayOfWeek;
+		fin.ignore();
 
 		//Input room name
 		getline(fin, newCourse->roomName);
@@ -66,6 +67,7 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 		AccountList* studentAccountList = nullptr;
 		ScoreList* studentScoreList = nullptr;
 		fin >> nStudent;
+		fin.ignore();
 
 		for (int i = 0; i < nStudent; i++) {
 			//Each student
@@ -88,7 +90,7 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 			insertAccountToAccountList(studentAccount, studentAccountList);
 			insertScoreToScoreList(studentScore, studentScoreList);
 		}
-		newCourse->accountList = studentAccountList;
+		newCourse->studentList = studentAccountList;
 		newCourse->scoreList = studentScoreList;
 
 		//Insert to list
@@ -123,7 +125,49 @@ bool insertCourseToCourseList(Course* courseData, CourseList*& courseList) {
 }
 
 bool saveCourseToStorage(string semester, CourseList* courseList) {
-	return false;
+	//Open file
+	string path = _courseStorage + semester + ".txt";
+	fstream fout(path, ios::out);
+	if (!fout.is_open()) return false;
+
+	while (courseList != nullptr) {
+		Course* courseData = courseList->courseData;
+		AccountList* studentList = courseData->studentList;
+		ScoreList* scoreList = courseData->scoreList;
+		int nStudent = getLengthAccountList(studentList);
+
+		string startDate, endDate, startTime, endTime;
+		startDate = dateToString(courseData->startDate, courseData->startMonth, courseData->startYear);
+		endDate = dateToString(courseData->endDate, courseData->endMonth, courseData->endYear);
+		startTime = timeToString(courseData->startHour, courseData->startMinute);
+		endTime = timeToString(courseData->endHour, courseData->endMinute);
+
+		fout << courseData->courseID << endl;
+		fout << courseData->courseName << endl;
+		fout << courseData->className << endl;
+		fout << courseData->lecturerAccount->ID << endl;
+		fout << startDate << endl;
+		fout << endDate << endl;
+		fout << startTime << endl;
+		fout << endTime << endl;
+		fout << courseData->dayOfWeek << endl;
+		fout << courseData->roomName << endl;
+		fout << nStudent << endl;
+
+		while (studentList != nullptr && scoreList!=nullptr) {
+			Score* score = scoreList->scoreData;
+			fout << studentList->accountData->ID << endl;
+			fout << score->midScore << " " << score->finalScore << " " << score->bonusScore << " " << score->totalScore << endl;
+
+			studentList = studentList->nextAccount;
+			scoreList = scoreList->nextScore;
+		}
+		
+		courseList = courseList->nextCourse;
+	}
+
+	fout.close();
+	return true;
 }
 
 void clearScoreList(ScoreList*& scoreList) {
@@ -169,7 +213,7 @@ void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
 }
 
 bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList) {
-	string path = _courseStorage + academicYear + '-' + semester + ".course.txt";
+	string path = _courseStorage + academicYear + '-' + semester + ".txt";
 
 	//Check existed
 	fstream fin(path, ios::in);
@@ -177,6 +221,7 @@ bool changeSemester(string academicYear, string semester, string& currentSemeste
 	fin.close();
 
 	//Import current semester courses
+	if (courseList != nullptr) clearCourseList(courseList);
 	currentSemester = academicYear + '-' + semester;
 	importCourseFromStorage(currentSemester, accountList, courseList);
 
@@ -184,7 +229,7 @@ bool changeSemester(string academicYear, string semester, string& currentSemeste
 }
 
 bool createSemester(string academicYear, string semester) {
-	string path = _courseStorage + academicYear + '-' + semester + ".course.txt";
+	string path = _courseStorage + academicYear + '-' + semester + ".txt";
 
 	//Check existed
 	fstream fin(path, ios::in);
@@ -241,4 +286,71 @@ int getLengthCourseList(CourseList* courseList) {
 		courseList = courseList->nextCourse;
 	}
 	return count;
+}
+
+
+Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage) {
+
+	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
+	Account* lecturerAccount = findAccountID(lecturerID, accountListStorage);
+	Class* classData = findClassName(className, classListStorage);
+	AccountList* studentList = classData->accountList;
+	ScoreList* scoreList = nullptr;
+
+	Course* newCourse = new Course;
+	int date, month, year;
+	int hour, minute;
+
+	newCourse->courseID = courseID;
+	newCourse->courseName = courseName;
+	newCourse->className = className;
+	newCourse->roomName = roomName;
+	newCourse->studentList = studentList;
+	newCourse->lecturerAccount = lecturerAccount;
+
+	for (int i = 0; i < 7; i++) {
+		if (dayString[i] == dayOfWeekString) {
+			newCourse->dayOfWeek = i;
+			break;
+		}
+	}
+
+
+	AccountList* runnerAccountList = studentList;
+	ScoreList* runnerScoreList = scoreList;
+	while (runnerAccountList != nullptr) {
+		Score* score = new Score;
+		if (runnerScoreList == nullptr) {
+			scoreList = new ScoreList;
+			runnerScoreList = scoreList;
+		}
+		else {
+			runnerScoreList->nextScore = new ScoreList;
+			runnerScoreList = runnerScoreList->nextScore;
+		}
+		runnerScoreList->scoreData = score;
+
+		runnerAccountList = runnerAccountList->nextAccount;
+	}
+	newCourse->scoreList = scoreList;
+
+	parseDate(startDate, date, month, year);
+	newCourse->startDate = date;
+	newCourse->startMonth = month;
+	newCourse->startYear = year;
+
+	parseDate(endDate, date, month, year);
+	newCourse->endDate = date;
+	newCourse->endMonth = month;
+	newCourse->endYear = year;
+
+	parseTime(startTime, hour, minute);
+	newCourse->startHour = hour;
+	newCourse->startMinute = minute;
+
+	parseTime(startTime, hour, minute);
+	newCourse->endHour = hour;
+	newCourse->endMinute = minute;
+
+	return newCourse;
 }

@@ -26,6 +26,7 @@ void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassLis
 void displayCreateNewAcademicYearSemester();
 void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage);
 void displayRemoveCourse(string currentSemester, CourseList*& courseList);
+void displayAddNewCourse(string currentSemester, AccountList* accountList, ClassList* classList, CourseList*& courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console
