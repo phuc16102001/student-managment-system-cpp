@@ -125,14 +125,35 @@ void functionStaff(int number) {
 		case (9):
 			displayViewListStudentInClass(classListStorage);
 			break;
-		case(10):
+		case (10):
 			displayCreateNewAcademicYearSemester();
 			break;
 		case (11):
 			displayChangeAcademicYearSemester(currentSemester,accountListStorage,courseListStorage);
 			break;
-		case(13):
+		case (12):
+			//AAAAAAAAAAAAAAAA
+			break;
+		case (13):
 			displayAddNewCourse(currentSemester, accountListStorage, classListStorage, courseListStorage);
+			break;
+		case (14):
+			//AAAAAAAAAAAAAAAA
+			break;
+		case (15):
+			displayRemoveCourse(currentSemester, courseListStorage);
+			break;
+		case (16):
+			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
+			break;
+		case (17):
+			displayAddStudentToCourse(currentSemester, accountListStorage, courseListStorage);
+			break;
+		case (18):
+			displayCurrentCourseList(currentSemester, courseListStorage);
+			break;
+		case (19):
+			displayStudentListFromCourse(currentSemester, courseListStorage);
 			break;
 		case (24):
 			basicMenu();

@@ -27,6 +27,10 @@ void displayCreateNewAcademicYearSemester();
 void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage);
 void displayRemoveCourse(string currentSemester, CourseList*& courseList);
 void displayAddNewCourse(string currentSemester, AccountList* accountList, ClassList* classList, CourseList*& courseList);
+void displayCurrentCourseList(string currentSemester, CourseList* courseList);
+void displayRemoveStudentFromCourse(string currentSemester, CourseList* courseListStorage);
+void displayAddStudentToCourse(string currentSemester, AccountList* accountListStorage, CourseList* courseListStorage);
+void displayStudentListFromCourse(string currentSemester, CourseList* courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

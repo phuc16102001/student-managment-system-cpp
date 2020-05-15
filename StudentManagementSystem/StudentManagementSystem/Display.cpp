@@ -68,6 +68,19 @@ void outputClass(Class* classData) {
 	outputAccountList(accountList);
 }
 
+void outputCourseList(CourseList* courseList) {
+	while (courseList != nullptr) {
+		cout << "==========================\n";
+		Course* courseData = courseList->courseData;
+		
+		cout << "Course ID: " << courseData->courseID << endl;
+		cout << "Course name: " << courseData->courseName << endl;
+		cout << "Course class: " << courseData->className << endl;
+
+		courseList = courseList->nextCourse;
+	}
+}
+
 void inputHidenText(string& text) {
 	text = "";
 	char c;
@@ -633,6 +646,10 @@ void displayChangeAcademicYearSemester(string& currentSemester, AccountList* acc
 void displayRemoveCourse(string currentSemester, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
 	cout << "Remove course\n";
 
 	string courseID;
@@ -654,6 +671,10 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	cout << "Add new course\n";
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
 
 	string courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName;
 	cout << "CourseID: "; getline(cin, courseID);
@@ -673,6 +694,122 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	cout << "Room name: "; getline(cin, roomName);
 
 	Course* newCourse = createCourse(courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList, classList);
-	insertCourseToCourseList(newCourse, courseList);
-	saveCourseToStorage(currentSemester, courseList);
+	if (newCourse != nullptr) {
+		insertCourseToCourseList(newCourse, courseList);
+		if (saveCourseToStorage(currentSemester, courseList)) {
+
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		cout << "Fail to create course\n";
+	}
+}
+
+void displayCurrentCourseList(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Course list: \n";
+
+	outputCourseList(courseList);
+}
+
+void displayRemoveStudentFromCourse(string currentSemester, CourseList* courseListStorage) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Remove a student from course\n";
+
+	string courseID, studentID;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	Course* courseData = findCourseID(courseID, courseListStorage);
+	if (courseData == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	cout << "StudentID: "; getline(cin, studentID);
+
+
+	if (removeAccountFromAccountList(studentID, courseData->studentList) && removeScoreAccountID(studentID, courseData->scoreList)) {
+		if (saveCourseToStorage(currentSemester, courseListStorage)) {
+			cout << "Remove successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	} else {
+	}
+}
+
+void displayAddStudentToCourse(string currentSemester, AccountList* accountListStorage, CourseList* courseListStorage) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Add a student to course\n";
+
+	string courseID, studentID;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	Course* courseData = findCourseID(courseID, courseListStorage);
+	if (courseData == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	cout << "StudentID: "; getline(cin, studentID);
+
+
+	Account* studentAccount = findAccountID(studentID, accountListStorage);
+	if (studentAccount == nullptr) {
+		cout << "Student not found\n";
+		return;
+	}
+
+	Score* newScore = new Score;
+	if (insertAccountToAccountList(studentAccount, courseData->studentList) && insertScoreToScoreList(newScore,courseData->scoreList)) {
+		if (saveCourseToStorage(currentSemester, courseListStorage)) {
+			cout << "Added successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		cout << "Fail to add\n";
+	}
+}
+
+void displayStudentListFromCourse(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Student from course\n";
+
+	string courseID;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	Course* courseData = findCourseID(courseID, courseList);
+	if (courseData == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	outputAccountList(courseData->studentList);
 }

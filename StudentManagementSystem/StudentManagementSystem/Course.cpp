@@ -79,6 +79,7 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 
 			//Input student's score
 			fin >> studentScore->midScore >> studentScore->finalScore >> studentScore->bonusScore >> studentScore->totalScore;
+			fin.ignore();
 
 			//Find account
 			Account* studentAccount = findAccountID(studentID, accountList);
@@ -193,7 +194,7 @@ void clearCourseList(CourseList*& courseList) {
 	}
 }
 
-void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
+bool insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
 	if (scoreList == nullptr) {
 		scoreList = new ScoreList;
 		scoreList->scoreData = scoreData;
@@ -210,6 +211,7 @@ void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
 		cur->scoreData = scoreData;
 		cur->nextScore = nullptr;
 	}
+	return true;
 }
 
 bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList) {
@@ -265,13 +267,17 @@ bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
 
 	//Other node
 	CourseList* cur = courseList;
-	while (cur != nullptr && cur->nextCourse!=nullptr && cur->nextCourse->courseData->courseID != courseID) {
-		CourseList* tempCourse = cur->nextCourse;
-		cur->nextCourse = tempCourse->nextCourse;
-		
-		clearScoreList(tempCourse->courseData->scoreList);
-		delete tempCourse;
-		return true;
+	while (cur != nullptr && cur->nextCourse!=nullptr) {
+		if (cur->nextCourse->courseData->courseID == courseID) {
+			CourseList* tempCourse = cur->nextCourse;
+			cur->nextCourse = tempCourse->nextCourse;
+
+			clearScoreList(tempCourse->courseData->scoreList);
+			delete tempCourse->courseData;
+			delete tempCourse;
+			return true;
+		}
+		cur = cur->nextCourse;
 	}
 	
 	return false;
@@ -288,12 +294,15 @@ int getLengthCourseList(CourseList* courseList) {
 	return count;
 }
 
-
 Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage) {
 
 	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
 	Account* lecturerAccount = findAccountID(lecturerID, accountListStorage);
+	if (lecturerAccount == nullptr) return nullptr;
+
 	Class* classData = findClassName(className, classListStorage);
+	if (classData == nullptr) return nullptr;
+
 	AccountList* studentList = classData->accountList;
 	ScoreList* scoreList = nullptr;
 
@@ -353,4 +362,32 @@ Course* createCourse(string courseID, string courseName, string className, strin
 	newCourse->endMinute = minute;
 
 	return newCourse;
+}
+
+bool removeScoreAccountID(string accountID, ScoreList*& scoreList) {
+	//1st node
+	if (scoreList->scoreData->studentID == accountID) {
+		ScoreList* tempScore = scoreList;
+		scoreList = scoreList->nextScore;
+
+		delete tempScore->scoreData;
+		delete tempScore;
+		return true;
+	}
+
+	//Other node
+	ScoreList* cur = scoreList;
+	while (cur != nullptr && cur->nextScore != nullptr) {
+		if (scoreList->scoreData->studentID == accountID) {
+			ScoreList* tempScore = scoreList;
+			scoreList = scoreList->nextScore;
+
+			delete tempScore->scoreData;
+			delete tempScore;
+			return true;
+		}
+		cur = cur->nextScore;
+	}
+
+	return false;
 }

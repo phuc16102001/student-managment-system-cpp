@@ -39,7 +39,7 @@ struct CourseList {
 	CourseList* nextCourse = nullptr;
 };
 
-void insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList);
+bool insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList);
 bool insertCourseToCourseList(Course* courseData, CourseList*& courseList);
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList);
 bool saveCourseToStorage(string semester, CourseList* courseList);
@@ -51,5 +51,6 @@ Course* findCourseID(string courseID, CourseList* courseList);
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList);
 int getLengthCourseList(CourseList* courseList);
 Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage);
+bool removeScoreAccountID(string accountID, ScoreList*& scoreList);
 
 #endif
