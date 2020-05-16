@@ -85,12 +85,18 @@
     <Text Include="Storage\course\2019-2020-2.txt">
       <Filter>Resource Files\Storage\Course</Filter>
     </Text>
+    <Text Include="Storage\course\2015-2016-3.txt">
+      <Filter>Resource Files\Storage\Course</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ImportFile\student19CLC5.csv">
       <Filter>Resource Files\ImportFile</Filter>
     </None>
     <None Include="ImportFile\student19CTT2.csv">
+      <Filter>Resource Files\ImportFile</Filter>
+    </None>
+    <None Include="ImportFile\course2019-2020-2.csv">
       <Filter>Resource Files\ImportFile</Filter>
     </None>
   </ItemGroup>

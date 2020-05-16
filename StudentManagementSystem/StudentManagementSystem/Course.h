@@ -47,10 +47,13 @@ void clearScoreList(ScoreList*& scoreList);
 void clearCourseList(CourseList*& courseList);
 bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList);
 bool createSemester(string academicYear, string semester);
-Course* findCourseID(string courseID, CourseList* courseList);
+Course* findCourseIDClassName(string courseID, string className, CourseList* courseList);
 bool removeCourseFromCourseList(string courseID, CourseList*& courseList);
 int getLengthCourseList(CourseList* courseList);
 Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage);
 bool removeScoreAccountID(string accountID, ScoreList*& scoreList);
+bool importCourseFromCSV(string path, AccountList* accountList, ClassList* classList, CourseList*& courseList);
+Score* findScoreAccountID(string accountID, ScoreList* scoreList);
+bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
 
 #endif

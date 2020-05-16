@@ -86,7 +86,6 @@ bool importStudentFromCSV(string path, AccountList*& accountList, AccountList*& 
 	string temp;
 	getline(fin, temp);
 
-	AccountList* cur = nullptr;
 	while (!fin.eof()) {
 		//Number of record
 		getline(fin, temp, ',');

@@ -111,7 +111,7 @@ void functionStaff(int number) {
 			displayAddManuallyStudentToClass(accountListStorage, classListStorage);
 			break;
 		case (5):
-			displayCreateClass(accountListStorage,classListStorage);
+			displayImportClassFromCSV(accountListStorage,classListStorage);
 			break;
 		case (6):
 			displayRemoveStudentFromClass(accountListStorage, classListStorage);
@@ -132,7 +132,7 @@ void functionStaff(int number) {
 			displayChangeAcademicYearSemester(currentSemester,accountListStorage,courseListStorage);
 			break;
 		case (12):
-			//AAAAAAAAAAAAAAAA
+			displayImportCourseFromCSV(accountListStorage, classListStorage);
 			break;
 		case (13):
 			displayAddNewCourse(currentSemester, accountListStorage, classListStorage, courseListStorage);

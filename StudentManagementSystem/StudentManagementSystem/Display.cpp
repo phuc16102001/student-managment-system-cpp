@@ -534,7 +534,7 @@ void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassLis
 	cout << "Cannot find this student\n";
 }
 
-void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
+void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& classListStorage) {
 	string className, pathFile;
 	AccountList* importList = nullptr;
 
@@ -729,10 +729,11 @@ void displayRemoveStudentFromCourse(string currentSemester, CourseList* courseLi
 	}
 	cout << "Remove a student from course\n";
 
-	string courseID, studentID;
+	string courseID, className, studentID;
 
 	cout << "CourseID: "; getline(cin, courseID);
-	Course* courseData = findCourseID(courseID, courseListStorage);
+	cout << "Class name: "; getline(cin, className);
+	Course* courseData = findCourseIDClassName(courseID, className, courseListStorage);
 	if (courseData == nullptr) {
 		cout << "Course not found\n";
 		return;
@@ -761,10 +762,11 @@ void displayAddStudentToCourse(string currentSemester, AccountList* accountListS
 	}
 	cout << "Add a student to course\n";
 
-	string courseID, studentID;
+	string courseID, className, studentID;
 
 	cout << "CourseID: "; getline(cin, courseID);
-	Course* courseData = findCourseID(courseID, courseListStorage);
+	cout << "Class name: "; getline(cin, className);
+	Course* courseData = findCourseIDClassName(courseID, className,courseListStorage);
 	if (courseData == nullptr) {
 		cout << "Course not found\n";
 		return;
@@ -802,14 +804,50 @@ void displayStudentListFromCourse(string currentSemester, CourseList* courseList
 	}
 	cout << "Student from course\n";
 
-	string courseID;
+	string courseID, className;
 
 	cout << "CourseID: "; getline(cin, courseID);
-	Course* courseData = findCourseID(courseID, courseList);
+	cout << "Class name: "; getline(cin, className);
+	Course* courseData = findCourseIDClassName(courseID, className, courseList);
 	if (courseData == nullptr) {
 		cout << "Course not found\n";
 		return;
 	}
 
 	outputAccountList(courseData->studentList);
+}
+
+void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList) {
+	string academicYear, semester, pathFile;
+
+	//Header
+	displayHeaderUI();
+	cout << "Create semester from csv file\n";
+
+	//Input
+	cout << "Academic year: ";
+	getline(cin, academicYear);
+	cout << "Semester: ";
+	getline(cin, semester);
+	cout << "Path CSV file: ";
+	getline(cin, pathFile);
+	
+	//Check if existed
+	if (createSemester(academicYear, semester)) {
+		CourseList* newCourseList = nullptr;
+		if (importCourseFromCSV(pathFile, accountList, classList, newCourseList)) {
+			if (saveCourseToStorage(academicYear + "-" + semester, newCourseList)) {
+				cout << "Import successfully\n";
+			}
+			else {
+				cout << "Fail to open file\n";
+			}
+		}
+		else {
+			cout << "Fail to import\n";
+		}
+	}
+	else {
+		cout << "Semester already existed\n";
+	}
 }

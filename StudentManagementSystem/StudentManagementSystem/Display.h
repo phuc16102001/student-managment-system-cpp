@@ -17,7 +17,7 @@ int displayStudentMenu(string semester);
 void displayFindStudent(AccountList* accountListStorage);
 void displayEditAccount(AccountList* accountListStorage);
 void displayResetPassword(AccountList* accountListStorage);
-void displayCreateClass(AccountList*& accountListStorage, ClassList*& classListStorage);
+void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& classListStorage);
 void displayViewListClasses(ClassList* classListStorage);
 void displayViewListStudentInClass(ClassList* classListStorage);
 void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage);
@@ -31,6 +31,7 @@ void displayCurrentCourseList(string currentSemester, CourseList* courseList);
 void displayRemoveStudentFromCourse(string currentSemester, CourseList* courseListStorage);
 void displayAddStudentToCourse(string currentSemester, AccountList* accountListStorage, CourseList* courseListStorage);
 void displayStudentListFromCourse(string currentSemester, CourseList* courseList);
+void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

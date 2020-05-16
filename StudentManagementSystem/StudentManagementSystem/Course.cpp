@@ -28,7 +28,7 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 		int date, month, year;
 		int hour, minute;
 		string input;
-		
+
 		//Input startDate
 		getline(fin, input);
 		parseDate(input, date, month, year);
@@ -84,7 +84,7 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 			//Find account
 			Account* studentAccount = findAccountID(studentID, accountList);
 			if (studentAccount == nullptr) break;
-		
+
 			studentScore->studentID = studentAccount->ID;
 
 			//Insert to list
@@ -93,6 +93,46 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 		}
 		newCourse->studentList = studentAccountList;
 		newCourse->scoreList = studentScoreList;
+
+		//Insert to list
+		insertCourseToCourseList(newCourse, courseList);
+	}
+
+	fin.close();
+	return true;
+}
+
+bool importCourseFromCSV(string path, AccountList* accountList, ClassList* classList, CourseList*& courseList) {
+	//Open file
+	fstream fin(path, ios::in);
+	if (!fin.is_open()) return false;
+
+	//Ignore the first line
+	string temp;
+	getline(fin, temp);
+
+	while (!fin.eof()) {
+
+		//Number of record
+		getline(fin, temp, ',');
+		if (temp == "") break;
+
+		string courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, roomName, dayOfWeekString;
+
+		//Read input
+		getline(fin, courseID, ',');
+		getline(fin, courseName, ',');
+		getline(fin, className, ',');
+		getline(fin, lecturerID, ',');
+		getline(fin, startDate, ',');
+		getline(fin, endDate, ',');
+		getline(fin, dayOfWeekString, ',');
+		getline(fin, startTime, ',');
+		getline(fin, endTime, ',');
+		getline(fin, roomName);
+
+		//Create course
+		Course* newCourse = createCourse(courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList,classList);
 
 		//Insert to list
 		insertCourseToCourseList(newCourse, courseList);
@@ -111,7 +151,8 @@ bool insertCourseToCourseList(Course* courseData, CourseList*& courseList) {
 	else {
 		CourseList* cur = courseList;
 		while (cur != nullptr) {
-			if (cur->courseData->courseID == courseData->courseID) {
+			if (cur->courseData->courseID == courseData->courseID 
+				&& cur->courseData->className == courseData->className) {
 				return false;
 			}
 			if (cur->nextCourse == nullptr) break;
@@ -244,9 +285,10 @@ bool createSemester(string academicYear, string semester) {
 	fout.close();
 }
 
-Course* findCourseID(string courseID, CourseList* courseList) {
+Course* findCourseIDClassName(string courseID, string className, CourseList* courseList) {
 	while (courseList != nullptr) {
-		if (courseList->courseData->courseID == courseID) {
+		if (courseList->courseData->courseID == courseID
+			&& courseList->courseData->className == className) {
 			return courseList->courseData;
 		}
 		courseList = courseList->nextCourse;
@@ -391,3 +433,7 @@ bool removeScoreAccountID(string accountID, ScoreList*& scoreList) {
 
 	return false;
 }
+
+Score* findScoreAccountID(string accountID, ScoreList* scoreList);
+
+bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
