@@ -6,6 +6,14 @@
 #include "Class.h"
 #include "Account.h"
 
+#define colorGreen 2
+#define colorBlue 3
+#define colorRed 4
+#define colorPurple 5
+#define colorOrange 6
+#define colorWhite 7
+#define colorMint 11
+
 void displayHeaderUI();																					//Display UI header
 void displayLogin(string& inputAccountID, string& inputPassword);										//Display UI login
 void displayProfileInfo(Account* accountDisplay);														//Display UI profile info of an account

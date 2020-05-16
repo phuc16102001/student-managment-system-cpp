@@ -1,16 +1,27 @@
 #include "Display.h"
 
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+void setColor(int color) {
+	SetConsoleTextAttribute(hConsole, color);
+}
+
 void displayHeaderUI() {
+	setColor(colorMint); 
 	cout << "--------------------------------\n";
 	cout << "|                              |\n";
 	cout << "|  Student Management System   |\n";
 	cout << "|                              |\n";
 	cout << "--------------------------------\n";
+	setColor(colorWhite);
 }
 
 void displayCurrentSemester(string semester) {
+	setColor(colorOrange);
 	cout << "Current semester: " << semester << endl;
+	setColor(colorMint);
 	cout << "--------------------------------\n";
+	setColor(colorWhite);
 }
 
 void outputAccount(Account* account) {
@@ -110,7 +121,9 @@ void inputHidenText(string& text) {
 void displayLogin(string& inputAccountID,string& inputPassword) {
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Press Ctrl+C to exit\n";
+	setColor(colorWhite);
 
 	//Input
 	cout << "User ID: ";
@@ -183,37 +196,51 @@ int displayStaffMenu(string semester) {
 	displayHeaderUI();
 	displayCurrentSemester(semester);
 	int x;
-	cout	<< "Staff Menu?\n"
-			<< "Student:\n"
-			<< "1. Find student\n"
-			<< "2. Edit student information\n"
-			<< "3. Reset password\n\n"
-			<< "Class:\n"
-			<< "4. Add manual student to a class\n"
-			<< "5. Create a class from csv file\n"
-			<< "6. Remove student from a class\n"
-			<< "7. Move student to another class\n"
-			<< "8. View list of classes\n"
-			<< "9. View list of students in a class\n\n"
-			<< "Course:\n"
-			<< "10. Create academic year and semester\n"
-			<< "11. Change current academic year and semester\n"
-			<< "12. Import courses from a semester\n"
-			<< "13. Add new course\n"
-			<< "14. Edit existing course\n"
-			<< "15. Remove course\n"
-			<< "16. Remove student from a course\n"
-			<< "17. Add student to a course\n"
-			<< "18. View list of course in the current semester\n"
-			<< "19. View list of students of a course\n"
-			<< "20. View attendance list of a course\n"
-			<< "21. Create/Update/Delete/View all lecturers\n\n"
-			<< "Scoreboard:\n"
-			<< "22. Search and view attendance list of a course\n"
-			<< "23. Export scoreboard into csv file\n"
-			<< "24. Back\n"
-			<< "Choose one function: ";
+	setColor(colorGreen);
+	cout << "           Staff Menu\n\n";
+	setColor(colorMint);
+	
+	cout << "Student:\n";
+	setColor(colorWhite);
+	cout << "1. Find student\n"
+		 << "2. Edit student information\n"
+		 << "3. Reset password\n\n";
+
+	setColor(colorMint);
+	cout << "Class:\n";
+	setColor(colorWhite);
+	cout << "4. Add manual student to a class\n"
+		 << "5. Create a class from csv file\n"
+		 << "6. Remove student from a class\n"
+		 << "7. Move student to another class\n"
+		 << "8. View list of classes\n"
+		 << "9. View list of students in a class\n\n";
+		 
+	setColor(colorMint);
+	cout << "Course:\n";
+	setColor(colorWhite);
+	cout << "10. Create academic year and semester\n"
+		 << "11. Change current academic year and semester\n"
+		 << "12. Import courses from a semester\n"
+		 << "13. Add new course\n"
+		 << "14. Edit existing course\n"
+		 << "15. Remove course\n"
+		 << "16. Remove student from a course\n"
+		 << "17. Add student to a course\n"
+		 << "18. View list of course in the current semester\n"
+		 << "19. View list of students of a course\n"
+		 << "20. View attendance list of a course\n"
+		 << "21. Create/Update/Delete/View all lecturers\n\n";
+
+	setColor(colorMint);
+	cout << "Scoreboard:\n";
+	setColor(colorWhite);
+	cout << "22. Search and view attendance list of a course\n"
+		 << "23. Export scoreboard into csv file\n"
+		 << "24. Back\n";
+	cout << "Choose one function: ";
 	cin >> x;
+
 	while (x < 1 || x > 24) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
@@ -226,7 +253,7 @@ int displayLecturerMenu(string semester) {
 	displayHeaderUI();
 	displayCurrentSemester(semester);
 	int x;
-	cout << "Lecturer Menu\n";
+	cout << "Lecturer Menu\n\n";
 	cout << "1. Change current semester\n"
 		 << "2. View list of courses in the current semester\n"
 		 << "3. View list of students of a course\n"
@@ -250,7 +277,7 @@ int displayStudentMenu(string semester) {
 	displayHeaderUI();
 	displayCurrentSemester(semester);
 	int x;
-	cout << "Student Menu\n";
+	cout << "Student Menu\n\n";
 	cout << "1. Check-in\n"
 		 << "2. View check-in result\n"
 		 << "3. View schedules\n"
