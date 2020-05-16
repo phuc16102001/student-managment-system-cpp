@@ -227,17 +227,18 @@ int displayLecturerMenu(string semester) {
 	displayCurrentSemester(semester);
 	int x;
 	cout << "Lecturer Menu\n";
-	cout << "1. View list of courses in the current semester\n"
-		 << "2. View list of students of a course\n"
-		 << "3. View attendance list of a course\n"
-		 << "4. Edit attendances\n"
-		 << "5. Import scoreboard\n"
-		 << "6. Edit student grade\n"
-		 << "7. Scoreboard\n"
-		 << "8. Back\n"
+	cout << "1. Change current semester\n"
+		 << "2. View list of courses in the current semester\n"
+		 << "3. View list of students of a course\n"
+		 << "4. View attendance list of a course\n"
+		 << "5. Edit attendances\n"
+		 << "6. Import scoreboard\n"
+		 << "7. Edit student grade\n"
+		 << "8. Scoreboard\n"
+		 << "9. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 8) {
+	while (x < 1 || x > 9) {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}

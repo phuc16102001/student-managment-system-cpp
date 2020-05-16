@@ -168,7 +168,16 @@ void functionStaff(int number) {
 
 void functionLecturer(int number) {
 	switch (number) {
-		case (8):
+		case (1):
+			displayChangeAcademicYearSemester(currentSemester, accountListStorage, courseListStorage); 
+			break;
+		case (2):
+			displayCurrentCourseList(currentSemester, courseListStorage);
+			break;
+		case (3):
+			displayStudentListFromCourse(currentSemester, courseListStorage);
+			break;
+		case (9):
 			basicMenu();
 			return;
 	}
