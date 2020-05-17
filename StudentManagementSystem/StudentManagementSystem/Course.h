@@ -6,6 +6,15 @@
 #include "Class.h"
 #include "Utils.h"
 
+struct CheckIn {
+	bool* checkInResult = nullptr;
+};
+
+struct CheckInList {
+	CheckIn* checkIn;
+	CheckInList* nextCheckIn = nullptr;
+};
+
 struct Score {
 	float midScore = -1;
 	float bonusScore = -1;
@@ -32,6 +41,7 @@ struct Course {
 	string roomName;
 	ScoreList* scoreList = nullptr;
 	AccountList* studentList = nullptr;
+	CheckInList* checkInList = nullptr;
 };
 
 struct CourseList {
@@ -39,6 +49,7 @@ struct CourseList {
 	CourseList* nextCourse = nullptr;
 };
 
+bool insertCheckInToCheckInList(CheckIn* checkIn, CheckInList*& checkInList);
 bool insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList);
 bool insertCourseToCourseList(Course* courseData, CourseList*& courseList);
 bool importCourseFromStorage(string semester, AccountList* accountList, CourseList*& courseList);

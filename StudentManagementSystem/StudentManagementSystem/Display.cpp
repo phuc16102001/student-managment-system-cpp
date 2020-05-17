@@ -266,14 +266,16 @@ int displayStudentMenu(string semester) {
 	cout << "Student Menu\n\n";
 	setColor(colorWhite);
 
-	cout << "1. Check-in\n"
-		 << "2. View check-in result\n"
-		 << "3. View schedules\n"
-		 << "4. View your scores\n"
-		 << "5. Back\n"
+	cout << "1. Change current academic year and semester\n"
+		 << "2. List of courses\n"
+		 <<	"3. Check-in\n"
+		 << "4. View check-in result\n"
+		 << "5. View schedules\n"
+		 << "6. View your scores\n"
+		 << "7. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 5) {
+	while (x < 1 || x > 7) {
 		cout << "Please choose again!\n"; 
 		cin >> x;
 	}

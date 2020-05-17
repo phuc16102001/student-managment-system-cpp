@@ -192,7 +192,13 @@ void functionLecturer(int number) {
 
 void functionStudent(int number) {
 	switch (number) {
-		case (5):
+		case (1): 
+			displayChangeAcademicYearSemester(currentSemester, accountListStorage, courseListStorage);
+			break;
+		case (2): 
+			displayCurrentCourseList(currentSemester, courseListStorage);
+			break;
+		case (7):
 			basicMenu();
 			return;
 	}
@@ -221,16 +227,7 @@ void demo() {
 }
 
 void test() {
-	string academicYear;
-	string semester;
-	cout << "year: "; getline(cin, academicYear);
-	cout << "semester: "; getline(cin, semester);
-	if (createSemester(academicYear, semester)) {
-		cout << "Success\n";
-	}
-	else {
-		cout << "Fail\n";
-	}
+	cout << getNumberOfWeek(18, 5, 2020, 1, 6, 2020);
 }
 
 int main() {

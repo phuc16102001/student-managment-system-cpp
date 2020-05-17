@@ -11,6 +11,7 @@ string clearSpecialCharString(string input) {
 	return input;
 }
 
+//Parse input from DD-MM-YYYY to int
 void parseDate(string input, int& date, int& month, int& year) {
 	//Find the index of '-'
 	int index1, index2;
@@ -23,6 +24,7 @@ void parseDate(string input, int& date, int& month, int& year) {
 	year = stoi(input.substr(index2 + 1, input.length() - index2 - 1));
 }
 
+//Parse input from HH:MM to int
 void parseTime(string input, int& hour, int& minute) {
 	//Find the index of ':'
 	int index = input.find(':');
@@ -32,7 +34,7 @@ void parseTime(string input, int& hour, int& minute) {
 	minute = stoi(input.substr(index + 1, input.length() - index - 1));
 }
 
-//Convert string input into format DD-MM-YYYY
+//Convert to DD-MM-YYYY
 string convertDate(string input) {
 	//Date of birth
 	int dd, mm, yyyy;
@@ -61,6 +63,7 @@ string convertDate(string input) {
 	return input;
 }
 
+//Convert to HH:MM
 string convertTime(string input) {
 	int hour, minute;
 
@@ -80,14 +83,17 @@ string convertTime(string input) {
 	return input;
 }
 
+//Convert to date string
 string dateToString(int date, int month, int year) {
 	return convertDate(to_string(date) + "-" + to_string(month) + "-" + to_string(year));
 }
 
+//Convert to time string
 string timeToString(int hour, int minute) {
 	return convertTime(to_string(hour) + ":" + to_string(minute));
 }
 
+//Get dayOfWeek int
 int getDayOfWeek(string input) {
 	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
 	for (int i = 0; i < input.length(); i++) {
@@ -100,7 +106,59 @@ int getDayOfWeek(string input) {
 	}
 }
 
+//Get dayOfWeek string
 string getDayOfWeekString(int input) {
 	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
 	return dayString[input];
+}
+
+//Check leap year
+bool isLeap(int year) {
+	return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
+}
+
+//Inc date from date-month-year + numberOfDay day
+void incDate(int& date, int& month, int& year, int numberOfDay) {
+	int dayInMonth[13] = { -1,31,28,31,30,31,30,31,31,30,31,30,31 };
+	if (isLeap(year)) dayInMonth[2] = 29;
+
+	date += numberOfDay;
+	while (date > dayInMonth[month]) {
+		date -= dayInMonth[month];
+		month += 1;
+		while (month > 12) {
+			month -= 12;
+			year += 1;
+			if (isLeap(year)) {
+				dayInMonth[2] = 29;
+			}
+			else {
+				dayInMonth[2] = 28;
+			}
+		}
+	}
+}
+
+//Check 2 date1<=date2
+bool isLowerEqual(int date1, int month1, int year1, int date2, int month2, int year2) {
+	if (year1 < year2) return true; else
+		if (year1 > year2) return false; else
+
+			if (month1 < month2) return true; else
+				if (month1 > month2) return false; else
+
+					if (date1 < date2) return true; else
+						if (date1 > date2) return false;
+
+		return true;
+}
+
+//Get number of week between 2 date (count full week)
+int getNumberOfWeek(int date1, int month1, int year1, int date2, int month2, int year2) {
+	int count = -1;
+	while (isLowerEqual(date1, month1, year1, date2, month2, year2)) {
+		incDate(date1, month1, year1, 7);
+		count++;
+	}
+	return count;
 }
