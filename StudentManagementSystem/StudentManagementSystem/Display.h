@@ -41,6 +41,7 @@ void displayRemoveStudentFromCourse(string currentSemester, CourseList* courseLi
 void displayAddStudentToCourse(string currentSemester, AccountList* accountListStorage, CourseList* courseListStorage);
 void displayStudentListFromCourse(string currentSemester, CourseList* courseList);
 void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList);
+void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

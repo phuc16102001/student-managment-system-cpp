@@ -96,6 +96,7 @@ void outputCourse(Course* course) {
 	cout << "End date: " << endDate << endl;
 	cout << "Start time: " << startTime << endl;
 	cout << "End time: " << endTime << endl;
+	cout << "Day of week: " << getDayOfWeekString(course->dayOfWeek) << endl;
 	cout << "Room: " << course->roomName << endl;
 }
 
@@ -789,9 +790,6 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	cout << "End time: "; getline(cin, endTime);
 
 	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): "; getline(cin, dayOfWeekString);
-	for (int i = 0; i < dayOfWeekString.length(); i++) {
-		dayOfWeekString[i] = toupper(dayOfWeekString[i]);
-	}
 
 	cout << "Room name: "; getline(cin, roomName);
 
@@ -807,6 +805,50 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	}
 	else {
 		cout << "Fail to create course\n";
+	}
+}
+
+void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	cout << "Edit course\n";
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+
+	string courseID, className;
+	cout << "CourseID: "; getline(cin, courseID);
+	cout << "Class name: "; getline(cin, className);
+
+	Course* findCourse = findCourseIDClassName(courseID, className, courseList);
+	if (findCourse == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	cout << "Found class, please input new information:\n";
+	string courseName, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName;
+	cout << "Leave blank if unchange\n";
+	cout << "Course name: "; getline(cin, courseName);
+	cout << "Lecturer ID: "; getline(cin, lecturerID);
+	cout << "Start date: "; getline(cin, startDate);
+	cout << "End date: "; getline(cin, endDate);
+	cout << "Start time: "; getline(cin, startTime);
+	cout << "End time: "; getline(cin, endTime);
+	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): "; getline(cin, dayOfWeekString);
+	cout << "Room name: "; getline(cin, roomName);
+
+	if (editCourse(courseName, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList, findCourse)) {
+		if (saveCourseToStorage(currentSemester, courseList)) {
+			cout << "Edited successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		cout << "Fail to edit\n";
 	}
 }
 

@@ -341,20 +341,24 @@ int getLengthCourseList(CourseList* courseList) {
 
 Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage) {
 
-	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
+	//Lecturer account
 	Account* lecturerAccount = findAccountID(lecturerID, accountListStorage);
 	if (lecturerAccount == nullptr) return nullptr;
 
+	//Class 
 	Class* classData = findClassName(className, classListStorage);
 	if (classData == nullptr) return nullptr;
 
+	//Student list
 	AccountList* studentList = classData->accountList;
 	ScoreList* scoreList = nullptr;
 
+	//Create new course
 	Course* newCourse = new Course;
 	int date, month, year;
 	int hour, minute;
 
+	//Assign value
 	newCourse->courseID = courseID;
 	newCourse->courseName = courseName;
 	newCourse->className = className;
@@ -362,14 +366,10 @@ Course* createCourse(string courseID, string courseName, string className, strin
 	newCourse->studentList = studentList;
 	newCourse->lecturerAccount = lecturerAccount;
 
-	for (int i = 0; i < 7; i++) {
-		if (dayString[i] == dayOfWeekString) {
-			newCourse->dayOfWeek = i;
-			break;
-		}
-	}
+	//Day of week
+	int dayOfWeek = getDayOfWeek(dayOfWeekString);
 
-
+	//Scorelist
 	AccountList* runnerAccountList = studentList;
 	ScoreList* runnerScoreList = scoreList;
 	while (runnerAccountList != nullptr) {
@@ -440,3 +440,55 @@ bool removeScoreAccountID(string accountID, ScoreList*& scoreList) {
 Score* findScoreAccountID(string accountID, ScoreList* scoreList);
 
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
+
+bool editCourse(string courseName, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course) {
+	if (lecturerID != "") {
+		Account* lecturerAccount = findAccountID(lecturerID, accountList);
+		if (lecturerAccount == nullptr) return false;
+		course->lecturerAccount = lecturerAccount;
+	}
+	
+	if (dayOfWeekString != "") {
+		int dayOfWeek = getDayOfWeek(dayOfWeekString);
+		course->dayOfWeek = dayOfWeek;
+	}
+
+	if (courseName != "") {
+		course->courseName = courseName;
+	}
+
+	if (roomName != "") {
+		course->roomName = roomName;
+	}
+	
+	int date, month, year;
+	int hour, minute;
+
+	if (startDate != "") {
+		parseDate(startDate, date, month, year);
+		course->startDate = date;
+		course->startMonth = month;
+		course->startYear = year;
+	}
+
+	if (endDate != "") {
+		parseDate(endDate, date, month, year);
+		course->endDate = date;
+		course->endMonth = month;
+		course->endYear = year;
+	}
+
+	if (startTime != "") {
+		parseTime(startTime, hour, minute);
+		course->startHour = hour;
+		course->startMinute = minute;
+	}
+
+	if (endTime != "") {
+		parseTime(endTime, hour, minute);
+		course->endHour = hour;
+		course->endMinute = minute;
+	}
+
+	return true;
+}

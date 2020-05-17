@@ -54,6 +54,7 @@ Course* createCourse(string courseID, string courseName, string className, strin
 bool removeScoreAccountID(string accountID, ScoreList*& scoreList);
 bool importCourseFromCSV(string path, AccountList* accountList, ClassList* classList, CourseList*& courseList);
 Score* findScoreAccountID(string accountID, ScoreList* scoreList);
+bool editCourse(string courseName, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course);
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
 
 #endif

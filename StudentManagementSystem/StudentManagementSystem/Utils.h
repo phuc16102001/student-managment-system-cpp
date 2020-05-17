@@ -10,5 +10,7 @@ string timeToString(int hour, int minute);
 string clearSpecialCharString(string input);
 string convertTime(string input);
 string convertDate(string input);
+string getDayOfWeekString(int input);
+int getDayOfWeek(string input);
 
 #endif

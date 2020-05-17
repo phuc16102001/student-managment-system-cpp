@@ -87,3 +87,20 @@ string dateToString(int date, int month, int year) {
 string timeToString(int hour, int minute) {
 	return convertTime(to_string(hour) + ":" + to_string(minute));
 }
+
+int getDayOfWeek(string input) {
+	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
+	for (int i = 0; i < input.length(); i++) {
+		input[i] = toupper(input[i]);
+	}
+	for (int i = 0; i < 7; i++) {
+		if (dayString[i] == input) {
+			return i;
+		}
+	}
+}
+
+string getDayOfWeekString(int input) {
+	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
+	return dayString[input];
+}

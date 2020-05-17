@@ -141,7 +141,7 @@ void functionStaff(int number) {
 			displayAddNewCourse(currentSemester, accountListStorage, classListStorage, courseListStorage);
 			break;
 		case (15):
-			//AAAAAAAAAAAAAAAA
+			displayEditCourse(currentSemester, accountListStorage, courseListStorage);
 			break;
 		case (16):
 			displayRemoveCourse(currentSemester, courseListStorage);
