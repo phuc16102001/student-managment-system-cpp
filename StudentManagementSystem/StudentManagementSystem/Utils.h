@@ -8,6 +8,7 @@ void parseTime(string input, int& hour, int& minute);
 string dateToString(int date, int month, int year);
 string timeToString(int hour, int minute);
 string clearSpecialCharString(string input);
+string convertTime(string input);
 string convertDate(string input);
 
 #endif

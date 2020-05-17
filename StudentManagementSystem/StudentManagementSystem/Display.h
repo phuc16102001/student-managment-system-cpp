@@ -22,6 +22,7 @@ void displayChangePassword(Account* account, AccountList* accountListStorage);
 int displayStaffMenu(string semester);
 int displayLecturerMenu(string semester);
 int displayStudentMenu(string semester);
+void displayCreateAccount(AccountList*& accountListStorage);
 void displayFindStudent(AccountList* accountListStorage);
 void displayEditAccount(AccountList* accountListStorage);
 void displayResetPassword(AccountList* accountListStorage);
@@ -44,5 +45,6 @@ void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList);
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console
 void outputClassList(ClassList* classList);
+void outputCourse(Course* course);
 
 #endif

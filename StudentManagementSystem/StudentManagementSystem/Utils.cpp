@@ -61,10 +61,29 @@ string convertDate(string input) {
 	return input;
 }
 
+string convertTime(string input) {
+	int hour, minute;
+
+	//Find the index of ':'
+	int index = input.find(':');
+
+	//Parse into int
+	hour = stoi(input.substr(0, index));
+	minute = stoi(input.substr(index + 1, input.length() - index - 1));
+
+	input = "";
+	if (hour < 10) input += "0";
+	input += to_string(hour) + ":";
+	if (minute < 10) input += "0";
+	input += to_string(minute);
+
+	return input;
+}
+
 string dateToString(int date, int month, int year) {
-	return to_string(date) + "-" + to_string(month) + "-" + to_string(year);
+	return convertDate(to_string(date) + "-" + to_string(month) + "-" + to_string(year));
 }
 
 string timeToString(int hour, int minute) {
-	return to_string(hour) + ":" + to_string(minute);
+	return convertTime(to_string(hour) + ":" + to_string(minute));
 }

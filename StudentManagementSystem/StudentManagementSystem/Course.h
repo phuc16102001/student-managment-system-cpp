@@ -48,7 +48,7 @@ void clearCourseList(CourseList*& courseList);
 bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList);
 bool createSemester(string academicYear, string semester);
 Course* findCourseIDClassName(string courseID, string className, CourseList* courseList);
-bool removeCourseFromCourseList(string courseID, CourseList*& courseList);
+bool removeCourseFromCourseList(string courseID, string className, CourseList*& courseList);
 int getLengthCourseList(CourseList* courseList);
 Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage);
 bool removeScoreAccountID(string accountID, ScoreList*& scoreList);

@@ -296,9 +296,11 @@ Course* findCourseIDClassName(string courseID, string className, CourseList* cou
 	return nullptr;
 }
 
-bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
+bool removeCourseFromCourseList(string courseID, string className, CourseList*& courseList) {
 	//1st node
-	if (courseList->courseData->courseID == courseID) {
+	if (courseList!=nullptr
+		&& courseList->courseData->courseID == courseID
+		&& courseList->courseData->className == className) {
 		CourseList* tempCourse = courseList;
 		courseList = courseList->nextCourse;
 
@@ -310,7 +312,8 @@ bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
 	//Other node
 	CourseList* cur = courseList;
 	while (cur != nullptr && cur->nextCourse!=nullptr) {
-		if (cur->nextCourse->courseData->courseID == courseID) {
+		if (cur->nextCourse->courseData->courseID == courseID
+			&& courseList->courseData->className == className) {
 			CourseList* tempCourse = cur->nextCourse;
 			cur->nextCourse = tempCourse->nextCourse;
 
@@ -399,7 +402,7 @@ Course* createCourse(string courseID, string courseName, string className, strin
 	newCourse->startHour = hour;
 	newCourse->startMinute = minute;
 
-	parseTime(startTime, hour, minute);
+	parseTime(endTime, hour, minute);
 	newCourse->endHour = hour;
 	newCourse->endMinute = minute;
 

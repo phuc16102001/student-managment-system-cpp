@@ -59,7 +59,9 @@ void outputAccount(Account* account) {
 
 void outputAccountList(AccountList* list) {
 	while (list != nullptr) {
+		setColor(colorOrange);
 		cout << "==========================\n";
+		setColor(colorWhite);
 		outputAccount(list->accountData);
 		list = list->nextAccount;
 	}
@@ -79,15 +81,31 @@ void outputClass(Class* classData) {
 	outputAccountList(accountList);
 }
 
+void outputCourse(Course* course) {
+	string startDate, endDate, startTime, endTime;
+	startDate = dateToString(course->startDate,course->startMonth,course->startYear);
+	endDate = dateToString(course->endDate, course->endMonth, course->endYear);
+	startTime = timeToString(course->startHour,course->startMinute);
+	endTime = timeToString(course->endHour,course->endMinute);
+
+	cout << "Course ID: " << course->courseID << endl;
+	cout << "Course name: " << course->courseName << endl;
+	cout << "Course class: " << course->className << endl;
+	cout << "Lecturer account: " << course->lecturerAccount->ID << endl;
+	cout << "Start date: " << startDate << endl;
+	cout << "End date: " << endDate << endl;
+	cout << "Start time: " << startTime << endl;
+	cout << "End time: " << endTime << endl;
+	cout << "Room: " << course->roomName << endl;
+}
+
 void outputCourseList(CourseList* courseList) {
 	while (courseList != nullptr) {
+		setColor(colorOrange);
 		cout << "==========================\n";
-		Course* courseData = courseList->courseData;
-		
-		cout << "Course ID: " << courseData->courseID << endl;
-		cout << "Course name: " << courseData->courseName << endl;
-		cout << "Course class: " << courseData->className << endl;
+		setColor(colorWhite);
 
+		outputCourse(courseList->courseData);
 		courseList = courseList->nextCourse;
 	}
 }
@@ -148,90 +166,51 @@ int displayBasicMenu() {
 	return x;
 }
 
-void displayChangePassword(Account* account, AccountList* accountListStorage) {
-	//Header
-	displayHeaderUI();
-	
-	//Input
-	string oldPassword, newPassword, repeatPassword;
-	cout << "Old password: ";
-	inputHidenText(oldPassword);
-	cout << "New password: ";
-	inputHidenText(newPassword);
-	cout << "Repeat new password: ";
-	inputHidenText(repeatPassword);
-
-	//Try to change password
-	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
-		case (0):
-			if (saveAccountListToStorage(accountListStorage)) {
-				//Save after change successful
-				cout << "Password change successful\n";
-			}
-			else {
-				//Fail to save
-				cout << "Fail to open storage\n";
-			}
-			break;
-		case (1):
-			//Wrong old password
-			cout << "Wrong password\n";
-			break;
-		case (2):
-			//Wrong repeat password
-			cout << "Repeat password is not the same\n";
-			break;
-		case (3):
-			//Maximum length is 20
-			cout << "Maximum length is 20\n";
-			break;
-	}
-	cout << "Press enter to continue...";
-	cin.ignore();
-	cin.get();
-	system("CLS");
-}
-
 int displayStaffMenu(string semester) {
 	displayHeaderUI();
 	displayCurrentSemester(semester);
 	int x;
 	setColor(colorGreen);
 	cout << "           Staff Menu\n\n";
+
 	setColor(colorMint);
-	
+	cout << "Account:\n";
+	setColor(colorWhite);
+	cout << "1. Create account\n\n";
+
+
+	setColor(colorMint);
 	cout << "Student:\n";
 	setColor(colorWhite);
-	cout << "1. Find student\n"
-		 << "2. Edit student information\n"
-		 << "3. Reset password\n\n";
+	cout << "2. Find student\n"
+		 << "3. Edit student information\n"
+		 << "4. Reset password\n\n";
 
 	setColor(colorMint);
 	cout << "Class:\n";
 	setColor(colorWhite);
-	cout << "4. Add manual student to a class\n"
-		 << "5. Create a class from csv file\n"
-		 << "6. Remove student from a class\n"
-		 << "7. Move student to another class\n"
-		 << "8. View list of classes\n"
-		 << "9. View list of students in a class\n\n";
+	cout << "5. Add manual student to a class\n"
+		 << "6. Create a class from csv file\n"
+		 << "7. Remove student from a class\n"
+		 << "8. Move student to another class\n"
+		 << "9. View list of classes\n"
+		 << "10. View list of students in a class\n\n";
 		 
 	setColor(colorMint);
 	cout << "Course:\n";
 	setColor(colorWhite);
-	cout << "10. Create academic year and semester\n"
-		 << "11. Change current academic year and semester\n"
-		 << "12. Import courses from a semester\n"
-		 << "13. Add new course\n"
-		 << "14. Edit existing course\n"
-		 << "15. Remove course\n"
-		 << "16. Remove student from a course\n"
-		 << "17. Add student to a course\n"
-		 << "18. View list of course in the current semester\n"
-		 << "19. View list of students of a course\n"
-		 << "20. View attendance list of a course\n"
-		 << "21. Create/Update/Delete/View all lecturers\n\n";
-
+	cout << "11. Create academic year and semester\n"
+		 << "12. Change current academic year and semester\n"
+		 << "13. Import courses\n"
+		 << "14. Add new course\n"
+		 << "15. Edit course\n"
+		 << "16. Remove course\n"
+		 << "17. Remove student from a course\n"
+		 << "18. Add student to a course\n"
+		 << "19. View list of courses\n"
+		 << "20. View list of students of a course\n"
+		 << "21. View attendance list of a course\n\n";
+		 
 	setColor(colorMint);
 	cout << "Scoreboard:\n";
 	setColor(colorWhite);
@@ -253,9 +232,13 @@ int displayLecturerMenu(string semester) {
 	displayHeaderUI();
 	displayCurrentSemester(semester);
 	int x;
-	cout << "Lecturer Menu\n\n";
+
+	setColor(colorGreen);
+	cout << "           Lecturer Menu\n\n";
+	setColor(colorWhite);
+
 	cout << "1. Change current semester\n"
-		 << "2. View list of courses in the current semester\n"
+		 << "2. View list of courses\n"
 		 << "3. View list of students of a course\n"
 		 << "4. View attendance list of a course\n"
 		 << "5. Edit attendances\n"
@@ -277,7 +260,11 @@ int displayStudentMenu(string semester) {
 	displayHeaderUI();
 	displayCurrentSemester(semester);
 	int x;
+
+	setColor(colorGreen);
 	cout << "Student Menu\n\n";
+	setColor(colorWhite);
+
 	cout << "1. Check-in\n"
 		 << "2. View check-in result\n"
 		 << "3. View schedules\n"
@@ -300,6 +287,91 @@ void displayProfileInfo(Account* accountDisplay) {
 	cin.ignore();
 	cin.get();
 	system("CLS");
+}
+
+void displayChangePassword(Account* account, AccountList* accountListStorage) {
+	//Header
+	displayHeaderUI();
+
+	//Input
+	string oldPassword, newPassword, repeatPassword;
+	cout << "Old password: ";
+	inputHidenText(oldPassword);
+	cout << "New password: ";
+	inputHidenText(newPassword);
+	cout << "Repeat new password: ";
+	inputHidenText(repeatPassword);
+
+	//Try to change password
+	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
+	case (0):
+		if (saveAccountListToStorage(accountListStorage)) {
+			//Save after change successful
+			cout << "Password change successful\n";
+		}
+		else {
+			//Fail to save
+			cout << "Fail to open storage\n";
+		}
+		break;
+	case (1):
+		//Wrong old password
+		cout << "Wrong password\n";
+		break;
+	case (2):
+		//Wrong repeat password
+		cout << "Repeat password is not the same\n";
+		break;
+	case (3):
+		//Maximum length is 20
+		cout << "Maximum length is 20\n";
+		break;
+	}
+	cout << "Press enter to continue...";
+	cin.ignore();
+	cin.get();
+	system("CLS");
+}
+
+void displayCreateAccount(AccountList*& accountListStorage) {
+	//Header
+	displayHeaderUI();
+	cout << "Create account\n";
+
+	string accountID;
+	cout << "UserID: ";
+	getline(cin, accountID);
+
+	Account* accountData = findAccountID(accountID, accountListStorage);
+	if (accountData != nullptr) {
+		cout << "Account existed\n";
+		return;
+	}
+
+	string lastName, firstName, dob, genderString, accountTypeString;
+	cout << "Last name: ";
+	getline(cin, lastName);
+	cout << "First name: ";
+	getline(cin, firstName);
+	cout << "Gender (Male/Female): ";
+	getline(cin, genderString);
+	cout << "Date of birth (DD-MM-YYYY): ";
+	getline(cin, dob);
+	cout << "Account type (Staff, Lecturer, Student): ";
+	getline(cin, accountTypeString);
+
+	accountData = createAccount(accountID, lastName, firstName, genderString, dob, accountTypeString);
+	if (insertAccountToAccountList(accountData, accountListStorage)) {
+		if (saveAccountListToStorage(accountListStorage)) {
+			cout << "Created account successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		cout << "Fail to create account\n";
+	}
 }
 
 void displayEditAccount(AccountList* accountListStorage) {
@@ -460,7 +532,7 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 	accountData = findAccountID(accountID, accountListStorage);
 	if (!accountData) {
 		//Not existed
-		string lastName, firstName, dob, genderText;
+		string lastName, firstName, dob, genderString;
 		bool gender;
 
 		//Input
@@ -468,13 +540,13 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 		getline(cin, lastName);
 		cout << "First name: ";
 		getline(cin, firstName);
-		cout << "Gender: ";
-		getline(cin, genderText);
-		cout << "Date of birth: ";
+		cout << "Gender (Male/Female): ";
+		getline(cin, genderString);
+		cout << "Date of birth (DD-MM-YYYY): ";
 		getline(cin, dob);
 
 		//Create new account
-		accountData = createAccount(accountID, lastName, firstName, genderText, dob, 2);
+		accountData = createAccount(accountID, lastName, firstName, genderString, dob, "Student");
 
 		//Add to storage
 		insertAccountToAccountList(accountData, accountListStorage);
@@ -680,9 +752,11 @@ void displayRemoveCourse(string currentSemester, CourseList*& courseList) {
 	}
 	cout << "Remove course\n";
 
-	string courseID;
+	string courseID, className;
 	cout << "CourseID: "; getline(cin, courseID);
-	if (removeCourseFromCourseList(courseID,courseList)) {
+	cout << "Class name: "; getline(cin, className);
+
+	if (removeCourseFromCourseList(courseID, className,courseList)) {
 		if (saveCourseToStorage(currentSemester, courseList)) {
 			cout << "Remove successfully\n";
 		}
@@ -725,7 +799,7 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	if (newCourse != nullptr) {
 		insertCourseToCourseList(newCourse, courseList);
 		if (saveCourseToStorage(currentSemester, courseList)) {
-
+			cout << "Created successfully\n";
 		}
 		else {
 			cout << "Fail to open file\n";

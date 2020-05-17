@@ -1,17 +1,32 @@
 #include "Account.h"
 
-Account* createAccount(string accountID, string lastName, string firstName, string genderText, string dob, int accountType) {
+Account* createAccount(string accountID, string lastName, string firstName, string genderString, string dob, string accountTypeString) {
 	Account* account = new Account;
 	if (!account) return nullptr;
 
-	//LowerCase 
+	string accountTypeList[] = { "staff","lecturer","student" };
+
+	//LowerCase genderText
 	bool gender = 0;
-	for (int i = 0; i < genderText.length(); i++) {
-		genderText[i] = tolower(genderText[i]);
+	for (int i = 0; i < genderString.length(); i++) {
+		genderString[i] = tolower(genderString[i]);
 	}
-	if (genderText == "male") {
+	if (genderString == "male") {
 		gender = 1;
 	}
+
+	//LowerCase accountTypeString
+	int accountType = 2;
+	for (int i = 0; i < accountTypeString.length(); i++) {
+		accountTypeString[i] = tolower(accountTypeString[i]);
+	}
+	for (int i = 0; i < 3; i++) {
+		if (accountTypeList[i] == accountTypeString) {
+			accountType = i;
+			break;
+		}
+	}
+
 
 	//Assign value
 	account->ID = accountID;
@@ -19,7 +34,7 @@ Account* createAccount(string accountID, string lastName, string firstName, stri
 	account->firstName = firstName;
 	account->dob = convertDate(dob);
 	account->gender = gender;
-	account->password = clearSpecialCharString(dob);
+	account->password = clearSpecialCharString(account->dob);
 	account->password = SHA256(account->password);
 	account->accountType = accountType;
 
