@@ -1021,10 +1021,6 @@ void displayCheckInBoard(string currentSemester, CourseList* courseList) {
 	int numberOfWeek = getNumberOfWeek(	course->startDate, course->startMonth, course->startYear,
 		course->endDate, course->endMonth, course->endYear);
 	
-	COORD newSize = { 100,9999 };
-	SetConsoleScreenBufferSize(hConsole, newSize);
-
-
 	//Check in header
 	int date, month, year;
 	date = course->startDate;
