@@ -183,7 +183,16 @@ void functionLecturer(int number) {
 		case (3):
 			displayStudentListFromCourse(currentSemester, courseListStorage);
 			break;
-		case (9):
+		case (4):
+			displayCheckInBoard(currentSemester, courseListStorage);
+			break;
+		case (5):
+			displayAddStudentToCourse(currentSemester, accountListStorage, courseListStorage);
+			break;
+		case (6):
+			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
+			break;
+		case (10):
 			basicMenu();
 			return;
 	}
@@ -200,6 +209,9 @@ void functionStudent(int number) {
 			break;
 		case (2): 
 			displayCurrentCourseList(currentSemester, courseListStorage);
+			break;
+		case (4):
+			displayCheckInBoard(currentSemester, courseListStorage);
 			break;
 		case (7):
 			basicMenu();

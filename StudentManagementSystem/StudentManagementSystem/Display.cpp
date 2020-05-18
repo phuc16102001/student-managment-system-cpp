@@ -241,15 +241,16 @@ int displayLecturerMenu(string semester) {
 	cout << "1. Change current semester\n"
 		 << "2. View list of courses\n"
 		 << "3. View list of students of a course\n"
-		 << "4. View attendance list of a course\n"
-		 << "5. Edit attendances\n"
-		 << "6. Import scoreboard\n"
-		 << "7. Edit student grade\n"
-		 << "8. Scoreboard\n"
-		 << "9. Back\n"
+		 << "4. View check in of a course\n"
+		 << "5. Add student to course\n"
+		 << "6. Remove student from course\n"
+		 << "7. Import scoreboard\n"
+		 << "8. Edit student grade\n"
+		 << "9. Scoreboard\n"
+		 << "10. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
-	while (x < 1 || x > 9) {
+	while (x < 1 || x > 10) {
 		cout << "Please choose again!"; 
 		cin >> x;
 	}
@@ -269,7 +270,7 @@ int displayStudentMenu(string semester) {
 	cout << "1. Change current academic year and semester\n"
 		 << "2. List of courses\n"
 		 <<	"3. Check-in\n"
-		 << "4. View check-in result\n"
+		 << "4. View check-in result of course\n"
 		 << "5. View schedules\n"
 		 << "6. View your scores\n"
 		 << "7. Back\n"
