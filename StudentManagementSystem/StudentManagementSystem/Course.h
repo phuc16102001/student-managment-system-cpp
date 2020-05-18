@@ -7,6 +7,7 @@
 #include "Utils.h"
 
 struct CheckIn {
+	string studentID = "";
 	bool* checkInResult = nullptr;
 };
 

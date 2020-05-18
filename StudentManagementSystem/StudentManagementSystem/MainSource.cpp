@@ -158,6 +158,9 @@ void functionStaff(int number) {
 		case (20):
 			displayStudentListFromCourse(currentSemester, courseListStorage);
 			break;
+		case (21):
+			displayCheckInBoard(currentSemester, courseListStorage);
+			break;
 		case (24):
 			basicMenu();
 			return;

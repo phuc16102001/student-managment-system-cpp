@@ -96,7 +96,9 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 			Account* studentAccount = findAccountID(studentID, accountList);
 			if (studentAccount == nullptr) break;
 
+			//Student ID
 			studentScore->studentID = studentAccount->ID;
+			checkIn->studentID = studentAccount->ID;
 
 			//Insert to list
 			insertAccountToAccountList(studentAccount, studentAccountList);
@@ -441,12 +443,16 @@ Course* createCourse(string courseID, string courseName, string className, strin
 	CheckInList* runnerCheckInList = checkInList;
 
 	while (runnerAccountList != nullptr) {
+		Account* account = runnerAccountList->accountData;
+
 		Score* score = new Score;
+		score->studentID = account->ID;
 		insertScoreToScoreList(score, scoreList);
 
 		CheckIn* checkIn = new CheckIn;
 		checkIn->checkInResult = new bool[numberOfWeek];
 		for (int i = 0; i < numberOfWeek; i++) checkIn->checkInResult[i] = false;
+		checkIn->studentID = account ->ID;
 		insertCheckInToCheckInList(checkIn, checkInList);
 
 		runnerAccountList = runnerAccountList->nextAccount;

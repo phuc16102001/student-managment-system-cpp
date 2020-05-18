@@ -210,7 +210,7 @@ int displayStaffMenu(string semester) {
 		 << "18. Add student to a course\n"
 		 << "19. View list of courses\n"
 		 << "20. View list of students of a course\n"
-		 << "21. View attendance list of a course\n\n";
+		 << "21. View check in result of a course\n\n";
 		 
 	setColor(colorMint);
 	cout << "Scoreboard:\n";
@@ -995,5 +995,71 @@ void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList) 
 	}
 	else {
 		cout << "Semester already existed\n";
+	}
+}
+
+void displayCheckInBoard(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Check in result: \n";
+
+	string courseID, className;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	cout << "Class name: "; getline(cin, className);
+	Course* course = findCourseIDClassName(courseID, className, courseList);
+	if (course == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	int numberOfWeek = getNumberOfWeek(	course->startDate, course->startMonth, course->startYear,
+		course->endDate, course->endMonth, course->endYear);
+	
+	COORD newSize = { 100,9999 };
+	SetConsoleScreenBufferSize(hConsole, newSize);
+
+
+	//Check in header
+	int date, month, year;
+	date = course->startDate;
+	month = course->startMonth;
+	year = course->startYear;
+	setColor(colorOrange);
+	cout << "========= Check in =========\n";
+
+	setColor(colorWhite);
+	cout << setw(15) << setfill(' ') << "Date:";
+	for (int i = 0; i < numberOfWeek; i++) {
+		setColor(colorMint);
+		cout << " " << dateToString(date, month, year) << " ";
+		
+		setColor(colorWhite);
+		cout << "|";
+		incDate(date, month, year, 7);
+	}
+	cout << endl;
+
+	//Check in result
+	CheckInList* checkInList = course->checkInList;
+	while (checkInList != nullptr) {
+		CheckIn* checkIn = checkInList->checkIn;
+
+		setColor(colorWhite);
+		cout << setw(15) << setfill(' ') << checkIn->studentID;
+	
+		for (int i = 0; i < numberOfWeek; i++) {
+			setColor(colorGreen);
+			cout << "      " << (checkIn->checkInResult[i] ? 'X' : ' ') << "     ";
+			
+			setColor(colorWhite);
+			cout << "|";
+		}
+		cout << endl;
+		checkInList = checkInList->nextCheckIn;
 	}
 }

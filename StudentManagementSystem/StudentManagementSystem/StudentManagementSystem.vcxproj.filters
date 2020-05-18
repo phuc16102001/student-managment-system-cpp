@@ -76,6 +76,9 @@
     <Text Include="Storage\class.txt">
       <Filter>Resource Files\Storage</Filter>
     </Text>
+    <Text Include="Storage\course\2019-2020-2.txt">
+      <Filter>Resource Files\Storage\Course</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="ImportFile\student19CLC5.csv">
