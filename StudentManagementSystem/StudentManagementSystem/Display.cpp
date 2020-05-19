@@ -515,7 +515,7 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 
 	//Header
 	displayHeaderUI();
-	cout << "Create class from csv file\n";
+	cout << "Add student to class\n";
 
 	//Input className
 	cout << "Class Name: ";
@@ -815,7 +815,7 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
-	cout << "` course\n";
+	cout << "Edit course\n";
 	if (currentSemester == "") {
 		cout << "Please choose semester\n";
 		return;
