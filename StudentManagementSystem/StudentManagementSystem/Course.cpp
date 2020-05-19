@@ -441,9 +441,7 @@ Score* findScoreAccountID(string accountID, ScoreList* scoreList) {
 		{
 			return scoreList->scoreData;
 		}
-		else {
-			scoreList = scoreList->nextScore; // run to next node
-		}
+		scoreList = scoreList->nextScore; // run to next node
 	}
 	return nullptr;
 }
