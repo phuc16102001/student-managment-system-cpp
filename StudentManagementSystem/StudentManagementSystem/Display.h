@@ -15,6 +15,7 @@
 #define colorMint 11
 
 void displayHeaderUI();																					//Display UI header
+void displayLoadingUI(int percentage);
 void displayLogin(string& inputAccountID, string& inputPassword);										//Display UI login
 void displayProfileInfo(Account* accountDisplay);														//Display UI profile info of an account
 int displayBasicMenu();																					//Display UI basic menu
@@ -43,6 +44,7 @@ void displayStudentListFromCourse(string currentSemester, CourseList* courseList
 void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList);
 void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList);
 void displayCheckInBoard(string currentSemester, CourseList* courseList);
+void displayViewScoreBoard(string currentSemester, CourseList* courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

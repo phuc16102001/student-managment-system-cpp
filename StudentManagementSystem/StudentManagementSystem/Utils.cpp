@@ -162,3 +162,20 @@ int getNumberOfWeek(int date1, int month1, int year1, int date2, int month2, int
 	}
 	return count;
 }
+
+//Check if current time is between 2 time
+bool isInTime(int hour1, int minute1, int hour2, int minute2, int curHour, int curMin) {
+	minute1 += hour1 * 60;
+	minute2 += hour2 * 60;
+	curMin += curHour * 60;
+	return (minute1 <= curMin && curMin <= minute2);
+}
+
+//Get current hour and time integer
+void getCurrentTime(int& hour, int& minute) {
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	hour = ltm->tm_hour;
+	minute = ltm->tm_min;
+	return;
+}

@@ -44,6 +44,7 @@ void basicMenu() {
 
 void login() {
 	//Get input
+	system("CLS");
 	string inputAccountID, inputPassword;
 	Account* accountLogin;
 	displayLogin(inputAccountID, inputPassword);
@@ -161,6 +162,9 @@ void functionStaff(int number) {
 		case (21):
 			displayCheckInBoard(currentSemester, courseListStorage);
 			break;
+		case (22):
+			displayViewScoreBoard(currentSemester, courseListStorage);
+			break;
 		case (24):
 			basicMenu();
 			return;
@@ -192,6 +196,9 @@ void functionLecturer(int number) {
 		case (6):
 			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
 			break;
+		case (9):
+			displayViewScoreBoard(currentSemester, courseListStorage);
+			break;
 		case (10):
 			basicMenu();
 			return;
@@ -213,6 +220,9 @@ void functionStudent(int number) {
 		case (4):
 			displayCheckInBoard(currentSemester, courseListStorage);
 			break;
+		case (6):
+			displayViewScoreBoard(currentSemester, courseListStorage);
+			break;
 		case (7):
 			basicMenu();
 			return;
@@ -225,15 +235,24 @@ void functionStudent(int number) {
 
 void demo() {
 	//Init account
+	displayLoadingUI(0);
 	accountListStorage = nullptr;
+
+	displayLoadingUI(20);
 	accountLoginStorage = nullptr;
+
+	displayLoadingUI(40);
 	classListStorage = nullptr;
 
 	//Import
+	displayLoadingUI(60);
 	importAccountFromStorage(accountListStorage);
+
+	displayLoadingUI(80);
 	importClassFromStorage(accountListStorage, classListStorage);
 
 	//Display Login
+	displayLoadingUI(100);
 	login();
 
 	//Clear account list
@@ -242,7 +261,7 @@ void demo() {
 }
 
 void test() {
-	cout << getNumberOfWeek(18, 5, 2020, 1, 6, 2020);
+	for (int i = 0; i <= 100; i++) displayLoadingUI(i);
 }
 
 int main() {

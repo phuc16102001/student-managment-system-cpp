@@ -16,6 +16,32 @@ void displayHeaderUI() {
 	setColor(colorWhite);
 }
 
+void displayLoadingUI(int percentage) {
+	system("CLS");
+	displayHeaderUI();
+	setColor(colorMint);
+	int k=0;
+	if (percentage < 100) k = 1;
+	if (percentage < 10) k = 2;
+
+	cout << "|             ";
+	setColor(colorOrange);
+	cout << percentage << "%";
+	setColor(colorMint);
+	for (int i = 0; i < k; i++) cout << " ";
+	cout << "             |\n";
+
+	k = (percentage * 30) / 100;
+	cout << "|";
+	setColor(colorGreen);
+	for (int i=0;i<k;i++) cout << "*";
+	setColor(colorMint);
+	for (int i = 0; i < 30-k; i++) cout << " ";
+
+	cout << "|\n";
+	cout << "--------------------------------\n";
+}
+
 void displayCurrentSemester(string semester) {
 	setColor(colorOrange);
 	cout << "Current semester: " << semester << endl;
@@ -215,7 +241,7 @@ int displayStaffMenu(string semester) {
 	setColor(colorMint);
 	cout << "Scoreboard:\n";
 	setColor(colorWhite);
-	cout << "22. Search and view attendance list of a course\n"
+	cout << "22. View scoreboard\n"
 		 << "23. Export scoreboard into csv file\n"
 		 << "24. Back\n";
 	cout << "Choose one function: ";
@@ -246,7 +272,7 @@ int displayLecturerMenu(string semester) {
 		 << "6. Remove student from course\n"
 		 << "7. Import scoreboard\n"
 		 << "8. Edit student grade\n"
-		 << "9. Scoreboard\n"
+		 << "9. View scoreboard\n"
 		 << "10. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
@@ -272,7 +298,7 @@ int displayStudentMenu(string semester) {
 		 <<	"3. Check-in\n"
 		 << "4. View check-in result of course\n"
 		 << "5. View schedules\n"
-		 << "6. View your scores\n"
+		 << "6. View scoreboard\n"
 		 << "7. Back\n"
 		 << "Choose one function: ";
 	cin >> x;
@@ -811,7 +837,6 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	}
 }
 
-//Remember todo: remove change date (because it will change checkin list)
 void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
@@ -1057,5 +1082,45 @@ void displayCheckInBoard(string currentSemester, CourseList* courseList) {
 		}
 		cout << endl;
 		checkInList = checkInList->nextCheckIn;
+	}
+}
+
+void displayViewScoreBoard(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "View scoreboard\n";
+
+	string courseID, className;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	cout << "Class name: "; getline(cin, className);
+	Course* course = findCourseIDClassName(courseID, className, courseList);
+	if (course == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	setColor(colorOrange);
+	cout << setw(15) << setfill(' ') << "Score";
+	cout << setw(10) << setfill(' ') << "Midterm";
+	cout << setw(10) << setfill(' ') << "Final";
+	cout << setw(10) << setfill(' ') << "Bonus";
+	cout << setw(10) << setfill(' ') << "Total";
+	cout << endl;
+	setColor(colorWhite);
+	ScoreList* scoreList = course->scoreList;
+	while (scoreList != nullptr) {
+		Score* score = scoreList->scoreData;
+		cout << setw(15) << setfill(' ') << score->studentID;
+		cout << setw(10) << setfill(' ') << score->midScore;
+		cout << setw(10) << setfill(' ') << score->finalScore;
+		cout << setw(10) << setfill(' ') << score->bonusScore;
+		cout << setw(10) << setfill(' ') << score->totalScore;
+		cout << endl;
+		scoreList = scoreList->nextScore;
 	}
 }
