@@ -814,7 +814,7 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
-	cout << "Edit course\n";
+	cout << "` course\n";
 	if (currentSemester == "") {
 		cout << "Please choose semester\n";
 		return;
@@ -835,14 +835,12 @@ void displayEditCourse(string currentSemester, AccountList* accountList, CourseL
 	cout << "Leave blank if unchange\n";
 	cout << "Course name: "; getline(cin, courseName);
 	cout << "Lecturer ID: "; getline(cin, lecturerID);
-	cout << "Start date: "; getline(cin, startDate);
-	cout << "End date: "; getline(cin, endDate);
 	cout << "Start time: "; getline(cin, startTime);
 	cout << "End time: "; getline(cin, endTime);
 	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): "; getline(cin, dayOfWeekString);
 	cout << "Room name: "; getline(cin, roomName);
 
-	if (editCourse(courseName, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList, findCourse)) {
+	if (editCourse(courseName, lecturerID, startTime, endTime, dayOfWeekString, roomName, accountList, findCourse)) {
 		if (saveCourseToStorage(currentSemester, courseList)) {
 			cout << "Edited successfully\n";
 		}
