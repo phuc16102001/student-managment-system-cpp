@@ -435,18 +435,21 @@ bool removeScoreAccountID(string accountID, ScoreList*& scoreList) {
 }
 
 Score* findScoreAccountID(string accountID, ScoreList* scoreList) {
-	while (scoreList != nullptr) {
-		if (scoreList->scoreData->studentID == accountID) {
+	while (scoreList != nullptr) // check if list empty  
+	{
+		if (scoreList->scoreData->studentID == accountID) // find student
+		{
 			return scoreList->scoreData;
 		}
 		else {
-			scoreList = scoreList->nextScore;
+			scoreList = scoreList->nextScore; // run to next node
 		}
 	}
 	return nullptr;
 }
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint) {
-	if (score == nullptr) return false;
+	if (score == nullptr) return false; // check if node is nullptr
+	// edit score
 	score->bonusScore = bonusPoint;
 	score->finalScore = finalTerm;
 	score->midScore = midTerm;
