@@ -434,6 +434,16 @@ bool removeScoreAccountID(string accountID, ScoreList*& scoreList) {
 	return false;
 }
 
-Score* findScoreAccountID(string accountID, ScoreList* scoreList);
-
-bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
+Score* findScoreAccountID(string accountID, ScoreList* scoreList) {
+	while (scoreList != nullptr) {
+		if (scoreList->scoreData->studentID == accountID) {
+			return scoreList->scoreData;
+		}
+		else {
+			scoreList = scoreList->nextScore;
+		}
+	}
+}
+bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint) {
+	
+}
