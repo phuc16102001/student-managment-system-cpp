@@ -449,5 +449,7 @@ bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, f
 	if (score == nullptr) return false;
 	score->bonusScore = bonusPoint;
 	score->finalScore = finalTerm;
-	
+	score->midScore = midTerm;
+	score->totalScore = totalPoint;
+	return true;
 }
