@@ -443,6 +443,7 @@ Score* findScoreAccountID(string accountID, ScoreList* scoreList) {
 			scoreList = scoreList->nextScore;
 		}
 	}
+	return nullptr;
 }
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint) {
 	
