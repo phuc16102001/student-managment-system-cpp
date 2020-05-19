@@ -495,7 +495,7 @@ Score* findScoreAccountID(string accountID, ScoreList* scoreList);
 
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
 
-bool editCourse(string courseName, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course) {
+bool editCourse(string courseName, string lecturerID, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course) {
 	if (lecturerID != "") {
 		Account* lecturerAccount = findAccountID(lecturerID, accountList);
 		if (lecturerAccount == nullptr) return false;
@@ -517,20 +517,6 @@ bool editCourse(string courseName, string lecturerID, string startDate, string e
 	
 	int date, month, year;
 	int hour, minute;
-
-	if (startDate != "") {
-		parseDate(startDate, date, month, year);
-		course->startDate = date;
-		course->startMonth = month;
-		course->startYear = year;
-	}
-
-	if (endDate != "") {
-		parseDate(endDate, date, month, year);
-		course->endDate = date;
-		course->endMonth = month;
-		course->endYear = year;
-	}
 
 	if (startTime != "") {
 		parseTime(startTime, hour, minute);
