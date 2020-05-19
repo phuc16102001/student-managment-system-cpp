@@ -811,6 +811,7 @@ void displayAddNewCourse(string currentSemester, AccountList* accountList, Class
 	}
 }
 
+//Remember todo: remove change date (because it will change checkin list)
 void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);

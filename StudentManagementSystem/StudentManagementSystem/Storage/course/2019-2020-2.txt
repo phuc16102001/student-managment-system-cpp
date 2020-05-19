@@ -42,14 +42,14 @@ htthanh
 -1 -1 -1 -1
 0 0 0 0
 CS0001
-Introduction to programming
+Phuc's course
 19CLC5
-dbtien
+19127242
 02-03-2020
 02-04-2020
 07:30
 11:45
-6
+1
 B23
 5
 19127242
