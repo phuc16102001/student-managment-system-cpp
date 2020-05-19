@@ -62,37 +62,52 @@ bool importCourseFromStorage(string semester, AccountList* accountList, CourseLi
 		//Input room name
 		getline(fin, newCourse->roomName);
 
-		//Input student list
+		//Input score, checkIn, studentID
 		int nStudent = -1;
 		AccountList* studentAccountList = nullptr;
 		ScoreList* studentScoreList = nullptr;
+		CheckInList* checkInList = nullptr;
 		fin >> nStudent;
 		fin.ignore();
 
+		int numberOfWeek = getNumberOfWeek(newCourse->startDate, newCourse->startMonth, newCourse->startYear,
+			newCourse->endDate, newCourse->endMonth, newCourse->endYear);
+		
 		for (int i = 0; i < nStudent; i++) {
 			//Each student
 			string studentID;
 			Score* studentScore = new Score;
+			CheckIn* checkIn = new CheckIn;
+			checkIn->checkInResult = new bool[numberOfWeek];
 
 			//Input student's ID
 			getline(fin, studentID);
 
 			//Input student's score
 			fin >> studentScore->midScore >> studentScore->finalScore >> studentScore->bonusScore >> studentScore->totalScore;
+		
+			//Input student's checkIn
+			for (int k = 0; k < numberOfWeek; k++) {
+				fin >> checkIn->checkInResult[k];
+			}
 			fin.ignore();
 
 			//Find account
 			Account* studentAccount = findAccountID(studentID, accountList);
 			if (studentAccount == nullptr) break;
 
+			//Student ID
 			studentScore->studentID = studentAccount->ID;
+			checkIn->studentID = studentAccount->ID;
 
 			//Insert to list
 			insertAccountToAccountList(studentAccount, studentAccountList);
 			insertScoreToScoreList(studentScore, studentScoreList);
+			insertCheckInToCheckInList(checkIn, checkInList);
 		}
 		newCourse->studentList = studentAccountList;
 		newCourse->scoreList = studentScoreList;
+		newCourse->checkInList = checkInList;
 
 		//Insert to list
 		insertCourseToCourseList(newCourse, courseList);
@@ -176,6 +191,7 @@ bool saveCourseToStorage(string semester, CourseList* courseList) {
 		Course* courseData = courseList->courseData;
 		AccountList* studentList = courseData->studentList;
 		ScoreList* scoreList = courseData->scoreList;
+		CheckInList* checkInList = courseData->checkInList;
 		int nStudent = getLengthAccountList(studentList);
 
 		string startDate, endDate, startTime, endTime;
@@ -196,15 +212,25 @@ bool saveCourseToStorage(string semester, CourseList* courseList) {
 		fout << courseData->roomName << endl;
 		fout << nStudent << endl;
 
-		while (studentList != nullptr && scoreList!=nullptr) {
+		int numberOfWeek = getNumberOfWeek(courseData->startDate, courseData->startMonth, courseData->startYear,
+			courseData->endDate, courseData->endMonth, courseData->endYear);
+		while (studentList != nullptr && scoreList!=nullptr && checkInList != nullptr) {
 			Score* score = scoreList->scoreData;
+			CheckIn* checkIn = checkInList->checkIn;
+
 			fout << studentList->accountData->ID << endl;
 			fout << score->midScore << " " << score->finalScore << " " << score->bonusScore << " " << score->totalScore << endl;
+			
+			for (int i = 0; i < numberOfWeek; i++) {
+				fout << checkIn->checkInResult[i];
+				if (i<numberOfWeek-1) fout << " ";
+			}
+			fout << endl;
 
 			studentList = studentList->nextAccount;
 			scoreList = scoreList->nextScore;
+			checkInList = checkInList->nextCheckIn;
 		}
-		
 		courseList = courseList->nextCourse;
 	}
 
@@ -255,6 +281,26 @@ bool insertScoreToScoreList(Score* scoreData, ScoreList*& scoreList) {
 	return true;
 }
 
+bool insertCheckInToCheckInList(CheckIn* checkIn, CheckInList*& checkInList) {
+	if (checkInList == nullptr) {
+		checkInList = new CheckInList;
+		checkInList->checkIn = checkIn;
+		checkInList->nextCheckIn = nullptr;
+	}
+	else {
+		CheckInList* cur = checkInList;
+		while (cur != nullptr) {
+			if (cur->nextCheckIn == nullptr) break;
+			cur = cur->nextCheckIn;
+		}
+		cur->nextCheckIn = new CheckInList;
+		cur = cur->nextCheckIn;
+		cur->checkIn = checkIn;
+		cur->nextCheckIn = nullptr;
+	}
+	return true;
+}
+
 bool changeSemester(string academicYear, string semester, string& currentSemester, AccountList* accountList, CourseList*& courseList) {
 	string path = _courseStorage + academicYear + '-' + semester + ".txt";
 
@@ -296,9 +342,11 @@ Course* findCourseIDClassName(string courseID, string className, CourseList* cou
 	return nullptr;
 }
 
-bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
+bool removeCourseFromCourseList(string courseID, string className, CourseList*& courseList) {
 	//1st node
-	if (courseList->courseData->courseID == courseID) {
+	if (courseList!=nullptr
+		&& courseList->courseData->courseID == courseID
+		&& courseList->courseData->className == className) {
 		CourseList* tempCourse = courseList;
 		courseList = courseList->nextCourse;
 
@@ -310,7 +358,8 @@ bool removeCourseFromCourseList(string courseID, CourseList*& courseList) {
 	//Other node
 	CourseList* cur = courseList;
 	while (cur != nullptr && cur->nextCourse!=nullptr) {
-		if (cur->nextCourse->courseData->courseID == courseID) {
+		if (cur->nextCourse->courseData->courseID == courseID
+			&& courseList->courseData->className == className) {
 			CourseList* tempCourse = cur->nextCourse;
 			cur->nextCourse = tempCourse->nextCourse;
 
@@ -337,54 +386,24 @@ int getLengthCourseList(CourseList* courseList) {
 }
 
 Course* createCourse(string courseID, string courseName, string className, string lecturerID, string startDate, string endDate, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountListStorage, ClassList* classListStorage) {
-
-	string dayString[7] = { "SUN","MON","TUE","WED","THU","FRI","SAT" };
+	//Lecturer account
 	Account* lecturerAccount = findAccountID(lecturerID, accountListStorage);
 	if (lecturerAccount == nullptr) return nullptr;
 
+	//Class 
 	Class* classData = findClassName(className, classListStorage);
 	if (classData == nullptr) return nullptr;
 
-	AccountList* studentList = classData->accountList;
-	ScoreList* scoreList = nullptr;
-
+	//Create new course
 	Course* newCourse = new Course;
+
+	//Student list
+	AccountList* studentList = classData->accountList;
+	newCourse->studentList = studentList;
+
+	//Date and time
 	int date, month, year;
 	int hour, minute;
-
-	newCourse->courseID = courseID;
-	newCourse->courseName = courseName;
-	newCourse->className = className;
-	newCourse->roomName = roomName;
-	newCourse->studentList = studentList;
-	newCourse->lecturerAccount = lecturerAccount;
-
-	for (int i = 0; i < 7; i++) {
-		if (dayString[i] == dayOfWeekString) {
-			newCourse->dayOfWeek = i;
-			break;
-		}
-	}
-
-
-	AccountList* runnerAccountList = studentList;
-	ScoreList* runnerScoreList = scoreList;
-	while (runnerAccountList != nullptr) {
-		Score* score = new Score;
-		if (runnerScoreList == nullptr) {
-			scoreList = new ScoreList;
-			runnerScoreList = scoreList;
-		}
-		else {
-			runnerScoreList->nextScore = new ScoreList;
-			runnerScoreList = runnerScoreList->nextScore;
-		}
-		runnerScoreList->scoreData = score;
-
-		runnerAccountList = runnerAccountList->nextAccount;
-	}
-	newCourse->scoreList = scoreList;
-
 	parseDate(startDate, date, month, year);
 	newCourse->startDate = date;
 	newCourse->startMonth = month;
@@ -399,9 +418,47 @@ Course* createCourse(string courseID, string courseName, string className, strin
 	newCourse->startHour = hour;
 	newCourse->startMinute = minute;
 
-	parseTime(startTime, hour, minute);
+	parseTime(endTime, hour, minute);
 	newCourse->endHour = hour;
 	newCourse->endMinute = minute;
+
+	//Assign value
+	newCourse->courseID = courseID;
+	newCourse->courseName = courseName;
+	newCourse->className = className;
+	newCourse->roomName = roomName;
+	newCourse->lecturerAccount = lecturerAccount;
+
+	//Day of week
+	int dayOfWeek = getDayOfWeek(dayOfWeekString);
+	newCourse->dayOfWeek = dayOfWeek;
+
+	//Scorelist and checkIn
+	int numberOfWeek = getNumberOfWeek(newCourse->startDate, newCourse->startMonth, newCourse->startYear,
+		newCourse->endDate, newCourse->endMonth, newCourse->endYear);
+	AccountList* runnerAccountList = studentList;
+	ScoreList* scoreList = nullptr;
+	CheckInList* checkInList = nullptr;
+	ScoreList* runnerScoreList = scoreList;
+	CheckInList* runnerCheckInList = checkInList;
+
+	while (runnerAccountList != nullptr) {
+		Account* account = runnerAccountList->accountData;
+
+		Score* score = new Score;
+		score->studentID = account->ID;
+		insertScoreToScoreList(score, scoreList);
+
+		CheckIn* checkIn = new CheckIn;
+		checkIn->checkInResult = new bool[numberOfWeek];
+		for (int i = 0; i < numberOfWeek; i++) checkIn->checkInResult[i] = false;
+		checkIn->studentID = account ->ID;
+		insertCheckInToCheckInList(checkIn, checkInList);
+
+		runnerAccountList = runnerAccountList->nextAccount;
+	}
+	newCourse->scoreList = scoreList;
+	newCourse->checkInList = checkInList;
 
 	return newCourse;
 }
@@ -454,5 +511,46 @@ bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, f
 	score->finalScore = finalTerm;
 	score->midScore = midTerm;
 	score->totalScore = totalPoint;
+	return true;
+}
+Score* findScoreAccountID(string accountID, ScoreList* scoreList);
+
+bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
+
+bool editCourse(string courseName, string lecturerID, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course) {
+	if (lecturerID != "") {
+		Account* lecturerAccount = findAccountID(lecturerID, accountList);
+		if (lecturerAccount == nullptr) return false;
+		course->lecturerAccount = lecturerAccount;
+	}
+	
+	if (dayOfWeekString != "") {
+		int dayOfWeek = getDayOfWeek(dayOfWeekString);
+		course->dayOfWeek = dayOfWeek;
+	}
+
+	if (courseName != "") {
+		course->courseName = courseName;
+	}
+
+	if (roomName != "") {
+		course->roomName = roomName;
+	}
+	
+	int date, month, year;
+	int hour, minute;
+
+	if (startTime != "") {
+		parseTime(startTime, hour, minute);
+		course->startHour = hour;
+		course->startMinute = minute;
+	}
+
+	if (endTime != "") {
+		parseTime(endTime, hour, minute);
+		course->endHour = hour;
+		course->endMinute = minute;
+	}
+
 	return true;
 }

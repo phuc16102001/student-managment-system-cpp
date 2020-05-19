@@ -6,6 +6,14 @@
 #include "Class.h"
 #include "Account.h"
 
+#define colorGreen 2
+#define colorBlue 3
+#define colorRed 4
+#define colorPurple 5
+#define colorOrange 6
+#define colorWhite 7
+#define colorMint 11
+
 void displayHeaderUI();																					//Display UI header
 void displayLogin(string& inputAccountID, string& inputPassword);										//Display UI login
 void displayProfileInfo(Account* accountDisplay);														//Display UI profile info of an account
@@ -14,6 +22,7 @@ void displayChangePassword(Account* account, AccountList* accountListStorage);
 int displayStaffMenu(string semester);
 int displayLecturerMenu(string semester);
 int displayStudentMenu(string semester);
+void displayCreateAccount(AccountList*& accountListStorage);
 void displayFindStudent(AccountList* accountListStorage);
 void displayEditAccount(AccountList* accountListStorage);
 void displayResetPassword(AccountList* accountListStorage);
@@ -32,9 +41,12 @@ void displayRemoveStudentFromCourse(string currentSemester, CourseList* courseLi
 void displayAddStudentToCourse(string currentSemester, AccountList* accountListStorage, CourseList* courseListStorage);
 void displayStudentListFromCourse(string currentSemester, CourseList* courseList);
 void displayImportCourseFromCSV(AccountList* accountList, ClassList* classList);
+void displayEditCourse(string currentSemester, AccountList* accountList, CourseList*& courseList);
+void displayCheckInBoard(string currentSemester, CourseList* courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console
 void outputClassList(ClassList* classList);
+void outputCourse(Course* course);
 
 #endif

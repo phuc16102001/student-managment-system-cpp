@@ -99,61 +99,67 @@ void functionMenu() {
 void functionStaff(int number) {
 	switch (number) {
 		case (1):
-			displayFindStudent(accountListStorage);
+			displayCreateAccount(accountListStorage);
 			break;
 		case (2):
-			displayEditAccount(accountListStorage);
+			displayFindStudent(accountListStorage);
 			break;
 		case (3):
-			displayResetPassword(accountListStorage);
+			displayEditAccount(accountListStorage);
 			break;
 		case (4):
-			displayAddManuallyStudentToClass(accountListStorage, classListStorage);
+			displayResetPassword(accountListStorage);
 			break;
 		case (5):
-			displayImportClassFromCSV(accountListStorage,classListStorage);
+			displayAddManuallyStudentToClass(accountListStorage, classListStorage);
 			break;
 		case (6):
-			displayRemoveStudentFromClass(accountListStorage, classListStorage);
+			displayImportClassFromCSV(accountListStorage,classListStorage);
 			break;
 		case (7):
-			displayMoveStudentToAnotherClass(accountListStorage, classListStorage);
+			displayRemoveStudentFromClass(accountListStorage, classListStorage);
 			break;
 		case (8):
-			displayViewListClasses(classListStorage);
+			displayMoveStudentToAnotherClass(accountListStorage, classListStorage);
 			break;
 		case (9):
-			displayViewListStudentInClass(classListStorage);
+			displayViewListClasses(classListStorage);
 			break;
 		case (10):
-			displayCreateNewAcademicYearSemester();
+			displayViewListStudentInClass(classListStorage);
 			break;
 		case (11):
-			displayChangeAcademicYearSemester(currentSemester,accountListStorage,courseListStorage);
+			displayCreateNewAcademicYearSemester();
 			break;
 		case (12):
-			displayImportCourseFromCSV(accountListStorage, classListStorage);
+			displayChangeAcademicYearSemester(currentSemester,accountListStorage,courseListStorage);
 			break;
 		case (13):
-			displayAddNewCourse(currentSemester, accountListStorage, classListStorage, courseListStorage);
+			displayImportCourseFromCSV(accountListStorage, classListStorage);
 			break;
 		case (14):
-			//AAAAAAAAAAAAAAAA
+			displayAddNewCourse(currentSemester, accountListStorage, classListStorage, courseListStorage);
 			break;
 		case (15):
-			displayRemoveCourse(currentSemester, courseListStorage);
+			displayEditCourse(currentSemester, accountListStorage, courseListStorage);
 			break;
 		case (16):
-			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
+			displayRemoveCourse(currentSemester, courseListStorage);
 			break;
 		case (17):
-			displayAddStudentToCourse(currentSemester, accountListStorage, courseListStorage);
+			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
 			break;
 		case (18):
-			displayCurrentCourseList(currentSemester, courseListStorage);
+			displayAddStudentToCourse(currentSemester, accountListStorage, courseListStorage);
 			break;
 		case (19):
+			displayCurrentCourseList(currentSemester, courseListStorage);
+			break;
+		case (20):
 			displayStudentListFromCourse(currentSemester, courseListStorage);
+			break;
+		case (21):
+			displayCheckInBoard(currentSemester, courseListStorage);
 			break;
 		case (24):
 			basicMenu();
@@ -177,7 +183,16 @@ void functionLecturer(int number) {
 		case (3):
 			displayStudentListFromCourse(currentSemester, courseListStorage);
 			break;
-		case (9):
+		case (4):
+			displayCheckInBoard(currentSemester, courseListStorage);
+			break;
+		case (5):
+			displayAddStudentToCourse(currentSemester, accountListStorage, courseListStorage);
+			break;
+		case (6):
+			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
+			break;
+		case (10):
 			basicMenu();
 			return;
 	}
@@ -189,7 +204,16 @@ void functionLecturer(int number) {
 
 void functionStudent(int number) {
 	switch (number) {
-		case (5):
+		case (1): 
+			displayChangeAcademicYearSemester(currentSemester, accountListStorage, courseListStorage);
+			break;
+		case (2): 
+			displayCurrentCourseList(currentSemester, courseListStorage);
+			break;
+		case (4):
+			displayCheckInBoard(currentSemester, courseListStorage);
+			break;
+		case (7):
 			basicMenu();
 			return;
 	}
@@ -218,16 +242,7 @@ void demo() {
 }
 
 void test() {
-	string academicYear;
-	string semester;
-	cout << "year: "; getline(cin, academicYear);
-	cout << "semester: "; getline(cin, semester);
-	if (createSemester(academicYear, semester)) {
-		cout << "Success\n";
-	}
-	else {
-		cout << "Fail\n";
-	}
+	cout << getNumberOfWeek(18, 5, 2020, 1, 6, 2020);
 }
 
 int main() {
