@@ -32,6 +32,6 @@ int changePasswordAccount(string oldPassword, string newPassword, string repeatP
 bool editAccount(Account* account, string lastName, string firstName, bool gender, string dob);				//Edit account's data
 void resetAccountPassword(Account* account);																//Reset password of an account (change to dob)
 bool removeAccountFromAccountList(string accountID, AccountList*& accountList);								//Remove account from accountList which has accountID (Note: dont delete Account*)
-Account* createAccount(string accountID, string lastName, string firstName, string genderText, string dob, int accountType);
+Account* createAccount(string accountID, string lastName, string firstName, string genderString, string dob, string accountTypeString);
 
 #endif
