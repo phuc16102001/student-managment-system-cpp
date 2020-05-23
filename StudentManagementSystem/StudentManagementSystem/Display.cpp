@@ -137,6 +137,17 @@ void outputCourseList(CourseList* courseList) {
 	}
 }
 
+void outputScore(Score* score) {
+	setColor(colorOrange);
+	cout << "Score board of " << score->studentID << ":\n";
+
+	setColor(colorWhite);
+	cout << "Midterm: " << score->midScore << "\n";
+	cout << "Final: " << score->finalScore << "\n";
+	cout << "Bonus: " << score->bonusScore << "\n";
+	cout << "Total: " << score->totalScore << "\n";
+}
+
 void inputHidenText(string& text) {
 	text = "";
 	char c;
@@ -1122,5 +1133,57 @@ void displayViewScoreBoard(string currentSemester, CourseList* courseList) {
 		cout << setw(10) << setfill(' ') << score->totalScore;
 		cout << endl;
 		scoreList = scoreList->nextScore;
+	}
+}
+
+void displayEditScore(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Edit student's score\n";
+
+	string courseID, className, studentID;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	cout << "Class name: "; getline(cin, className);
+	Course* course = findCourseIDClassName(courseID, className, courseList);
+	if (course == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	ScoreList* scoreList = course->scoreList;
+	cout << "Student ID: "; getline(cin, studentID);
+	Score* studentScore = findScoreAccountID(studentID, scoreList);
+	if (studentScore == nullptr) {
+		cout << "Student not found\n";
+		return;
+	}
+
+	cout << endl;
+	outputScore(studentScore);
+
+	cout << endl;
+	float midScore, finalScore, bonusScore, totalScore;
+	setColor(colorOrange);
+	cout << "Enter new score:\n";
+	setColor(colorWhite);
+	cout << "Midterm: "; cin >> midScore;
+	cout << "Final: "; cin >> finalScore;
+	cout << "Bonus: "; cin >> bonusScore;
+	cout << "Total: "; cin >> totalScore;
+	if (editScore(studentScore, midScore, finalScore, bonusScore, totalScore)) {
+		if (saveCourseToStorage(currentSemester, courseList)) {
+			cout << "Edited successfully\n";
+		}
+		else {
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		cout << "Fail to edit\n";
 	}
 }

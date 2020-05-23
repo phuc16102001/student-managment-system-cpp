@@ -179,3 +179,11 @@ void getCurrentTime(int& hour, int& minute) {
 	minute = ltm->tm_min;
 	return;
 }
+
+void getCurrentDate(int& date, int& month, int& year) {
+
+}
+
+bool isInDate(int date1, int month1, int year1, int date2, int month2, int year2) {
+	return false;
+}
