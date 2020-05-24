@@ -180,6 +180,7 @@ void getCurrentTime(int& hour, int& minute) {
 	return;
 }
 
+// Get current Date integer
 void getCurrentDate(int& date, int& month, int& year) {
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
@@ -189,6 +190,7 @@ void getCurrentDate(int& date, int& month, int& year) {
 	return;
 }
 
+// Check if 2 date is duplicated ? 
 bool isInDate(int date1, int month1, int year1, int date2, int month2, int year2) {
 	date1 += month1 * 31 + year1 * 365;
 	date2 += month2 * 31 + year2 * 365;
