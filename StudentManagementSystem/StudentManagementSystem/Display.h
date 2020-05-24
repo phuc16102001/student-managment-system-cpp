@@ -46,6 +46,7 @@ void displayEditCourse(string currentSemester, AccountList* accountList, CourseL
 void displayCheckInBoard(string currentSemester, CourseList* courseList);
 void displayViewScoreBoard(string currentSemester, CourseList* courseList);
 void displayEditScore(string currentSemester, CourseList* courseList);
+void displayCheckIn(string currentSemester, CourseList* courseList);
 
 void outputAccount(Account* account);																		//Output 1 account to console
 void outputAccountList(AccountList* list);																	//Output accountList to console

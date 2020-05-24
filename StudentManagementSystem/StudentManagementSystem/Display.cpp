@@ -50,6 +50,19 @@ void displayCurrentSemester(string semester) {
 	setColor(colorWhite);
 }
 
+void outputCurrentDate(int date, int month, int year, int hour, int minute) {
+	setColor(colorOrange);
+	cout << "Current date and time:\n";
+	setColor(colorMint);
+	cout << "Date: ";
+	setColor(colorWhite);
+	cout << dateToString(date, month, year) << endl;
+	setColor(colorMint);
+	cout << "Time: ";
+	setColor(colorWhite);
+	cout << timeToString(hour,minute) << endl;
+}
+
 void outputAccount(Account* account) {
 	//Gender string
 	string gender = "Female";
@@ -75,12 +88,35 @@ void outputAccount(Account* account) {
 	}
 
 	//Output
-	cout << "UserID: " << account->ID << endl;
-	cout << "Last name: " << account->lastName << endl;
-	cout << "First name: " << account->firstName << endl;
-	cout << "Gender: " << gender << endl;
-	cout << "Date of birth: " << account->dob << endl;
-	cout << "Account type: " << accountType << endl;
+	setColor(colorMint);
+	cout << "UserID: ";
+	setColor(colorWhite);
+	cout << account->ID << endl;
+
+	setColor(colorMint);
+	cout << "Last name: ";
+	setColor(colorWhite);
+	cout << account->lastName << endl;
+	
+	setColor(colorMint);
+	cout << "First name: ";
+	setColor(colorWhite);
+	cout << account->firstName << endl;
+	
+	setColor(colorMint);
+	cout << "Gender: ";
+	setColor(colorWhite);
+	cout << gender << endl;
+	
+	setColor(colorMint);
+	cout << "Date of birth: ";
+	setColor(colorWhite);
+	cout << account->dob << endl;
+	
+	setColor(colorMint);
+	cout << "Account type: ";
+	setColor(colorWhite);
+	cout << accountType << endl;
 }
 
 void outputAccountList(AccountList* list) {
@@ -114,16 +150,55 @@ void outputCourse(Course* course) {
 	startTime = timeToString(course->startHour,course->startMinute);
 	endTime = timeToString(course->endHour,course->endMinute);
 
-	cout << "Course ID: " << course->courseID << endl;
-	cout << "Course name: " << course->courseName << endl;
-	cout << "Course class: " << course->className << endl;
-	cout << "Lecturer account: " << course->lecturerAccount->ID << endl;
-	cout << "Start date: " << startDate << endl;
-	cout << "End date: " << endDate << endl;
-	cout << "Start time: " << startTime << endl;
-	cout << "End time: " << endTime << endl;
-	cout << "Day of week: " << getDayOfWeekString(course->dayOfWeek) << endl;
-	cout << "Room: " << course->roomName << endl;
+	setColor(colorMint);
+	cout << "Course ID: ";
+	setColor(colorWhite);
+	cout << course->courseID << endl;
+
+	setColor(colorMint); 
+	cout << "Course name: ";
+	setColor(colorWhite); 
+	cout << course->courseName << endl;
+	
+	setColor(colorMint);
+	cout << "Course class: ";
+	setColor(colorWhite); 
+	cout << course->className << endl;
+
+	setColor(colorMint);
+	cout << "Lecturer account: ";
+	setColor(colorWhite);
+	cout << course->lecturerAccount->ID << endl;
+
+	setColor(colorMint); 
+	cout << "Start date: ";
+	setColor(colorWhite);
+	cout << startDate << endl;
+
+	setColor(colorMint); 
+	cout << "End date: ";
+	setColor(colorWhite);
+	cout << endDate << endl;
+
+	setColor(colorMint); 
+	cout << "Start time: ";
+	setColor(colorWhite);
+	cout << startTime << endl;
+
+	setColor(colorMint); 
+	cout << "End time: ";
+	setColor(colorWhite);
+	cout << endTime << endl;
+
+	setColor(colorMint); 
+	cout << "Day of week: ";
+	setColor(colorWhite);
+	cout << getDayOfWeekString(course->dayOfWeek) << endl;
+
+	setColor(colorMint); 
+	cout << "Room: ";
+	setColor(colorWhite);
+	cout << course->roomName << endl;
 }
 
 void outputCourseList(CourseList* courseList) {
@@ -1186,4 +1261,37 @@ void displayEditScore(string currentSemester, CourseList* courseList) {
 	else {
 		cout << "Fail to edit\n";
 	}
+}
+
+void displayCheckIn(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		cout << "Please choose semester\n";
+		return;
+	}
+	cout << "Check in\n";
+
+	string courseID, className;
+
+	cout << "CourseID: "; getline(cin, courseID);
+	cout << "Class name: "; getline(cin, className);
+	Course* course = findCourseIDClassName(courseID, className, courseList);
+	if (course == nullptr) {
+		cout << "Course not found\n";
+		return;
+	}
+
+	cout << endl;
+	setColor(colorOrange);
+	cout << "Course found!\n";
+	setColor(colorWhite); 
+
+	outputCourse(course);
+	cout << endl;
+
+	int date, month, year, hour, minute;
+	getCurrentDate(date, month, year);
+	getCurrentTime(hour, minute);
+	outputCurrentDate(date,month,year,hour,minute);
 }

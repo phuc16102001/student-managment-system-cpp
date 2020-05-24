@@ -220,6 +220,9 @@ void functionStudent(int number) {
 		case (2): 
 			displayCurrentCourseList(currentSemester, courseListStorage);
 			break;
+		case (3):
+			displayCheckIn(currentSemester, courseListStorage);
+			break;
 		case (4):
 			displayCheckInBoard(currentSemester, courseListStorage);
 			break;
