@@ -181,7 +181,12 @@ void getCurrentTime(int& hour, int& minute) {
 }
 
 void getCurrentDate(int& date, int& month, int& year) {
-
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	date = ltm->tm_mday;
+	month = ltm->tm_mon;
+	year = ltm->tm_year;
+	return;
 }
 
 bool isInDate(int date1, int month1, int year1, int date2, int month2, int year2) {
