@@ -184,8 +184,8 @@ void getCurrentDate(int& date, int& month, int& year) {
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
 	date = ltm->tm_mday;
-	month = ltm->tm_mon;
-	year = ltm->tm_year;
+	month = ltm->tm_mon + 1;
+	year = ltm->tm_year + 1900;
 	return;
 }
 
