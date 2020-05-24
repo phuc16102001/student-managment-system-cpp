@@ -190,5 +190,7 @@ void getCurrentDate(int& date, int& month, int& year) {
 }
 
 bool isInDate(int date1, int month1, int year1, int date2, int month2, int year2) {
-	return false;
+	date1 += month1 * 31 + year1 * 365;
+	date2 += month2 * 31 + year2 * 365;
+	return (date1 == date2);
 }
