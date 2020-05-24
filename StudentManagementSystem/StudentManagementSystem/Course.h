@@ -68,5 +68,7 @@ bool importCourseFromCSV(string path, AccountList* accountList, ClassList* class
 Score* findScoreAccountID(string accountID, ScoreList* scoreList);
 bool editCourse(string courseName, string lecturerID, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course);
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
+CheckIn* findCheckInAccountID(string accountID, CheckInList* checkInList);
+bool checkInCourse(int currentDate, int currentMonth, int currentYear, int currentHour, int currentMinute, string studentID, Course* course);
 
 #endif

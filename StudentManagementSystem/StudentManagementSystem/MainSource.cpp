@@ -221,7 +221,7 @@ void functionStudent(int number) {
 			displayCurrentCourseList(currentSemester, courseListStorage);
 			break;
 		case (3):
-			displayCheckIn(currentSemester, courseListStorage);
+			displayCheckIn(currentSemester, courseListStorage, accountLoginStorage);
 			break;
 		case (4):
 			displayCheckInBoard(currentSemester, courseListStorage);

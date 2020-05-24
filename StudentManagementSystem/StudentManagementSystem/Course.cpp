@@ -501,6 +501,16 @@ Score* findScoreAccountID(string accountID, ScoreList* scoreList) {
 	return nullptr;
 }
 
+CheckIn* findCheckInAccountID(string accountID, CheckInList* checkInList) {
+	while (checkInList != nullptr) {
+		if (checkInList->checkIn->studentID == accountID) {
+			return checkInList->checkIn;
+		}
+		checkInList = checkInList->nextCheckIn;
+	}
+	return nullptr;
+}
+
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint) {
 	if (score == nullptr) return false;
 
@@ -514,6 +524,43 @@ bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, f
 Score* findScoreAccountID(string accountID, ScoreList* scoreList);
 
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
+
+bool checkInCourse(int currentDate, int currentMonth, int currentYear, int currentHour, int currentMinute, string studentID, Course* course) {
+
+	int startHour, startMinute, endHour, endMinute;
+	startHour = course->startHour;
+	startMinute = course->startMinute;
+	endHour = course->endHour;
+	endMinute = course->endMinute;
+	
+	if (isInTime(startHour, startMinute, endHour, endMinute, currentHour, currentMinute)) {
+		int startDate, startMonth, startYear, endDate, endMonth, endYear;
+		startDate = course->startDate;
+		startMonth = course->startMonth;
+		startYear = course->startYear;
+		endDate = course->endDate;
+		endMonth = course->endMonth;
+		endYear = course->endYear;
+
+		int k = 0;
+		while (isLowerEqualDate(startDate, startMonth, startYear, endDate, endMonth, endYear)) {
+			if (isInDate(startDate, startMonth, startYear, currentDate, currentMonth, currentYear)) {
+				CheckInList* checkInList = course->checkInList;
+				CheckIn* checkIn = findCheckInAccountID(studentID,checkInList);
+				if (checkIn == nullptr) {
+					return false;
+				}
+
+				checkIn->checkInResult[k] = 1;
+				return true;
+			}
+			k++;
+			incDate(startDate, startMonth, startYear, 7);
+		}
+	}
+
+	return false;
+}
 
 bool editCourse(string courseName, string lecturerID, string startTime, string endTime, string dayOfWeekString, string roomName, AccountList* accountList, Course* course) {
 	if (lecturerID != "") {

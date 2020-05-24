@@ -158,7 +158,6 @@
   <ItemGroup>
     <Text Include="Storage\account.txt" />
     <Text Include="Storage\class.txt" />
-    <Text Include="Storage\course\2019-2020-2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ImportFile\course2019-2020-2.csv" />

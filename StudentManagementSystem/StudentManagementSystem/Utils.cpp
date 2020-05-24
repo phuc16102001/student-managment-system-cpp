@@ -140,7 +140,7 @@ void incDate(int& date, int& month, int& year, int numberOfDay) {
 }
 
 //Check 2 date1<=date2
-bool isLowerEqual(int date1, int month1, int year1, int date2, int month2, int year2) {
+bool isLowerEqualDate(int date1, int month1, int year1, int date2, int month2, int year2) {
 	if (year1 < year2) return true; else
 		if (year1 > year2) return false; else
 
@@ -155,8 +155,8 @@ bool isLowerEqual(int date1, int month1, int year1, int date2, int month2, int y
 
 //Get number of week between 2 date (count full week)
 int getNumberOfWeek(int date1, int month1, int year1, int date2, int month2, int year2) {
-	int count = -1;
-	while (isLowerEqual(date1, month1, year1, date2, month2, year2)) {
+	int count = 0;
+	while (isLowerEqualDate(date1, month1, year1, date2, month2, year2)) {
 		incDate(date1, month1, year1, 7);
 		count++;
 	}

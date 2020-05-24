@@ -411,38 +411,54 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 
 	//Input
 	string oldPassword, newPassword, repeatPassword;
+	setColor(colorOrange);
 	cout << "Old password: ";
+	setColor(colorWhite);
 	inputHidenText(oldPassword);
+
+	setColor(colorOrange);
 	cout << "New password: ";
+	setColor(colorWhite);
 	inputHidenText(newPassword);
+
+	setColor(colorOrange);
 	cout << "Repeat new password: ";
+	setColor(colorWhite);
 	inputHidenText(repeatPassword);
 
 	//Try to change password
+	cout << endl;
 	switch (changePasswordAccount(oldPassword, newPassword, repeatPassword, account)) {
 	case (0):
 		if (saveAccountListToStorage(accountListStorage)) {
 			//Save after change successful
-			cout << "Password change successful\n";
+			setColor(colorGreen);
+			cout << "Password changed successful\n";
 		}
 		else {
 			//Fail to save
+			setColor(colorRed);
 			cout << "Fail to open storage\n";
 		}
 		break;
 	case (1):
 		//Wrong old password
+		setColor(colorRed);
 		cout << "Wrong password\n";
 		break;
 	case (2):
 		//Wrong repeat password
+		setColor(colorRed);
 		cout << "Repeat password is not the same\n";
 		break;
 	case (3):
 		//Maximum length is 20
+		setColor(colorRed);
 		cout << "Maximum length is 20\n";
 		break;
 	}
+
+	setColor(colorWhite);
 	cout << "Press enter to continue...";
 	cin.ignore();
 	cin.get();
@@ -1263,7 +1279,7 @@ void displayEditScore(string currentSemester, CourseList* courseList) {
 	}
 }
 
-void displayCheckIn(string currentSemester, CourseList* courseList) {
+void displayCheckIn(string currentSemester, CourseList* courseList, Account* loginAccount) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
@@ -1294,4 +1310,21 @@ void displayCheckIn(string currentSemester, CourseList* courseList) {
 	getCurrentDate(date, month, year);
 	getCurrentTime(hour, minute);
 	outputCurrentDate(date,month,year,hour,minute);
+
+	cout << endl;
+	if (checkInCourse(date, month, year, hour, minute, loginAccount->ID, course)) {
+		if (saveCourseToStorage(currentSemester, courseList)) {
+			setColor(colorGreen);
+			cout << "Check-in successfully\n";
+		}
+		else {
+			setColor(colorRed);
+			cout << "Fail to open file\n";
+		}
+	}
+	else {
+		setColor(colorRed);
+		cout << "Check-in failed\n";
+	}
+	setColor(colorWhite);
 }
