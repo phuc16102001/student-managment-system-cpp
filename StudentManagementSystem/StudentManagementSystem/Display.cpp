@@ -419,19 +419,23 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 	//Header
 	displayHeaderUI();
 
+	setColor(colorOrange);
+	cout << "Change password\n";
+	setColor(colorWhite);
+
 	//Input
 	string oldPassword, newPassword, repeatPassword;
-	setColor(colorOrange);
+	setColor(colorMint);
 	cout << "Old password: ";
 	setColor(colorWhite);
 	inputHidenText(oldPassword);
 
-	setColor(colorOrange);
+	setColor(colorMint);
 	cout << "New password: ";
 	setColor(colorWhite);
 	inputHidenText(newPassword);
 
-	setColor(colorOrange);
+	setColor(colorMint);
 	cout << "Repeat new password: ";
 	setColor(colorWhite);
 	inputHidenText(repeatPassword);
