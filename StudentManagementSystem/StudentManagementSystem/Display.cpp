@@ -1074,63 +1074,129 @@ void displayRemoveCourse(string currentSemester, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite); 
 		return;
 	}
+
+	setColor(colorOrange);
 	cout << "Remove course\n";
+	setColor(colorWhite);
 
 	string courseID, className;
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: "; 
+	setColor(colorWhite); 
+	getline(cin, courseID);
+	
+	setColor(colorMint);
+	cout << "Class name: ";
+	setColor(colorWhite);
+	getline(cin, className);
 
 	if (removeCourseFromCourseList(courseID, className,courseList)) {
 		if (saveCourseToStorage(currentSemester, courseList)) {
+			setColor(colorGreen);
 			cout << "Remove successfully\n";
+			setColor(colorWhite);
 		}
 		else {
+			setColor(colorRed);
 			cout << "Fail to open file\n";
+			setColor(colorWhite);
 		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Cannot find this course\n";
+		setColor(colorWhite);
 	}
 }
 
 void displayAddNewCourse(string currentSemester, AccountList* accountList, ClassList* classList, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
-	cout << "Add new course\n";
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite); 
 		return;
 	}
 
+	setColor(colorOrange);
+	cout << "Add new course\n";
+	setColor(colorWhite);
+
 	string courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName;
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Course name: "; getline(cin, courseName);
-	cout << "Class name: "; getline(cin, className);
-	cout << "Lecturer ID: "; getline(cin, lecturerID);
-	cout << "Start date: "; getline(cin, startDate);
-	cout << "End date: "; getline(cin, endDate);
-	cout << "Start time: "; getline(cin, startTime);
-	cout << "End time: "; getline(cin, endTime);
+	setColor(colorMint);
+	cout << "CourseID: ";
+	setColor(colorWhite); 
+	getline(cin, courseID);
+	
+	setColor(colorMint); 
+	cout << "Course name: ";
+	setColor(colorWhite); 
+	getline(cin, courseName);
+	
+	setColor(colorMint); 
+	cout << "Class name: ";
+	setColor(colorWhite); 
+	getline(cin, className);
+	
+	setColor(colorMint); 
+	cout << "Lecturer ID: ";
+	setColor(colorWhite); 
+	getline(cin, lecturerID);
+	
+	setColor(colorMint); 
+	cout << "Start date: ";
+	setColor(colorWhite); 
+	getline(cin, startDate);
+	
+	setColor(colorMint); 
+	cout << "End date: ";
+	setColor(colorWhite); 
+	getline(cin, endDate);
+	
+	setColor(colorMint); 
+	cout << "Start time: ";
+	setColor(colorWhite); 
+	getline(cin, startTime);
+	
+	setColor(colorMint); 
+	cout << "End time: ";
+	setColor(colorWhite); 
+	getline(cin, endTime);
 
-	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): "; getline(cin, dayOfWeekString);
+	setColor(colorMint);
+	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): ";
+	setColor(colorWhite); 
+	getline(cin, dayOfWeekString);
 
-	cout << "Room name: "; getline(cin, roomName);
+	setColor(colorMint);
+	cout << "Room name: ";
+	setColor(colorWhite); 
+	getline(cin, roomName);
 
 	Course* newCourse = createCourse(courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList, classList);
 	if (newCourse != nullptr) {
 		insertCourseToCourseList(newCourse, courseList);
 		if (saveCourseToStorage(currentSemester, courseList)) {
+			setColor(colorGreen);
 			cout << "Created successfully\n";
+			setColor(colorWhite);
 		}
 		else {
+			setColor(colorRed);
 			cout << "Fail to open file\n";
+			setColor(colorWhite);
 		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Fail to create course\n";
+		setColor(colorWhite);
 	}
 }
 
