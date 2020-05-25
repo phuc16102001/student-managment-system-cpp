@@ -664,26 +664,36 @@ void displayResetPassword(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Reset password\n";
-
+	
 	//Input
+	setColor(colorMint);
 	cout << "User ID: ";
+
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
 	Account* account = findAccountID(accountID, accountListStorage);
 	if (account == nullptr) {
+		setColor(colorRed);
 		cout << "Cannot find this student\n";
+		setColor(colorWhite);
+		return;
+	}
+
+	resetAccountPassword(account);
+	if (saveAccountListToStorage(accountListStorage)) {
+		setColor(colorGreen);
+		cout << "Reset successfully\n";
 	}
 	else {
-		resetAccountPassword(account);
-		if (saveAccountListToStorage(accountListStorage)) {
-			cout << "Reset successfully\n";
-		}
-		else {
-			cout << "Fail to open file\n";
-		}
+		setColor(colorRed);
+		cout << "Fail to open file\n";
 	}
+
+	setColor(colorWhite);
 }
 
 void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
