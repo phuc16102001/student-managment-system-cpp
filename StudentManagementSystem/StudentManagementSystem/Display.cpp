@@ -1013,13 +1013,29 @@ void displayCreateNewAcademicYearSemester() {
 	displayHeaderUI();
 
 	string academicYear, semester;
-	cout << "Academic year: "; getline(cin, academicYear);
-	cout << "Semester: "; getline(cin, semester);
+	setColor(colorOrange);
+	cout << "Create academic year and semester\n";
+	setColor(colorWhite);
+
+	setColor(colorMint);
+	cout << "Academic year: ";
+	setColor(colorWhite);
+	getline(cin, academicYear);
+	
+	setColor(colorMint);
+	cout << "Semester: ";
+	setColor(colorWhite);
+	getline(cin, semester);
+	
 	if (createSemester(academicYear, semester)) {
+		setColor(colorGreen);
 		cout << "Created successfully\n";
+		setColor(colorWhite);
 	}
 	else {
+		setColor(colorRed);
 		cout << "Fail to create semester\n";
+		setColor(colorWhite);
 	}
 }
 
