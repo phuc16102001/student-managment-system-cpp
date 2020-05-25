@@ -849,42 +849,69 @@ void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassLis
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Remove student from class\n";
+	setColor(colorWhite);
 
 	//Old class
+	setColor(colorMint);
 	cout << "Old class Name: ";
+	setColor(colorWhite);
 	getline(cin, oldClassName);
+	
 	oldClass = findClassName(oldClassName, classListStorage);
 	if (!oldClass) {
+		setColor(colorRed);
 		cout << "Class does not existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//New class
+	setColor(colorMint);
 	cout << "New class Name: ";
+	setColor(colorWhite);
 	getline(cin, newClassName);
+
 	newClass = findClassName(newClassName, classListStorage);
 	if (!newClass) {
+		setColor(colorRed);
 		cout << "Class does not existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//Account
+	setColor(colorMint);
 	cout << "Student ID: ";
+	setColor(colorWhite);
 	getline(cin, studentID);
 	account = findAccountID(studentID, accountListStorage);
 
-	//If account exist and remove success
-	if (removeAccountFromAccountList(studentID, oldClass->accountList) && account) {
-		//Insert to new class
-		if (insertAccountToAccountList(account, newClass->accountList)) {
-			cout << "Changed successfully\n";
-			return;
-		}
+	if (account == nullptr) {
+		setColor(colorRed);
+		cout << "Account not existed\n";
+		setColor(colorWhite);
+		return;
 	}
 
-	//Cannot find student neither account nor in class
-	cout << "Cannot find this student\n";
+	if (removeAccountFromAccountList(studentID, oldClass->accountList) && insertAccountToAccountList(account, newClass->accountList)) {
+		if (saveClassToStorage(classListStorage)) {
+			setColor(colorGreen);
+			cout << "Changed successfully\n";
+			setColor(colorWhite);
+		}
+		else {
+			setColor(colorRed);
+			cout << "Fail to open file\n";
+			setColor(colorWhite);
+		}
+	}
+	else {
+		setColor(colorRed);
+		cout << "Moved fail\n";
+		setColor(colorWhite);
+	}
 }
 
 void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& classListStorage) {
