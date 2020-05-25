@@ -271,6 +271,11 @@ void displayLogin(string& inputAccountID,string& inputPassword) {
 int displayBasicMenu() {
 	displayHeaderUI();
 	int x;
+
+	setColor(colorGreen);
+	cout << "       Basic menu\n";
+
+	setColor(colorWhite);
 	cout	<< "1. View profile info\n"
 			<< "2. Change password\n"
 			<< "3. Function menu\n"
@@ -414,19 +419,23 @@ void displayChangePassword(Account* account, AccountList* accountListStorage) {
 	//Header
 	displayHeaderUI();
 
+	setColor(colorOrange);
+	cout << "Change password\n";
+	setColor(colorWhite);
+
 	//Input
 	string oldPassword, newPassword, repeatPassword;
-	setColor(colorOrange);
+	setColor(colorMint);
 	cout << "Old password: ";
 	setColor(colorWhite);
 	inputHidenText(oldPassword);
 
-	setColor(colorOrange);
+	setColor(colorMint);
 	cout << "New password: ";
 	setColor(colorWhite);
 	inputHidenText(newPassword);
 
-	setColor(colorOrange);
+	setColor(colorMint);
 	cout << "Repeat new password: ";
 	setColor(colorWhite);
 	inputHidenText(repeatPassword);
@@ -539,8 +548,10 @@ void displayEditAccount(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Edit a student\n";
 	cout << "Let blank if unchange\n";
+	setColor(colorWhite);
 
 	//Input
 	setColor(colorMint); 
@@ -554,7 +565,9 @@ void displayEditAccount(AccountList* accountListStorage) {
 
 	if (account == nullptr) {
 		//Dont have this account
+		setColor(colorRed);
 		cout << "Cannot find this account\n";
+		setColor(colorWhite);
 		return;
 	}
 
@@ -640,15 +653,20 @@ void displayFindStudent(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Find a student\n";
+	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "User ID: ";
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
 	Account* account = findAccountID(accountID, accountListStorage);
 	if (account == nullptr) {
+		setColor(colorRed);
 		cout << "Cannot find this student\n";
 	}
 	else {
@@ -656,6 +674,7 @@ void displayFindStudent(AccountList* accountListStorage) {
 		displayHeaderUI();
 		outputAccount(account);
 	}
+	setColor(colorWhite);
 }
 
 void displayResetPassword(AccountList* accountListStorage) {
@@ -664,26 +683,36 @@ void displayResetPassword(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Reset password\n";
-
+	
 	//Input
+	setColor(colorMint);
 	cout << "User ID: ";
+
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
 	Account* account = findAccountID(accountID, accountListStorage);
 	if (account == nullptr) {
+		setColor(colorRed);
 		cout << "Cannot find this student\n";
+		setColor(colorWhite);
+		return;
+	}
+
+	resetAccountPassword(account);
+	if (saveAccountListToStorage(accountListStorage)) {
+		setColor(colorGreen);
+		cout << "Reset successfully\n";
 	}
 	else {
-		resetAccountPassword(account);
-		if (saveAccountListToStorage(accountListStorage)) {
-			cout << "Reset successfully\n";
-		}
-		else {
-			cout << "Fail to open file\n";
-		}
+		setColor(colorRed);
+		cout << "Fail to open file\n";
 	}
+
+	setColor(colorWhite);
 }
 
 void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
@@ -694,21 +723,30 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Add student to class\n";
+	setColor(colorWhite);
 
 	//Input className
+	setColor(colorMint);
 	cout << "Class Name: ";
+	
+	setColor(colorWhite);
 	getline(cin, className);
 	classData = findClassName(className, classListStorage);
 
 	//Find class
 	if (!classData) {
+		setColor(colorRed);
 		cout << "Class does not exist\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//Input userID
+	setColor(colorMint);
 	cout << "UserID: ";
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
@@ -719,13 +757,24 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 		bool gender;
 
 		//Input
+		setColor(colorMint);
 		cout << "Last name: ";
+		setColor(colorWhite);
 		getline(cin, lastName);
+
+		setColor(colorMint);
 		cout << "First name: ";
+		setColor(colorWhite);
 		getline(cin, firstName);
+
+		setColor(colorMint);
 		cout << "Gender (Male/Female): ";
+		setColor(colorWhite);
 		getline(cin, genderString);
+
+		setColor(colorMint);
 		cout << "Date of birth (DD-MM-YYYY): ";
+		setColor(colorWhite); 
 		getline(cin, dob);
 
 		//Create new account
@@ -739,7 +788,9 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 	//Add to student list
 	insertAccountToAccountList(accountData, classData->accountList);
 	saveClassToStorage(classListStorage);
+	setColor(colorGreen);
 	cout << "Added successfully\n";
+	setColor(colorWhite);
 }
 
 void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
@@ -747,27 +798,46 @@ void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*&
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Remove student from class\n";
+	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "Class Name: ";
+	setColor(colorWhite);
 	getline(cin, className);
 
 	Class* findClass = findClassName(className, classListStorage);
 	if (!findClass) {
+		setColor(colorRed);
 		cout << "Class does not existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//Input
+	setColor(colorMint);
 	cout << "Student ID: ";
+	setColor(colorWhite);
 	getline(cin, studentID);
 
 	if (removeAccountFromAccountList(studentID, findClass->accountList)) {
-		cout << "Removed successfully\n";
+		if (saveClassToStorage(classListStorage)) {
+			setColor(colorGreen);
+			cout << "Removed successfully\n";
+			setColor(colorWhite);
+		}
+		else {
+			setColor(colorRed);
+			cout << "Fail to open file\n";
+			setColor(colorWhite);
+		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Cannot find this student\n";
+		setColor(colorWhite);
 	}
 }
 
@@ -779,42 +849,69 @@ void displayMoveStudentToAnotherClass(AccountList*& accountListStorage, ClassLis
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Remove student from class\n";
+	setColor(colorWhite);
 
 	//Old class
+	setColor(colorMint);
 	cout << "Old class Name: ";
+	setColor(colorWhite);
 	getline(cin, oldClassName);
+	
 	oldClass = findClassName(oldClassName, classListStorage);
 	if (!oldClass) {
+		setColor(colorRed);
 		cout << "Class does not existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//New class
+	setColor(colorMint);
 	cout << "New class Name: ";
+	setColor(colorWhite);
 	getline(cin, newClassName);
+
 	newClass = findClassName(newClassName, classListStorage);
 	if (!newClass) {
+		setColor(colorRed);
 		cout << "Class does not existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//Account
+	setColor(colorMint);
 	cout << "Student ID: ";
+	setColor(colorWhite);
 	getline(cin, studentID);
 	account = findAccountID(studentID, accountListStorage);
 
-	//If account exist and remove success
-	if (removeAccountFromAccountList(studentID, oldClass->accountList) && account) {
-		//Insert to new class
-		if (insertAccountToAccountList(account, newClass->accountList)) {
-			cout << "Changed successfully\n";
-			return;
-		}
+	if (account == nullptr) {
+		setColor(colorRed);
+		cout << "Account not existed\n";
+		setColor(colorWhite);
+		return;
 	}
 
-	//Cannot find student neither account nor in class
-	cout << "Cannot find this student\n";
+	if (removeAccountFromAccountList(studentID, oldClass->accountList) && insertAccountToAccountList(account, newClass->accountList)) {
+		if (saveClassToStorage(classListStorage)) {
+			setColor(colorGreen);
+			cout << "Changed successfully\n";
+			setColor(colorWhite);
+		}
+		else {
+			setColor(colorRed);
+			cout << "Fail to open file\n";
+			setColor(colorWhite);
+		}
+	}
+	else {
+		setColor(colorRed);
+		cout << "Moved fail\n";
+		setColor(colorWhite);
+	}
 }
 
 void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& classListStorage) {
@@ -823,20 +920,28 @@ void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& cla
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Create class from csv file\n";
+	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "Class Name: ";
+	setColor(colorWhite);
 	getline(cin, className);
 
 	//Check if existed
 	Class* findClass = findClassName(className, classListStorage);
 	if (findClass) {
+		setColor(colorRed);
 		cout << "Class existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
+	setColor(colorMint);
 	cout << "Path of .csv file: ";
+	setColor(colorWhite);
 	getline(cin, pathFile);
 
 	//Import student to importList
@@ -850,24 +955,32 @@ void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& cla
 		if (insertClassToClassList(classListStorage, newClass)) {
 			//Save classStorage
 			if (saveAccountListToStorage(accountListStorage) && saveClassToStorage(classListStorage)) {
+				setColor(colorGreen);
 				cout << "Create new class successful\n";
+				setColor(colorWhite);
 			}
 			else {
 				//Fail to save account and class
+				setColor(colorRed);
 				cout << "Fail to save\n";
+				setColor(colorWhite);
 			}
 		}
 	}
 	else {
 		//Fail to open file csv
+		setColor(colorRed);
 		cout << "Fail to open file\n";
+		setColor(colorWhite);
 	}
 }
 
 void displayViewListClasses(ClassList* classListStorage) {
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "List of classes\n";
+	setColor(colorWhite);
 
 	//Output list of classes
 	outputClassList(classListStorage);
@@ -900,29 +1013,60 @@ void displayCreateNewAcademicYearSemester() {
 	displayHeaderUI();
 
 	string academicYear, semester;
-	cout << "Academic year: "; getline(cin, academicYear);
-	cout << "Semester: "; getline(cin, semester);
+	setColor(colorOrange);
+	cout << "Create academic year and semester\n";
+	setColor(colorWhite);
+
+	setColor(colorMint);
+	cout << "Academic year: ";
+	setColor(colorWhite);
+	getline(cin, academicYear);
+	
+	setColor(colorMint);
+	cout << "Semester: ";
+	setColor(colorWhite);
+	getline(cin, semester);
+	
 	if (createSemester(academicYear, semester)) {
+		setColor(colorGreen);
 		cout << "Created successfully\n";
+		setColor(colorWhite);
 	}
 	else {
+		setColor(colorRed);
 		cout << "Fail to create semester\n";
+		setColor(colorWhite);
 	}
 }
 
 void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
+	
+	setColor(colorOrange);
 	cout << "Change academic year and semester\n";
+	setColor(colorWhite);
 
 	string academicYear, semester;
-	cout << "Academic year: "; getline(cin, academicYear);
-	cout << "Semester: "; getline(cin, semester);
+	setColor(colorMint);
+	cout << "Academic year: "; 
+	setColor(colorWhite);
+	getline(cin, academicYear);
+	
+	setColor(colorMint);
+	cout << "Semester: ";
+	setColor(colorWhite);
+	getline(cin, semester);
+	
 	if (changeSemester(academicYear, semester, currentSemester, accountListStorage, courseListStorage)) {
+		setColor(colorGreen);
 		cout << "Change successfully\n";
+		setColor(colorWhite);
 	}
 	else {
+		setColor(colorRed);
 		cout << "Cannot find this academic year and semester\n";
+		setColor(colorWhite);
 	}
 }
 
@@ -930,63 +1074,129 @@ void displayRemoveCourse(string currentSemester, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite); 
 		return;
 	}
+
+	setColor(colorOrange);
 	cout << "Remove course\n";
+	setColor(colorWhite);
 
 	string courseID, className;
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: "; 
+	setColor(colorWhite); 
+	getline(cin, courseID);
+	
+	setColor(colorMint);
+	cout << "Class name: ";
+	setColor(colorWhite);
+	getline(cin, className);
 
 	if (removeCourseFromCourseList(courseID, className,courseList)) {
 		if (saveCourseToStorage(currentSemester, courseList)) {
+			setColor(colorGreen);
 			cout << "Remove successfully\n";
+			setColor(colorWhite);
 		}
 		else {
+			setColor(colorRed);
 			cout << "Fail to open file\n";
+			setColor(colorWhite);
 		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Cannot find this course\n";
+		setColor(colorWhite);
 	}
 }
 
 void displayAddNewCourse(string currentSemester, AccountList* accountList, ClassList* classList, CourseList*& courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
-	cout << "Add new course\n";
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite); 
 		return;
 	}
 
+	setColor(colorOrange);
+	cout << "Add new course\n";
+	setColor(colorWhite);
+
 	string courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName;
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Course name: "; getline(cin, courseName);
-	cout << "Class name: "; getline(cin, className);
-	cout << "Lecturer ID: "; getline(cin, lecturerID);
-	cout << "Start date: "; getline(cin, startDate);
-	cout << "End date: "; getline(cin, endDate);
-	cout << "Start time: "; getline(cin, startTime);
-	cout << "End time: "; getline(cin, endTime);
+	setColor(colorMint);
+	cout << "CourseID: ";
+	setColor(colorWhite); 
+	getline(cin, courseID);
+	
+	setColor(colorMint); 
+	cout << "Course name: ";
+	setColor(colorWhite); 
+	getline(cin, courseName);
+	
+	setColor(colorMint); 
+	cout << "Class name: ";
+	setColor(colorWhite); 
+	getline(cin, className);
+	
+	setColor(colorMint); 
+	cout << "Lecturer ID: ";
+	setColor(colorWhite); 
+	getline(cin, lecturerID);
+	
+	setColor(colorMint); 
+	cout << "Start date: ";
+	setColor(colorWhite); 
+	getline(cin, startDate);
+	
+	setColor(colorMint); 
+	cout << "End date: ";
+	setColor(colorWhite); 
+	getline(cin, endDate);
+	
+	setColor(colorMint); 
+	cout << "Start time: ";
+	setColor(colorWhite); 
+	getline(cin, startTime);
+	
+	setColor(colorMint); 
+	cout << "End time: ";
+	setColor(colorWhite); 
+	getline(cin, endTime);
 
-	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): "; getline(cin, dayOfWeekString);
+	setColor(colorMint);
+	cout << "Date of week (MON,TUE,WED,THU,FRI,SAT,SUN): ";
+	setColor(colorWhite); 
+	getline(cin, dayOfWeekString);
 
-	cout << "Room name: "; getline(cin, roomName);
+	setColor(colorMint);
+	cout << "Room name: ";
+	setColor(colorWhite); 
+	getline(cin, roomName);
 
 	Course* newCourse = createCourse(courseID, courseName, className, lecturerID, startDate, endDate, startTime, endTime, dayOfWeekString, roomName, accountList, classList);
 	if (newCourse != nullptr) {
 		insertCourseToCourseList(newCourse, courseList);
 		if (saveCourseToStorage(currentSemester, courseList)) {
+			setColor(colorGreen);
 			cout << "Created successfully\n";
+			setColor(colorWhite);
 		}
 		else {
+			setColor(colorRed);
 			cout << "Fail to open file\n";
+			setColor(colorWhite);
 		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Fail to create course\n";
+		setColor(colorWhite);
 	}
 }
 
