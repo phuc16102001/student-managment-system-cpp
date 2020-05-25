@@ -723,21 +723,30 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Add student to class\n";
+	setColor(colorWhite);
 
 	//Input className
+	setColor(colorMint);
 	cout << "Class Name: ";
+	
+	setColor(colorWhite);
 	getline(cin, className);
 	classData = findClassName(className, classListStorage);
 
 	//Find class
 	if (!classData) {
+		setColor(colorRed);
 		cout << "Class does not exist\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//Input userID
+	setColor(colorMint);
 	cout << "UserID: ";
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
@@ -748,13 +757,24 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 		bool gender;
 
 		//Input
+		setColor(colorMint);
 		cout << "Last name: ";
+		setColor(colorWhite);
 		getline(cin, lastName);
+
+		setColor(colorMint);
 		cout << "First name: ";
+		setColor(colorWhite);
 		getline(cin, firstName);
+
+		setColor(colorMint);
 		cout << "Gender (Male/Female): ";
+		setColor(colorWhite);
 		getline(cin, genderString);
+
+		setColor(colorMint);
 		cout << "Date of birth (DD-MM-YYYY): ";
+		setColor(colorWhite); 
 		getline(cin, dob);
 
 		//Create new account
@@ -768,7 +788,9 @@ void displayAddManuallyStudentToClass(AccountList*& accountListStorage, ClassLis
 	//Add to student list
 	insertAccountToAccountList(accountData, classData->accountList);
 	saveClassToStorage(classListStorage);
+	setColor(colorGreen);
 	cout << "Added successfully\n";
+	setColor(colorWhite);
 }
 
 void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*& classListStorage) {
@@ -776,27 +798,46 @@ void displayRemoveStudentFromClass(AccountList*& accountListStorage, ClassList*&
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Remove student from class\n";
+	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "Class Name: ";
+	setColor(colorWhite);
 	getline(cin, className);
 
 	Class* findClass = findClassName(className, classListStorage);
 	if (!findClass) {
+		setColor(colorRed);
 		cout << "Class does not existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
 	//Input
+	setColor(colorMint);
 	cout << "Student ID: ";
+	setColor(colorWhite);
 	getline(cin, studentID);
 
 	if (removeAccountFromAccountList(studentID, findClass->accountList)) {
-		cout << "Removed successfully\n";
+		if (saveClassToStorage(classListStorage)) {
+			setColor(colorGreen);
+			cout << "Removed successfully\n";
+			setColor(colorWhite);
+		}
+		else {
+			setColor(colorRed);
+			cout << "Fail to open file\n";
+			setColor(colorWhite);
+		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Cannot find this student\n";
+		setColor(colorWhite);
 	}
 }
 
