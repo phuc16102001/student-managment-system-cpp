@@ -951,7 +951,9 @@ void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& cla
 void displayViewListClasses(ClassList* classListStorage) {
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "List of classes\n";
+	setColor(colorWhite);
 
 	//Output list of classes
 	outputClassList(classListStorage);
