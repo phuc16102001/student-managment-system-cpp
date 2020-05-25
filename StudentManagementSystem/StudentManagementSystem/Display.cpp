@@ -649,15 +649,20 @@ void displayFindStudent(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Find a student\n";
+	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "User ID: ";
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
 	Account* account = findAccountID(accountID, accountListStorage);
 	if (account == nullptr) {
+		setColor(colorRed);
 		cout << "Cannot find this student\n";
 	}
 	else {
@@ -665,6 +670,7 @@ void displayFindStudent(AccountList* accountListStorage) {
 		displayHeaderUI();
 		outputAccount(account);
 	}
+	setColor(colorWhite);
 }
 
 void displayResetPassword(AccountList* accountListStorage) {
