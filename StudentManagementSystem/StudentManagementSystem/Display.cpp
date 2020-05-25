@@ -893,20 +893,28 @@ void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& cla
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Create class from csv file\n";
+	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "Class Name: ";
+	setColor(colorWhite);
 	getline(cin, className);
 
 	//Check if existed
 	Class* findClass = findClassName(className, classListStorage);
 	if (findClass) {
+		setColor(colorRed);
 		cout << "Class existed\n";
+		setColor(colorWhite);
 		return;
 	}
 
+	setColor(colorMint);
 	cout << "Path of .csv file: ";
+	setColor(colorWhite);
 	getline(cin, pathFile);
 
 	//Import student to importList
@@ -920,17 +928,23 @@ void displayImportClassFromCSV(AccountList*& accountListStorage, ClassList*& cla
 		if (insertClassToClassList(classListStorage, newClass)) {
 			//Save classStorage
 			if (saveAccountListToStorage(accountListStorage) && saveClassToStorage(classListStorage)) {
+				setColor(colorGreen);
 				cout << "Create new class successful\n";
+				setColor(colorWhite);
 			}
 			else {
 				//Fail to save account and class
+				setColor(colorRed);
 				cout << "Fail to save\n";
+				setColor(colorWhite);
 			}
 		}
 	}
 	else {
 		//Fail to open file csv
+		setColor(colorRed);
 		cout << "Fail to open file\n";
+		setColor(colorWhite);
 	}
 }
 
