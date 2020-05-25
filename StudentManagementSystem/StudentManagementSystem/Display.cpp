@@ -257,9 +257,14 @@ void displayLogin(string& inputAccountID,string& inputPassword) {
 	setColor(colorWhite);
 
 	//Input
+	setColor(colorMint);
 	cout << "User ID: ";
+	setColor(colorWhite);
 	getline(cin, inputAccountID);
+
+	setColor(colorMint); 
 	cout << "Password: ";
+	setColor(colorWhite); 
 	inputHidenText(inputPassword);
 }
 
@@ -471,7 +476,9 @@ void displayCreateAccount(AccountList*& accountListStorage) {
 	cout << "Create account\n";
 
 	string accountID;
+	setColor(colorOrange);
 	cout << "UserID: ";
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	Account* accountData = findAccountID(accountID, accountListStorage);
@@ -481,29 +488,48 @@ void displayCreateAccount(AccountList*& accountListStorage) {
 	}
 
 	string lastName, firstName, dob, genderString, accountTypeString;
+	setColor(colorOrange);
 	cout << "Last name: ";
+	setColor(colorWhite);
 	getline(cin, lastName);
+	
+	setColor(colorOrange); 
 	cout << "First name: ";
+	setColor(colorWhite);
 	getline(cin, firstName);
+	
+	setColor(colorOrange); 
 	cout << "Gender (Male/Female): ";
+	setColor(colorWhite);
 	getline(cin, genderString);
+	
+	setColor(colorOrange); 
 	cout << "Date of birth (DD-MM-YYYY): ";
+	setColor(colorWhite);
 	getline(cin, dob);
+	
+	setColor(colorOrange); 
 	cout << "Account type (Staff, Lecturer, Student): ";
+	setColor(colorWhite);
 	getline(cin, accountTypeString);
 
 	accountData = createAccount(accountID, lastName, firstName, genderString, dob, accountTypeString);
 	if (insertAccountToAccountList(accountData, accountListStorage)) {
 		if (saveAccountListToStorage(accountListStorage)) {
+			setColor(colorGreen);
 			cout << "Created account successfully\n";
 		}
 		else {
+			setColor(colorRed);
 			cout << "Fail to open file\n";
 		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Fail to create account\n";
 	}
+
+	setColor(colorWhite);
 }
 
 void displayEditAccount(AccountList* accountListStorage) {
@@ -517,7 +543,10 @@ void displayEditAccount(AccountList* accountListStorage) {
 	cout << "Let blank if unchange\n";
 
 	//Input
+	setColor(colorMint); 
 	cout << "User ID: ";
+
+	setColor(colorWhite);
 	getline(cin, accountID);
 
 	//Find account
@@ -529,22 +558,38 @@ void displayEditAccount(AccountList* accountListStorage) {
 		return;
 	}
 
+	cout << endl;
+
+	setColor(colorOrange);
+	cout << "Account found!\n";
+	outputAccount(account);
+
+	cout << endl;
+	setColor(colorOrange);
+	cout << "Edit information\n";
+
 	//Last name
+	setColor(colorMint); 
 	cout << "Last name: ";
+	setColor(colorWhite);
 	getline(cin, lastName);
 	if (lastName == "") {
 		lastName = account->lastName;
 	}
 
 	//First name
+	setColor(colorMint);
 	cout << "First name: ";
+	setColor(colorWhite);
 	getline(cin, firstName);
 	if (firstName == "") {
 		firstName = account->firstName;
 	}
 
 	//Gender
+	setColor(colorMint);
 	cout << "Gender: ";
+	setColor(colorWhite);
 	getline(cin, genderText);
 
 	//LowerCase 
@@ -561,7 +606,9 @@ void displayEditAccount(AccountList* accountListStorage) {
 	}
 
 	//Dob input
+	setColor(colorMint);
 	cout << "Date of birth: ";
+	setColor(colorWhite);
 	getline(cin, dob);
 	if (dob == "") {
 		dob = account->dob;
@@ -570,17 +617,21 @@ void displayEditAccount(AccountList* accountListStorage) {
 	if (editAccount(account, lastName, firstName, gender, dob)) {
 		if (saveAccountListToStorage(accountListStorage)) {
 			//Successful 
+			setColor(colorGreen);
 			cout << "Success to edit informaton\n";
 		}
 		else {
 			//Open storage failed
+			setColor(colorRed);
 			cout << "Fail to open storage\n";
 		}
 	}
 	else {
 		//Not exist
+		setColor(colorRed);
 		cout << "Fail to edit information\n";
 	}
+	setColor(colorWhite);
 }
 
 void displayFindStudent(AccountList* accountListStorage) {
