@@ -548,8 +548,10 @@ void displayEditAccount(AccountList* accountListStorage) {
 
 	//Header
 	displayHeaderUI();
+	setColor(colorOrange);
 	cout << "Edit a student\n";
 	cout << "Let blank if unchange\n";
+	setColor(colorWhite);
 
 	//Input
 	setColor(colorMint); 
@@ -563,7 +565,9 @@ void displayEditAccount(AccountList* accountListStorage) {
 
 	if (account == nullptr) {
 		//Dont have this account
+		setColor(colorRed);
 		cout << "Cannot find this account\n";
+		setColor(colorWhite);
 		return;
 	}
 
