@@ -1042,16 +1042,31 @@ void displayCreateNewAcademicYearSemester() {
 void displayChangeAcademicYearSemester(string& currentSemester, AccountList* accountListStorage, CourseList*& courseListStorage) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
+	
+	setColor(colorOrange);
 	cout << "Change academic year and semester\n";
+	setColor(colorWhite);
 
 	string academicYear, semester;
-	cout << "Academic year: "; getline(cin, academicYear);
-	cout << "Semester: "; getline(cin, semester);
+	setColor(colorMint);
+	cout << "Academic year: "; 
+	setColor(colorWhite);
+	getline(cin, academicYear);
+	
+	setColor(colorMint);
+	cout << "Semester: ";
+	setColor(colorWhite);
+	getline(cin, semester);
+	
 	if (changeSemester(academicYear, semester, currentSemester, accountListStorage, courseListStorage)) {
+		setColor(colorGreen);
 		cout << "Change successfully\n";
+		setColor(colorWhite);
 	}
 	else {
+		setColor(colorRed);
 		cout << "Cannot find this academic year and semester\n";
+		setColor(colorWhite);
 	}
 }
 
