@@ -271,6 +271,11 @@ void displayLogin(string& inputAccountID,string& inputPassword) {
 int displayBasicMenu() {
 	displayHeaderUI();
 	int x;
+
+	setColor(colorGreen);
+	cout << "       Basic menu\n";
+
+	setColor(colorWhite);
 	cout	<< "1. View profile info\n"
 			<< "2. Change password\n"
 			<< "3. Function menu\n"
