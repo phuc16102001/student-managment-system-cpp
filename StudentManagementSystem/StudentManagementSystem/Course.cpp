@@ -601,6 +601,7 @@ bool editCourse(string courseName, string lecturerID, string startTime, string e
 }
 
 bool exportScoreBoardToCSV(string path, ScoreList* scoreList) {
+
 	fstream fout(path,ios::out);
 	if (!fout.is_open()) return false;
 
@@ -616,5 +617,22 @@ bool exportScoreBoardToCSV(string path, ScoreList* scoreList) {
 	}
 
 	fout.close();
+	return true;
+}
+
+bool addAccountToCourse(Account* account, Course* course) {
+	if (!insertAccountToAccountList(account,course->studentList)) return false;
+	
+	Score* newScore = new Score;
+	newScore->studentID = account->ID;
+	if (!insertScoreToScoreList(newScore,course->scoreList)) return false;
+
+	CheckIn* checkIn = new CheckIn;
+	checkIn->studentID = account->ID;
+	int numberOfWeek = getNumberOfWeek(course->startDate,course->startMonth,course->startYear,course->endDate,course->endMonth,course->endYear);
+	checkIn->checkInResult = new bool[numberOfWeek];
+	for (int i=0;i<numberOfWeek;i++) checkIn->checkInResult[i]=false;
+	if (!insertCheckInToCheckInList(checkIn,course->checkInList)) return false;
+
 	return true;
 }

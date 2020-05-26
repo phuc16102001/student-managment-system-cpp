@@ -6,6 +6,7 @@
 #include "Class.h"
 #include "Account.h"
 
+//Color definition
 #define colorGreen 2
 #define colorBlue 3
 #define colorRed 4

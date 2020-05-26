@@ -1316,7 +1316,7 @@ void displayAddStudentToCourse(string currentSemester, AccountList* accountListS
 	}
 
 	Score* newScore = new Score;
-	if (insertAccountToAccountList(studentAccount, courseData->studentList) && insertScoreToScoreList(newScore,courseData->scoreList)) {
+	if (addAccountToCourse(studentAccount,courseData)) {
 		if (saveCourseToStorage(currentSemester, courseListStorage)) {
 			cout << "Added successfully\n";
 		}
@@ -1390,18 +1390,33 @@ void displayCheckInBoard(string currentSemester, CourseList* courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite);
 		return;
 	}
+
+	setColor(colorOrange);
 	cout << "Check in result: \n";
+	setColor(colorWhite);
 
 	string courseID, className;
 
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: ";
+	setColor(colorWhite);
+	getline(cin, courseID);
+
+	setColor(colorMint);
+	cout << "Class name: ";
+	setColor(colorWhite);
+	getline(cin, className);
+
 	Course* course = findCourseIDClassName(courseID, className, courseList);
 	if (course == nullptr) {
+		setColor(colorRed);
 		cout << "Course not found\n";
+		setColor(colorWhite);
 		return;
 	}
 
@@ -1544,18 +1559,32 @@ void displayCheckIn(string currentSemester, CourseList* courseList, Account* log
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite);
 		return;
 	}
+	setColor(colorOrange);
 	cout << "Check in\n";
+	setColor(colorWhite);
 
 	string courseID, className;
 
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: "; 
+	setColor(colorWhite);
+	getline(cin, courseID);
+	
+	setColor(colorMint);
+	cout << "Class name: ";
+	setColor(colorWhite);
+	getline(cin, className);
+	
 	Course* course = findCourseIDClassName(courseID, className, courseList);
 	if (course == nullptr) {
+		setColor(colorRed);
 		cout << "Course not found\n";
+		setColor(colorWhite);
 		return;
 	}
 
