@@ -90,5 +90,8 @@
     <None Include="ImportFile\course2019-2020-2.csv">
       <Filter>Resource Files\ImportFile</Filter>
     </None>
+    <None Include="ImportFile\CTT008-19CLC5.csv">
+      <Filter>Resource Files\ImportFile</Filter>
+    </None>
   </ItemGroup>
 </Project>

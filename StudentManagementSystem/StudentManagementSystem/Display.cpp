@@ -1669,3 +1669,57 @@ void displayExportScoreBoardToCSV(string currentSemester, CourseList* courseList
 		setColor(colorWhite);
 	}
 }
+
+void displayImportScoreBoardFromCSV(string currentSemester, CourseList* courseList) {
+
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		setColor(colorRed);
+		cout << "Please choose semester\n";
+		setColor(colorWhite);
+		return;
+	}
+
+	setColor(colorOrange);
+	cout << "Import score board from CSV\n";
+	setColor(colorWhite);
+
+	string courseID, className;
+	setColor(colorMint);
+	cout << "CourseID: ";
+	setColor(colorWhite);
+	getline(cin, courseID);
+
+	setColor(colorMint);
+	cout << "Class name: ";
+	setColor(colorWhite);
+	getline(cin, className);
+
+	Course* course = findCourseIDClassName(courseID, className, courseList);
+	if (course == nullptr) {
+		setColor(colorRed);
+		cout << "Course not found\n";
+		setColor(colorWhite);
+		return;
+	}
+
+	string path;
+
+	setColor(colorMint);
+	cout << "Path file (D:\\scoreboard.csv): ";
+	setColor(colorWhite);
+	getline(cin, path);
+
+	if (importScoreBoardFromCSV(path, course->scoreList)) {
+		if (saveCourseToStorage(currentSemester, courseList)) {
+			cout << "Imported successfully\n";
+		}
+		else {
+
+		}
+	}
+	else {
+
+	}
+}

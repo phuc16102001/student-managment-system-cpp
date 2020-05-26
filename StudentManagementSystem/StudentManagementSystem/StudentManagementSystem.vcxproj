@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ImportFile\course2019-2020-2.csv" />
+    <None Include="ImportFile\CTT008-19CLC5.csv" />
     <None Include="ImportFile\student19CLC5.csv" />
     <None Include="ImportFile\student19CTT2.csv" />
   </ItemGroup>

@@ -636,3 +636,43 @@ bool addAccountToCourse(Account* account, Course* course) {
 
 	return true;
 }
+
+bool importScoreBoardFromCSV(string path, ScoreList* scoreList) {
+	fstream fin(path, ios::in);
+	if (!fin.is_open()) return false;
+
+	string temp;
+	getline(fin, temp);
+	while (true) {
+		string studentID, midString, finalString, bonusString, totalString;
+		float midScore, finalScore, bonusScore, totalScore;
+		midScore = finalScore = -1;
+		bonusScore = totalScore = -1;
+
+		getline(fin, studentID, ',');
+		if (studentID == "") break;
+		getline(fin, midString, ',');
+		getline(fin, finalString, ',');
+		getline(fin, bonusString, ',');
+		getline(fin, totalString);
+
+		try {
+			midScore = stof(midString);
+			finalScore = stof(finalString);
+			bonusScore = stof(bonusString);
+			totalScore = stof(totalString);
+
+			Score* score = findScoreAccountID(studentID, scoreList);
+			if (score == nullptr) continue;
+
+			score->midScore = midScore;
+			score->finalScore = finalScore;
+			score->bonusScore = bonusScore;
+			score->totalScore = totalScore;
+		}
+		catch (exception e) {
+			return false;
+		}
+	}
+	return true;
+}

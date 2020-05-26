@@ -199,6 +199,9 @@ void functionLecturer(int number) {
 		case (6):
 			displayRemoveStudentFromCourse(currentSemester, courseListStorage);
 			break;
+		case (7):
+			displayImportScoreBoardFromCSV(currentSemester, courseListStorage);
+			break;
 		case (8):
 			displayEditScore(currentSemester, courseListStorage);
 			break;
