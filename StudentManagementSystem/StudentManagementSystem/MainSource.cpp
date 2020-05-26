@@ -165,6 +165,9 @@ void functionStaff(int number) {
 		case (22):
 			displayViewScoreBoard(currentSemester, courseListStorage);
 			break;
+		case (23):
+			displayExportScoreBoardToCSV(currentSemester,courseListStorage);
+			break;
 		case (24):
 			basicMenu();
 			return;

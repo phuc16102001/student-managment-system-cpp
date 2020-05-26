@@ -599,3 +599,22 @@ bool editCourse(string courseName, string lecturerID, string startTime, string e
 
 	return true;
 }
+
+bool exportScoreBoardToCSV(string path, ScoreList* scoreList) {
+	fstream fout(path,ios::out);
+	if (!fout.is_open()) return false;
+
+	fout << "StudentID,Midterm,Final,Bonus,Total\n";
+	while (scoreList!=nullptr) {
+		Score* score = scoreList->scoreData;
+		fout << score->studentID << ",";
+		fout << score->midScore << ",";
+		fout << score->finalScore << ",";
+		fout << score->bonusScore << ",";
+		fout << score->totalScore << ",\n";
+		scoreList = scoreList->nextScore;
+	}
+
+	fout.close();
+	return true;
+}

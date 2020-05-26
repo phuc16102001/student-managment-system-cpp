@@ -1589,3 +1589,54 @@ void displayCheckIn(string currentSemester, CourseList* courseList, Account* log
 	}
 	setColor(colorWhite);
 }
+
+void displayExportScoreBoardToCSV(string currentSemester, CourseList* courseList) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		setColor(colorRed);
+		cout << "Please choose semester\n";
+		setColor(colorWhite); 
+		return;
+	}
+
+	setColor(colorOrange);
+	cout << "Export score board to CSV\n";
+	setColor(colorWhite);
+
+	string courseID, className;
+	setColor(colorMint);
+	cout << "CourseID: "; 
+	setColor(colorWhite);
+	getline(cin, courseID);
+
+	setColor(colorMint);
+	cout << "Class name: "; 
+	setColor(colorWhite);
+	getline(cin, className);
+	
+	Course* course = findCourseIDClassName(courseID, className, courseList);
+	if (course == nullptr) {
+		setColor(colorRed);
+		cout << "Course not found\n";
+		setColor(colorWhite);
+		return;
+	}
+
+	string path;
+	
+	setColor(colorMint);
+	cout << "Path file (D:\\scoreboard.csv): "; 
+	setColor(colorWhite);
+	getline(cin, path);
+
+	if (exportScoreBoardToCSV(path,course->scoreList)) {
+		setColor(colorGreen);
+		cout << "Exported successfully\n";
+		setColor(colorWhite);
+	} else {
+		setColor(colorRed);
+		cout << "Fail to export\n";
+		setColor(colorWhite);
+	}
+}

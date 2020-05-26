@@ -70,5 +70,6 @@ bool editCourse(string courseName, string lecturerID, string startTime, string e
 bool editScore(Score* score, float midTerm, float finalTerm, float bonusPoint, float totalPoint);
 CheckIn* findCheckInAccountID(string accountID, CheckInList* checkInList);
 bool checkInCourse(int currentDate, int currentMonth, int currentYear, int currentHour, int currentMinute, string studentID, Course* course);
+bool exportScoreBoardToCSV(string path, ScoreList* scoreList);
 
 #endif
