@@ -217,12 +217,27 @@ void outputCourseList(CourseList* courseList) {
 void outputScore(Score* score) {
 	setColor(colorOrange);
 	cout << "Score board of " << score->studentID << ":\n";
-
 	setColor(colorWhite);
-	cout << "Midterm: " << score->midScore << "\n";
-	cout << "Final: " << score->finalScore << "\n";
-	cout << "Bonus: " << score->bonusScore << "\n";
-	cout << "Total: " << score->totalScore << "\n";
+	
+	setColor(colorMint);
+	cout << "Midterm: ";
+	setColor(colorWhite);
+	cout << score->midScore << "\n";
+	
+	setColor(colorMint);
+	cout << "Final: ";
+	setColor(colorWhite);
+	cout << score->finalScore << "\n";
+
+	setColor(colorMint);
+	cout << "Bonus: ";
+	setColor(colorWhite);
+	cout  << score->bonusScore << "\n";
+	
+	setColor(colorMint);
+	cout << "Total: ";
+	setColor(colorWhite);
+	cout << score->totalScore << "\n";
 }
 
 void inputHidenText(string& text) {
@@ -1309,10 +1324,14 @@ void displayCurrentCourseList(string currentSemester, CourseList* courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite);
 		return;
 	}
+	setColor(colorOrange);
 	cout << "Course list: \n";
+	setColor(colorWhite);
 
 	outputCourseList(courseList);
 }
@@ -1436,18 +1455,33 @@ void displayStudentListFromCourse(string currentSemester, CourseList* courseList
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite);
 		return;
 	}
+
+	setColor(colorOrange);
 	cout << "Student from course\n";
+	setColor(colorWhite);
 
 	string courseID, className;
 
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: "; 
+	setColor(colorWhite);
+	getline(cin, courseID);
+
+	setColor(colorMint);
+	cout << "Class name: "; 
+	setColor(colorWhite);
+	getline(cin, className);
+
 	Course* courseData = findCourseIDClassName(courseID, className, courseList);
-	if (courseData == nullptr) {
-		cout << "Course not found\n";
+	if (courseData == nullptr) {	
+		setColor(colorRed);
+		cout << "Course not found\n";	
+		setColor(colorWhite);
 		return;
 	}
 
@@ -1588,18 +1622,32 @@ void displayViewScoreBoard(string currentSemester, CourseList* courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite);
 		return;
 	}
+	setColor(colorOrange);
 	cout << "View scoreboard\n";
+	setColor(colorWhite);
 
 	string courseID, className;
 
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: ";
+	setColor(colorWhite);
+	getline(cin, courseID);
+
+	setColor(colorMint);
+	cout << "Class name: "; 
+	setColor(colorWhite);
+	getline(cin, className);
+	
 	Course* course = findCourseIDClassName(courseID, className, courseList);
 	if (course == nullptr) {
+		setColor(colorRed);
 		cout << "Course not found\n";
+		setColor(colorWhite);
 		return;
 	}
 
@@ -1628,26 +1676,47 @@ void displayEditScore(string currentSemester, CourseList* courseList) {
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
+		setColor(colorRed);
 		cout << "Please choose semester\n";
+		setColor(colorWhite);
 		return;
 	}
+	setColor(colorOrange);
 	cout << "Edit student's score\n";
+	setColor(colorWhite);
 
 	string courseID, className, studentID;
 
-	cout << "CourseID: "; getline(cin, courseID);
-	cout << "Class name: "; getline(cin, className);
+	setColor(colorMint);
+	cout << "CourseID: "; 
+	setColor(colorWhite);
+	getline(cin, courseID);
+	
+	setColor(colorMint);
+	cout << "Class name: "; 
+	setColor(colorWhite);
+	getline(cin, className);
+
 	Course* course = findCourseIDClassName(courseID, className, courseList);
 	if (course == nullptr) {
-		cout << "Course not found\n";
+		setColor(colorRed);
+		cout << "Course not found\n";	
+		setColor(colorWhite);
 		return;
 	}
 
 	ScoreList* scoreList = course->scoreList;
-	cout << "Student ID: "; getline(cin, studentID);
+	
+	setColor(colorMint);
+	cout << "Student ID: "; 
+	setColor(colorWhite);
+	getline(cin, studentID);
+
 	Score* studentScore = findScoreAccountID(studentID, scoreList);
 	if (studentScore == nullptr) {
-		cout << "Student not found\n";
+		setColor(colorRed);	
+		cout << "Student not found\n";	
+		setColor(colorWhite);
 		return;
 	}
 
@@ -1659,19 +1728,40 @@ void displayEditScore(string currentSemester, CourseList* courseList) {
 	setColor(colorOrange);
 	cout << "Enter new score:\n";
 	setColor(colorWhite);
-	cout << "Midterm: "; cin >> midScore;
-	cout << "Final: "; cin >> finalScore;
-	cout << "Bonus: "; cin >> bonusScore;
-	cout << "Total: "; cin >> totalScore;
+	
+	setColor(colorMint);
+	cout << "Midterm: "; 
+	setColor(colorWhite);
+	cin >> midScore;
+	
+	setColor(colorMint);
+	cout << "Final: "; 
+	setColor(colorWhite);
+	cin >> finalScore;
+	
+	setColor(colorMint);
+	cout << "Bonus: "; 
+	setColor(colorWhite);
+	cin >> bonusScore;
+
+	
+	setColor(colorMint);
+	cout << "Total: "; 
+	setColor(colorWhite);
+	cin >> totalScore;
+
 	if (editScore(studentScore, midScore, finalScore, bonusScore, totalScore)) {
 		if (saveCourseToStorage(currentSemester, courseList)) {
+			setColor(colorGreen);
 			cout << "Edited successfully\n";
 		}
 		else {
+			setColor(colorRed);
 			cout << "Fail to open file\n";
 		}
 	}
 	else {
+		setColor(colorRed);
 		cout << "Fail to edit\n";
 	}
 }
@@ -1792,7 +1882,6 @@ void displayExportScoreBoardToCSV(string currentSemester, CourseList* courseList
 }
 
 void displayImportScoreBoardFromCSV(string currentSemester, CourseList* courseList) {
-
 	displayHeaderUI();
 	displayCurrentSemester(currentSemester);
 	if (currentSemester == "") {
@@ -1847,4 +1936,35 @@ void displayImportScoreBoardFromCSV(string currentSemester, CourseList* courseLi
 		cout << "Fail to import\n";
 	}
 	setColor(colorWhite);
+}
+
+void displayViewSchedule(string currentSemester, CourseList* courseList, Account* loginAccount) {
+	displayHeaderUI();
+	displayCurrentSemester(currentSemester);
+	if (currentSemester == "") {
+		setColor(colorRed);
+		cout << "Please choose semester\n";
+		setColor(colorWhite);
+		return;
+	}
+
+	setColor(colorOrange);
+	cout << "View schedule\n";
+	setColor(colorWhite);
+
+	while (courseList!=nullptr) {
+		Course* course = courseList->courseData;
+		Account* findAccount = findAccountID(loginAccount->ID,course->studentList);
+		if (findAccount!=nullptr) {
+			setColor(colorOrange);
+			cout << "==================================\n";
+			setColor(colorMint);
+			cout << course->courseID << " (" << course->className << ")\n";
+			setColor(colorWhite);
+			cout << "Course name: " << course->courseName << endl;
+			cout << "Time: " << getDayOfWeekString(course->dayOfWeek) << " " 
+			<< timeToString(course->startHour,course->startMinute)+"-"+timeToString(course->endHour,course->endMinute) << endl;
+		}
+		courseList = courseList->nextCourse;
+	}
 }
