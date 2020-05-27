@@ -60,7 +60,9 @@ void login() {
 	}
 
 	//Incorrect account
+	setColor(colorRed);
 	cout << "Incorrect information\n";
+	setColor(colorWhite);
 	cout << "Press enter to try again...\n";
 	cin.get();
 	system("CLS");
@@ -173,6 +175,7 @@ void functionStaff(int number) {
 			return;
 	}
 
+	setColor(colorWhite);
 	cout << "Press enter to continue...\n";
 	cin.get();
 	system("CLS");
@@ -212,6 +215,8 @@ void functionLecturer(int number) {
 			basicMenu();
 			return;
 	}
+
+	setColor(colorWhite);
 	cout << "Press enter to continue...\n";
 	cin.get();
 	system("CLS");
@@ -239,6 +244,8 @@ void functionStudent(int number) {
 			basicMenu();
 			return;
 	}
+	
+	setColor(colorWhite);
 	cout << "Press enter to continue...\n";
 	cin.get();
 	system("CLS");

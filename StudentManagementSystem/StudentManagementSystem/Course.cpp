@@ -359,7 +359,7 @@ bool removeCourseFromCourseList(string courseID, string className, CourseList*& 
 	CourseList* cur = courseList;
 	while (cur != nullptr && cur->nextCourse!=nullptr) {
 		if (cur->nextCourse->courseData->courseID == courseID
-			&& cur->courseData->className == className) {
+			&& cur->nextCourse->courseData->className == className) {
 			CourseList* tempCourse = cur->nextCourse;
 			cur->nextCourse = tempCourse->nextCourse;
 

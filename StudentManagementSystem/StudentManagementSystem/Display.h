@@ -15,6 +15,7 @@
 #define colorWhite 7
 #define colorMint 11
 
+void setColor(int color);
 void displayHeaderUI();																					//Display UI header
 void displayLoadingUI(int percentage);
 void displayLogin(string& inputAccountID, string& inputPassword);										//Display UI login
