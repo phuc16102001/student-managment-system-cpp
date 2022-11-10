@@ -7,7 +7,7 @@
 
 ## Introduction 
 
-This is an student management system which developed in C++ language. The program uses to store students', lecturers' information and courses. Furthermore, it uses linked list data structure to implement the list (e.g. student list).
+This is a student management system which developed in C++ language. The program uses to store students', lecturers' information and courses. Furthermore, it uses linked list data structure to implement the list (e.g. student list).
 
 ## Usage
 
