@@ -1,0 +1,34 @@
+Database: {
+	
+}
+
+Storage: {
+	account: {
+		read till end
+		n lines continuous contain an account info
+		each account store:
+		- string accountID
+		- string lastName;
+		- string firstName;
+		- bool gender;			//(0/1) equal false/true (1 is male)
+		- string dob;
+		- string password;		//hash sha1
+		- int accountType;		//0:staff, 1:lecture, 2:student
+	}
+
+	class: {
+		each class contains "className,numberStudent,accountID,...,accountID\n"
+
+		numberStudent: number of student in the class
+		accountID: ID account of each student
+	}
+
+	course: {
+		
+	}
+
+	score: {
+		each scoreboard contains "courseID,studentID,midterm,final,lab,bonus,grade\n"
+
+	}
+}

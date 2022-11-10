@@ -1,0 +1,4 @@
+No,CourseID,CourseName,Class,LecturerAccount,StartDate,EndDate,Day of week,StartTime,EndTime,Room
+1,CTT008,Programming Techniques,19CTT2,dbtien,2-3-2020,2-4-2020,MON,7:30,10:00,I34
+2,CTT008,Programming Techniques,19CLC5,dbtien,2-3-2020,2-4-2020,TUE,10:00,11:45,I22
+3,CS0001,Introduction to programming,19CLC5,dbtien,2-3-2020,2-4-2020,SAT,7:30,11:45,B23

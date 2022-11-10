@@ -1,20 +1,24 @@
-# ktlt-19clc5-group01
-This is the project of Programming Techniques course in HCMUS. This repository is owned by group 01 of class 19CLC5
+# Student management system - Cpp console
 
-ID: 19127242
-+ Fullname: Do Vuong Phuc
-+ Email: 19127242@student.hcmus.edu.vn
-+ Facebook: Do Vuong Phuc (fb.com/phuc16102001)
-+ Phone number: 0707953475
+<div>
+    <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white">
+    <img src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white">
+</div>
 
-ID: 19127067
-+ Fullname: Hoang Nhu Thanh
-+ Email: 19127067@student.hcmus.edu.vn
-+ Facebook: NhuThanh Hoang (fb.com/thanhhoang4869)
-+ Phone number: 0933442607
+## Introduction 
 
-ID: 19127109
-+ Fullname: Bui Ngoc Chinh
-+ Email: 19127109@student.hcmus.edu.vn
-+ Facebook: Ngoc Chinhh (fb.com/nChinhhh)
-+ Phone number: 0977739628
+This is an student management system which developed in C++ language. The program uses to store students', lecturers' information and courses. Furthermore, it uses linked list data structure to implement the list (e.g. student list).
+
+## Usage
+
+To run the application, please open the file [StudentManagementSystem.sln](src/StudentManagementSystem.sln) with [Visual Studio](https://visualstudio.microsoft.com/)
+
+## Contribution
+
+The project team includes 3 members:
+- [phuc16102001](https://github.com/phuc16102001)
+- [thanhhoang4869](https://github.com/thanhhoang4869)
+- [buingocchinh321](https://github.com/buingocchinh321)
+
+## License
+[MIT](LICENSE)
